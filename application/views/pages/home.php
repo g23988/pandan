@@ -2,7 +2,7 @@
 
       <!-- Main component for a primary marketing message or call to action -->
       <div class="jumbotron">
-        <h1>歡迎使用PANDAN<small> Close BETA</small></h1>
+        <h1>歡迎使用PANDAN<small> Open BETA</small></h1>
         <br />
         <p class="text-center">
           <a class="btn btn-lg btn-primary" href="<?=base_url()."index.php/pandan/pandanByHost"?>">開始盤點</a>
