@@ -240,6 +240,72 @@ on datapath.KeeperID=user.UserID
 			);
 		$this->db->update('host',$data,array('HostID'=>$hostid));
 		}
+		
+		
+		
+		//get path api for softwarepath
+	public function get_softwarepathXML(){
+		
+		$query = $this->db->query("select PathID,host.Name as 'Hostname',hostcloud.Name as 'VM',softwarecloud.Name as 'Type',software.Name as 'Name',softwarepath.Version as 'Version',userinfo.GroupNickname as 'Group',settingtype.Name as 'SettingFile',softwarepath.SettingPath as '
+Setting_path',logtype.Name as 'Log',softwarepath.LogPath as 'Log_path',userinfo.Name as 'Keeper',bg.Name as 'BG',softwarepath.Modifytime as 'Updatetime' from softwarepath
+left join software on softwarepath.SoftwareID = software.SoftwareID
+left join softwarecloud on softwarepath.SoftwareCloudID = softwarecloud.CloudID
+left join host on softwarepath.HostID = host.HostID
+left join hostcloud on softwarepath.HostCloudID = hostcloud.CloudID
+left join (
+    select user.Name as Name,user.UserID as UserID,usergroup.Name as GroupName,usergroup.Nickname as GroupNickname from user 
+left join usergroup on user.GroupID = usergroup.GroupID
+    ) userinfo on userinfo.UserID = softwarepath.KeeperID
+left join bg on softwarepath.BGID = bg.BGID
+left join settingtype on softwarepath.SettingTypeID = settingtype.SettingTypeID
+left join logtype on softwarepath.LogTypeID = logtype.LogTypeID");
+		
+		/*
+		select PathID,host.Name as 'Hostname',hostcloud.Name as 'VM',softwarecloud.Name as 'Type',software.Name as 'Name',softwarepath.Version as 'Version',userinfo.GroupNickname as 'Group',settingtype.Name as 'SettingFile',softwarepath.SettingPath as '
+Setting_path',logtype.Name as 'Log',softwarepath.LogPath as 'Log_path',userinfo.Name as 'Keeper',bg.Name as 'BG',softwarepath.Modifytime as 'Updatetime' from softwarepath
+left join software on softwarepath.SoftwareID = software.SoftwareID
+left join softwarecloud on softwarepath.SoftwareCloudID = softwarecloud.CloudID
+left join host on softwarepath.HostID = host.HostID
+left join hostcloud on softwarepath.HostCloudID = hostcloud.CloudID
+left join (
+    select user.Name as Name,user.UserID as UserID,usergroup.Name as GroupName,usergroup.Nickname as GroupNickname from user 
+left join usergroup on user.GroupID = usergroup.GroupID
+    ) userinfo on userinfo.UserID = softwarepath.KeeperID
+left join bg on softwarepath.BGID = bg.BGID
+left join settingtype on softwarepath.SettingTypeID = settingtype.SettingTypeID
+left join logtype on softwarepath.LogTypeID = logtype.LogTypeID
+		*/
+		return $query->result_array();
+		}
+		
+		//get path api for datapath
+		public function get_datapathXML(){
+				//讀取datatype表
+				$query = $this->db->query("select PathID,host.Name as 'Hostname',hostcloud.Name as 'Cloud',userinfo.GroupNickname as 'Data_Group',datatype.Name as 'Type',datapath.DataPath as 'PATH',userinfo.Name as 'Keeper',bg.Name as 'BG',datapath.Modifytime as 'Updatetime' from datapath
+left join host on datapath.HostID = host.HostID
+left join hostcloud on datapath.HostCloudID = hostcloud.CloudID
+left join (
+    select user.Name as Name,user.UserID as UserID,usergroup.Name as GroupName,usergroup.Nickname as GroupNickname from user 
+left join usergroup on user.GroupID = usergroup.GroupID
+    ) userinfo on userinfo.UserID = datapath.KeeperID
+left join bg on datapath.BGID = bg.BGID
+left join datatype on datapath.DataTypeID = datatype.DataTypeID");
+				
+				/*
+				select PathID,host.Name as 'Hostname',hostcloud.Name as 'Cloud',userinfo.GroupNickname as 'Data_Group',datatype.Name as 'Type',datapath.DataPath as 'PATH',userinfo.Name as 'Keeper',bg.Name as 'BG',datapath.Modifytime as 'Updatetime' from datapath
+left join host on datapath.HostID = host.HostID
+left join hostcloud on datapath.HostCloudID = hostcloud.CloudID
+left join (
+    select user.Name as Name,user.UserID as UserID,usergroup.Name as GroupName,usergroup.Nickname as GroupNickname from user 
+left join usergroup on user.GroupID = usergroup.GroupID
+    ) userinfo on userinfo.UserID = datapath.KeeperID
+left join bg on datapath.BGID = bg.BGID
+left join datatype on datapath.DataTypeID = datatype.DataTypeID
+				*/
+				return $query->result_array();
+				}
+			
+	
 	}
 
 ?>

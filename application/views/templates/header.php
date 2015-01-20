@@ -95,6 +95,10 @@
                 <li><a href="<?=base_url()."index.php/listadmin/dataview"?>">資料類型</a></li>
                 <li><a href="<?=base_url()."index.php/listadmin/settingview"?>">設定檔類型</a></li>
                 <li><a href="<?=base_url()."index.php/listadmin/logview"?>">記錄檔類型</a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header">Output API xml format</li>
+                <li><a href="<?=base_url()."index.php/pandanoutput/GetAllDataPathData/root/Admin123"?>">軟體明細</a></li>
+                <li><a href="<?=base_url()."index.php/pandanoutput/GetAllSoftwarePathData/root/Admin123"?>">資料明細</a></li>
               </ul>
             </li>
             <?php endif;?>
