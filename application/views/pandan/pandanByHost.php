@@ -73,13 +73,13 @@ function echoLabel($flag){
         		<h3 class="panel-title">機器名稱快速連結 <small>字首導覽，可以直接鍵入字首跳頁</small></h3>
         	</div>
         	<div class="panel-body">
-           	    <a class="btn btn-default btn-lg" href="#ABCD" style="width:14%;">A B C D</a>
-                <a class="btn btn-default btn-lg" href="#EFGH" style="width:14%;">E F G H</a>
-                <a class="btn btn-default btn-lg" href="#IJKL" style="width:14%;">I J K L</a>
-                <a class="btn btn-default btn-lg" href="#MNOP" style="width:14%;">M N O P</a>
-                <a class="btn btn-default btn-lg" href="#QRST" style="width:14%;">Q R S T</a>
-                <a class="btn btn-default btn-lg" href="#UVWX" style="width:14%;">U V W X</a>
-                <a class="btn btn-default btn-lg" href="#YZnum" style="width:14%;">Y Z 0~9</a>
+           	    <a class="btn btn-default btn-lg" href="#ABCD" style="width:10%;">A B C D</a>
+                <a class="btn btn-default btn-lg" href="#EFGH" style="width:10%;">E F G H</a>
+                <a class="btn btn-default btn-lg" href="#IJKL" style="width:10%;">I J K L</a>
+                <a class="btn btn-default btn-lg" href="#MNOP" style="width:10%;">M N O P</a>
+                <a class="btn btn-default btn-lg" href="#QRST" style="width:10%;">Q R S T</a>
+                <a class="btn btn-default btn-lg" href="#UVWX" style="width:10%;">U V W X</a>
+                <a class="btn btn-default btn-lg" href="#YZnum" style="width:10%;">Y Z 0~9</a>
    
             </div>
         </div>

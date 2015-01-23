@@ -52,10 +52,29 @@ class Signin extends CI_Controller{
 		
 		
 		}
+	//登出
 	public function signout(){
 			$this->session->sess_destroy(); //destrioy all session
 			$this->load->view('signin/index');
 		}
+	
+	//admin切換身分登入
+	public function resignin($ResigninUser){
+		$username = $this->session->userdata('username');
+		if($username === 'admin'){
+			//resignin
+			$data['userinfo'] = $this->Signin_model->loadinfo_username($ResigninUser);
+			$this->session->set_userdata('userinfo', $data['userinfo']);
+			$username = $ResigninUser;
+			$this->session->set_userdata('username', $username);
+			redirect('','refresh');
+			}
+		else{
+			$this->signout();
+			return;
+			}
+		}
+	
 	
 	//ad驗證功能實作
 	private function checkLDAP($username,$password){
@@ -79,43 +98,7 @@ class Signin extends CI_Controller{
 			} 
 			return $checkok;
 		}}
-/*	public function view($slug){
-		$data['news_item'] = $this->news_model->get_news($slug);
-		
-		if(empty($data['news_item'])){
-			show_404();
-			}
-		$data['title'] = $data['news_item']['title'];
-		$this->load->view('templates/header',$data);
-		$this->load->view('news/view',$data);
-		$this->load->view('templates/footer');
-		}
-	public function create(){
-		$this->load->helper('form');
-		$this->load->library('form_validation');
-		
-		$data['title'] = 'Create a new item';
-		
-		$this->form_validation->set_rules('title','標題','required');
-		$this->form_validation->set_rules('text','內文','required');
-		
-		if($this->form_validation->run() === false){
-			$this->load->view('templates/header',$data);
-			$this->load->view('news/create');
-			$this->load->view('templates/footer');
-			}
-		else{
-			$this->news_model->set_news();
-			$this->load->view('news/success');
-			}
-		}
-*/	
-	/*		$data['news']= $this->news_model->get_news();
-		$data['title']= 'News archive';
-		
-		$this->load->view('templates/header',$data);
-		$this->load->view('news/index',$data);
-		$this->load->view('templates/footer');*/
+
 	
 	}
 

@@ -45,6 +45,21 @@ class User_model extends CI_Model{
 		$this->db->update('user',$data,array('UserID'=>$userid));
 		
 		}
+	public function admin_update_users(){
+		//管理者更新資料
+		$username = $this->session->userdata('username');
+		$userinfo = $this->session->userdata('userinfo');
+		$data = array(
+				'Name' => $this->input->post('editname'),
+				'Nickname' => $this->input->post('editnickname'),
+				'GroupID' => $this->input->post('editgroupname'),
+				'Modifytime' => date('Y-m-d H:i:s',time()),
+				'Modifyuser' => $userinfo['Name']
+			);
+		$userid = $this->input->post('userid');
+		$this->db->update('user',$data,array('UserID'=>$this->input->post('editUserID')));
+		
+		}
 	}
 
 ?>

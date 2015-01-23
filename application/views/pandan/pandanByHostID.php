@@ -43,7 +43,7 @@ $(function () {
       	<div class="col-md-8">
         	<div class="panel panel-default">
             	<div class="panel-heading">
-                <h4><?php echo $hostdetail["hostname"] ?> 詳細資訊</h4>
+                <h4><?php echo $hostdetail["hostname"] ?> 詳細資訊</h4> 
                 </div>
                 <div class="panel-body">
                 
@@ -68,7 +68,7 @@ $(function () {
                             <?php echoLabel($hostdetail["flag"])?>
                             <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownflag">
                               <li role="presentation">
-                                 <a id="chageflag0" role="menuitem" tabindex="-1"><span class="label label-danger">Never</span></a>
+                                 <a id="chageflag0" role="menuitem" tabindex="-1"><span class="label label-danger" >Never</span></a>
                               </li>
                               <li role="presentation">
                                  <a id="chageflag1" role="menuitem" tabindex="-1"><span class="label label-warning">DNF</span></a>
@@ -80,9 +80,27 @@ $(function () {
                             </div>
                             </td>
                         </tr>
+                        <tr>
+                        	<td><input id="cloneHostname" type="text" style="width:100%;display:none;" value="<?php echo $hostdetail["hostname"]."_clone"?>" data-toggle="tooltip" data-placement="bottom" title="輸入新的主機名稱"/></td><td><span id="clonelock" class="btn btn-primary btn-sm glyphicon glyphicon-lock" aria-hidden="true"> 解鎖複製</span><span id="cloneopen" class="btn btn-success btn-sm glyphicon glyphicon-share" aria-hidden="true" style="display:none;" data-toggle="tooltip" data-placement="right" title="複製途中請勿關閉瀏覽器"> 複製</span></td>
+                        </tr>
                     </tbody>            
                 </table>
-                
+                <script>
+					$(function(){
+						$('[data-toggle="tooltip"]').tooltip();
+
+						$('#clonelock').click(function(){
+							$('#clonelock').css('display','none');
+							$('#cloneopen').css('display','');
+							$('#cloneHostname').css('display','');
+
+							});
+						$('#cloneopen').click(function(){
+							var url = '<?=base_url()."index.php/clonehost/showClonePage/"?>'+$('#cloneHostname').val()+'/'+'<?php echo $hostdetail["HostID"]?>';
+							window.location = url;
+							});
+						});
+				</script>
                 </div>
             </div>
         </div>

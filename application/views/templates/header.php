@@ -5,10 +5,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
 	<title>Pandan</title>
-
     <!-- Bootstrap core CSS -->
-    <link href="<?=base_url()?>resources/css/bootstrap.css" rel="stylesheet">
-
+    <link href="<?=base_url()?>resources/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="<?=base_url()?>resources/css/sticky-footer-navbar.css" rel="stylesheet">
 	
@@ -70,6 +68,7 @@
                 <li class="dropdown-header">Administrator</li>
                 <li><a href="<?=base_url()."index.php/user/view"?>">使用者</a></li>
                 <li><a href="<?=base_url()."index.php/userGroup/view"?>">使用者群組</a></li>
+                <li><a href="<?=base_url()."index.php/user/ChangLoginUser"?>">切換身分</a></li>
               <?php endif;?>
               </ul>
             </li>
@@ -83,6 +82,7 @@
               	<li class="dropdown-header">Account Manager</li>
                 <li><a href="<?=base_url()."index.php/user/view"?>">使用者</a></li>
                 <li><a href="<?=base_url()."index.php/userGroup/view"?>">使用者群組</a></li>
+                <li><a href="<?=base_url()."index.php/user/ChangLoginUser"?>">切換身分</a></li>
 				<li class="divider"></li>
                 <li class="dropdown-header">BG Manager</li>
                 <li><a href="<?=base_url()."index.php/bg/view"?>">使用單位</a></li>
@@ -97,14 +97,16 @@
                 <li><a href="<?=base_url()."index.php/listadmin/logview"?>">記錄檔類型</a></li>
                 <li class="divider"></li>
                 <li class="dropdown-header">Output API xml format</li>
-                <li><a href="<?=base_url()."index.php/pandanoutput/GetAllDataPathData/root/Admin123"?>">軟體明細</a></li>
-                <li><a href="<?=base_url()."index.php/pandanoutput/GetAllSoftwarePathData/root/Admin123"?>">資料明細</a></li>
+                <li><a href="<?=base_url()."index.php/pandanoutput/GetAllSoftwarePathData/root/Admin123"?>">軟體明細</a></li>
+                <li><a href="<?=base_url()."index.php/pandanoutput/GetAllDataPathData/root/Admin123"?>">資料明細</a></li>
               </ul>
             </li>
             <?php endif;?>
             <!--管理全域結束-->
+            
           </ul>
           <ul class="nav navbar-nav navbar-right">
+         
             <!--<li><a href="../navbar/">Mail</a></li>-->
             <!--<li><a href="../navbar-static-top/">Static top</a></li>-->
             <li><a>您好！<?php echo $userinfo['Nickname']?></a></li>
@@ -120,5 +122,5 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <!-- <script src="<?//=base_url()?>resources/assets/jquery.js"></script> -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="<?=base_url()?>resources/js/jquery.min.js"></script>
     <script src="<?=base_url()?>resources/js/bootstrap.min.js"></script>
