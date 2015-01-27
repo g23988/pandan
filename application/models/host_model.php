@@ -41,16 +41,28 @@ class Host_model extends CI_Model{
 				'Modifytime' => date('Y-m-d H:i:s',time()),
 				'Modifyuser' => $userinfo['UserID']
 			);
-		$hostid = $this->input->post('hostid');
-		$this->db->update('host',$data,array('HostID'=>$hostid));
+		//檢查是否有重複的值
+		$query = $this->db->get_where('host',array('Name'=>$this->input->post('hostname')));
+		/*if($query->result_array()!=null){
+			echo "<script type='text/javascript'>alert('機器名稱重複');</script>";
+			}
+		else{*/
+			$hostid = $this->input->post('hostid');
+			$this->db->update('host',$data,array('HostID'=>$hostid));
+			
+			//}
+		
 		}
 	
 	public function delete_hosts($hostid){
 		//指定主機id刪除
 		$query = $this->db->delete('host', array('HostID' => $hostid)); 
+		//順便刪除datapath softwarepath資料
+		$this->db->delete('softwarepath',array('HostID' => $hostid));
+		$this->db->delete('datapath',array('HostID' => $hostid));
 		}
 	public function insert_hosts(){
-		//新增軟體
+		//新增host
 		$username = $this->session->userdata('username');
 		$userinfo = $this->session->userdata('userinfo');
 		$data = array(
@@ -62,7 +74,16 @@ class Host_model extends CI_Model{
 			'Createtime' => date('Y-m-d H:i:s',time()),
 			'Modifyuser' => $userinfo['UserID']
 		);
-		return $this->db->insert('host',$data);
+		//檢查是否有重複的值
+		$query = $this->db->get_where('host',array('Name'=>$this->input->post('hostname')));
+		if($query->result_array()!=null){
+			echo "<script type='text/javascript'>alert('機器名稱重複');</script>";
+			}
+		else{
+			$this->db->insert('host',$data);
+			
+			}
+		
 		
 		}
 	public function updateAllFlag(){

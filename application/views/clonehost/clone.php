@@ -34,9 +34,9 @@
 <div class="container">
 <div class="row">
 	<div class="col-md-12">
-    	<div class="panel panel-info">
+    	<div id="showallinfo" class="panel panel-info">
         <div class="panel-heading">
-        <h4><span id="title">正在執行複製作業 </span><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span></h4>
+        <h4><span id="title">正在執行複製作業，請勿重複刷新本頁 </span><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span></h4>
         </div>
         <div class="panel-body">
         <div class="progress">
@@ -65,7 +65,7 @@
             </div>
             <div class="col-md-2">
             	<div id="getOldSoftwareInfo" class="panel panel-default">
-                    <div class="panel-heading">取得軟體資訊模型
+                    <div class="panel-heading">收集軟體資訊
                     </div>
                     <div id="getOldSoftwareInfoDetail" class="panel-body">
                     等待...
@@ -74,7 +74,7 @@
             </div>
             <div class="col-md-2">
             	<div id="resetSoftwareInfo" class="panel panel-default">
-                    <div class="panel-heading">重塑軟體資訊模型
+                    <div class="panel-heading">複製軟體資訊
                     </div>
                     <div id="resetSoftwareInfoDetail" class="panel-body">
                     等待...
@@ -83,7 +83,7 @@
             </div>
             <div class="col-md-2">
             	<div id="getOldDataInfo" class="panel panel-default">
-                    <div class="panel-heading">取得資料資訊模型
+                    <div class="panel-heading">收集資料資訊
                     </div>
                     <div id="getOldDataInfoDetail" class="panel-body">
                     等待...
@@ -92,7 +92,7 @@
             </div>
             <div class="col-md-2">
             	<div id="resetDataInfo" class="panel panel-default">
-                    <div class="panel-heading">重塑資料資訊模型
+                    <div class="panel-heading">複製資料資訊
                     </div>
                     <div id="resetDataInfoDetail" class="panel-body">
                     等待...
@@ -105,7 +105,8 @@
         </div>
     </div>
 </div>
-<p class="text-center"><span id="checkBtn" class="btn btn-lg btn-default" style="display:none;"><span class="glyphicon glyphicon-ok"></span> 確認完成</span></p>
+<p class="text-center"><a id="checkBtn" class="btn btn-lg btn-default" style="display:none;"><span class="glyphicon glyphicon-ok"></span> 確認完成</a></p>
+<p class="text-center"><a href="<?=base_url()?>index.php/pandan/view/<?php echo $oldhostid?>" id="failBtn" class="btn btn-lg btn-danger" style="display:none;"><span class="glyphicon glyphicon-remove"></span> 失敗了</a></p>
 </div>
 <script>
 //setInterval(function(){
@@ -113,42 +114,190 @@
 //	}, 2000);
 $(function(){
 	
-	var newhostname = '<?php echo $newhostname?>';
+	var newhostname = '<?php echo urldecode($newhostname)?>';
+	var newhostid ;
 	var oldhostid = '<?php echo $oldhostid?>';
 	setTimeout(function(){
-    	$('#getOldHostInfoDetail').load('<?=base_url()?>/index.php/clonehost/getHostByHostID/'+newhostname+'/'+oldhostid,'',function(){
-			$('#getOldHostInfo').removeClass('panel-default').addClass('panel-success');
-			$('#resetHostInfoDetail').html('工作中...');
-			$('#progressbar').css('width','17%');
-		});
+			//第一步驟，得到資訊
+			$.ajax({
+						  url: "<?=base_url()?>index.php/clonehost/cloneHostByHostID/"+newhostname+"/"+oldhostid,
+						  type: "GET",
+						  dataType: "json",
+						  contentType: "application/json; charset=utf-8",
+						  success: function(JData) {
+							  
+							  if(JData==""||JData==null){
+								  fail("機器名稱重複！");
+								  $("#getOldHostInfoDetail").html('').append('機器名稱重複');
+								  $('#getOldHostInfo').removeClass('panel-default').addClass('panel-danger');
+								  return;
+								  }
+							  else{
+								  $("#getOldHostInfoDetail").html('').append('HostID：'+JData["HostID"]);
+								  $("#getOldHostInfoDetail").append('<br>').append('Name：'+JData["Name"]);
+								  //調整viewbar
+								$('#getOldHostInfo').removeClass('panel-default').addClass('panel-success');
+								$('#resetHostInfoDetail').html('工作中...');
+						    	$('#progressbar').css('width','17%');
+
+								//等待兩秒 執行重塑機器模型
+								setTimeout(function(){resetHostInfo()},1000);
+								  }
+							  
+											  },
+						  error: function() {
+							fail("失敗！請立刻聯絡系統管理員處理垃圾資料！");
+						  }
+					}); 
 		
-	}, 2000);
-	setTimeout(function(){
-    	$('#resetHostInfoDetail').load('<?=base_url()?>/index.php/clonehost/test','',function(){
-			$('#resetHostInfo').removeClass('panel-default').addClass('panel-success');
-			$('#getOldSoftwareInfoDetail').html('工作中...');
-			$('#progressbar').css('width','34%');
-			});
+	}, 1000);
+	
+	//重塑機器模型
+	function resetHostInfo(){
+			//第二步驟，重塑insert資訊
+			$.ajax({
+						  url: "<?=base_url()?>index.php/clonehost/resetcloneHost/"+newhostname+"/"+oldhostid,
+						  type: "GET",
+						  dataType: "json",
+						  contentType: "application/json; charset=utf-8",
+						  success: function(JData) {
 
-	}, 4000);
+							  $("#resetHostInfoDetail").html('').append('HostID：'+JData["HostID"]);
+							  //重設目標newhostid
+							  newhostid = JData["HostID"];
+							  $("#resetHostInfoDetail").append('<br>').append('Name：'+JData["Name"]);
+							  //調整viewbar
+								$('#resetHostInfo').removeClass('panel-default').addClass('panel-success');
+								$('#getOldSoftwareInfoDetail').html('工作中...');
+						    	$('#progressbar').css('width','34%');
+								//等待兩秒 執行取得軟體資料模型
+								setTimeout(function(){getOldSoftwareInfo()},1000);
+											  },
+						  error: function() {
+							fail("失敗！請立刻聯絡系統管理員處理垃圾資料！");
+						  }
+					}); 
+		}
+	
+	//取得軟體資料模型
+	function getOldSoftwareInfo(){
+			//第三步驟，取得軟體by oldhostid
+			$.ajax({
+						  url: "<?=base_url()?>index.php/clonehost/cloneSoftwareByHostID/"+newhostid+"/"+oldhostid,
+						  type: "GET",
+						  dataType: "json",
+						  contentType: "application/json; charset=utf-8",
+						  success: function(JData) { 
+						  		//檢查是否為空值
+							  if(JData==""||JData==null){
+								  $("#getOldSoftwareInfoDetail").html('').append('筆數：0');
+								  }
+							  else{
+								  $("#getOldSoftwareInfoDetail").html('').append('筆數：'+JData.length);
+								  }
+							  //調整viewbar
+								$('#getOldSoftwareInfo').removeClass('panel-default').addClass('panel-success');
+								$('#resetSoftwareInfoDetail').html('工作中...');
+						    	$('#progressbar').css('width','51%');
+								//等待兩秒 執行resetSoftwareInfo
+								setTimeout(function(){resetSoftwareInfo()},1000);
+											  },
+						  error: function() {
+							fail("失敗！請立刻聯絡系統管理員處理垃圾資料！");
+						  }
+					}); 
+		
+		
+		}
+	
+	function resetSoftwareInfo(){
+			//第四步驟，INSERT軟體by oldhostid
+			$.ajax({
+						  url: "<?=base_url()?>index.php/clonehost/setnewsoftwarepath/"+newhostid+"/"+oldhostid,
+						  type: "GET",
+						  dataType: "json",
+						  contentType: "application/json; charset=utf-8",
+						  success: function(JData) { //
+								if(JData==""||JData==null){
+									$("#resetSoftwareInfoDetail").html('').append('筆數：0');
+								}
+								else{
+									$("#resetSoftwareInfoDetail").html('').append('筆數：'+JData.length);
+									}
+							  
+							  //調整viewbar
+								$('#resetSoftwareInfo').removeClass('panel-default').addClass('panel-success');
+								$('#getOldDataInfoDetail').html('工作中...');
+						    	$('#progressbar').css('width','68%');
+								//等待兩秒
+								setTimeout(function(){getOldDataInfo()},1000);
+											  },
+						  error: function() {
+							fail("失敗！請立刻聯絡系統管理員處理垃圾資料！");
+						  }
+					}); 
+		
+		
+		}
+	
+	//取得資料資訊模型
+	function getOldDataInfo(){
+			//第五步驟，取得資料by oldhostid
+			$.ajax({
+						  url: "<?=base_url()?>index.php/clonehost/cloneDataByHostID/"+newhostid+"/"+oldhostid,
+						  type: "GET",
+						  dataType: "json",
+						  contentType: "application/json; charset=utf-8",
+						  success: function(JData) { 
+						  if(JData==""||JData==null){$("#getOldDataInfoDetail").html('').append('筆數：0');}
+						  else{$("#getOldDataInfoDetail").html('').append('筆數：'+JData.length);}
+							  
+							  //調整viewbar
+								$('#getOldDataInfo').removeClass('panel-default').addClass('panel-success');
+								$('#resetDataInfoDetail').html('工作中...');
+						    	$('#progressbar').css('width','85%');
+								//等待兩秒 執行resetSoftwareInfo
+								setTimeout(function(){resetDataInfo()},1000);
+											  },
+						  error: function() {
+							fail("失敗！請立刻聯絡系統管理員處理垃圾資料！");
+						  }
+					}); 
+		
+		
+		}
+		
+	function resetDataInfo(){
+			//第六步驟，INSERT軟體by oldhostid
+			$.ajax({
+						  url: "<?=base_url()?>index.php/clonehost/setnewdatapath/"+newhostid+"/"+oldhostid,
+						  type: "GET",
+						  dataType: "json",
+						  contentType: "application/json; charset=utf-8",
+						  success: function(JData) { 
+						  if(JData==""||JData==null){$("#resetDataInfoDetail").html('').append('筆數：0');}
+						  else{$("#resetDataInfoDetail").html('').append('筆數：'+JData.length);}
+							  //調整viewbar
+								$('#resetDataInfo').removeClass('panel-default').addClass('panel-success');
+						    	$('#progressbar').css('width','100%');
+								
+								
+								$('#checkBtn').css('display','').attr('href','<?=base_url()?>index.php/pandan/view/'+newhostid);
+								$('.glyphicon-refresh-animate').css('display','none');
+								$('#progressbar').removeClass('active');
+								$('#title').html('作業完成！');
+											  },
+						  error: function() {
+							fail("失敗！請立刻聯絡系統管理員處理垃圾資料！");
+						  }
+					}); 
+		
+		
+		}
+		
+	/*
 	setTimeout(function(){
-    	$('#getOldSoftwareInfoDetail').load('<?=base_url()?>/index.php/clonehost/test','',function(){
-			$('#getOldSoftwareInfo').removeClass('panel-default').addClass('panel-success');
-			$('#resetSoftwareInfoDetail').html('工作中...');
-			$('#progressbar').css('width','51%');
-			});
-
-	}, 6000);
-	setTimeout(function(){
-    	$('#resetSoftwareInfoDetail').load('<?=base_url()?>/index.php/clonehost/test','',function(){
-			$('#resetSoftwareInfo').removeClass('panel-default').addClass('panel-success');
-			$('#getOldDataInfoDetail').html('工作中...');
-			$('#progressbar').css('width','68%');
-			});
-
-	}, 8000);
-	setTimeout(function(){
-    	$('#getOldDataInfoDetail').load('<?=base_url()?>/index.php/clonehost/test','',function(){
+    	$('#getOldDataInfoDetail').load('/index.php/clonehost/test','',function(){
 			$('#getOldDataInfo').removeClass('panel-default').addClass('panel-success');
 			$('#resetDataInfoDetail').html('工作中...');
 			$('#progressbar').css('width','85%');
@@ -156,16 +305,28 @@ $(function(){
 
 	}, 10000);
 	setTimeout(function(){
-    	$('#resetDataInfoDetail').load('<?=base_url()?>/index.php/clonehost/test','',function(){
+    	$('#resetDataInfoDetail').load('/index.php/clonehost/test','',function(){
 			$('#resetDataInfo').removeClass('panel-default').addClass('panel-success');
 			$('#progressbar').css('width','100%');
-			$('#checkBtn').css('display','');
-			$('.glyphicon-refresh-animate').css('display','none');
-			$('#progressbar').removeClass('active');
-			$('#title').html('作業完成！');
+			
+			
+
 			});
 
 	}, 12000);
+	*/
+	//失敗跳這邊
+	function fail(AL){
+			$('.glyphicon-refresh-animate').css('display','none');
+			$('#progressbar').removeClass('active');
+			$('#showallinfo').removeClass('panel-info').addClass('panel-danger');
+			$('#title').html(AL);
+			//打開失敗按鈕
+			$('#failBtn').css('display','');
+		}
+
+	
+	
 	
 	});
 

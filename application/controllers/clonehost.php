@@ -23,42 +23,109 @@ class Clonehost extends CI_Controller{
 			*/
 		}
 	
-	//clone首頁，處發起點 step1
-	public function getHostByHostID($newhostname,$oldhostid){
-		var_dump($oldhostid);
-		var_dump($newhostname);
+	//clone首頁，處發起點
+	public function cloneHostByHostID($newhostname,$oldhostid){
 		$data['userinfo'] = $this->session->userdata('userinfo');
-		$hostinfo = $this->clone_model->selectCloneHost($newhostname,$oldhostid);
-		//收集新的host資料
-		$Name = $newhostname;
-		$CloudID = $hostinfo->CloudID;
-		$UserID = $data['userinfo']['UserID'];
-		$Remark = $hostinfo->Remark;
-		$Createtime = date('Y-m-d H:i:s',time());
-		$Modifytime = date('Y-m-d H:i:s',time());
-		$Modifyuser = $data['userinfo']['UserID'];
-		$flag = 0;
-		
-		
-		
-		//開始創建新的
-		
-		//取得最新一筆資料的id
-		
-		//收集原本的id
-		
-		//收集舊id的softwarepath
-		
-		//收集舊id的datapath
-		
+		$hostinfo = $this->clone_model->selectCloneHost(urldecode($newhostname),$oldhostid);
+		//檢查是否相同名稱
+		$checkSameName = $this->clone_model->checkSameHost($newhostname);
+				//false不存在可使用 true存在回應空
+		if($checkSameName){
+			print(json_encode(""));
+			}
+		else{print(json_encode($hostinfo,JSON_UNESCAPED_UNICODE));
+			}
 		}
 	
+	//insert新的host
+	public function resetcloneHost($newhostname,$oldhostid){
+		$data['userinfo'] = $this->session->userdata('userinfo');
+		$hostinfo = $this->clone_model->selectCloneHost(urldecode($newhostname),$oldhostid);
+		$oldName = $hostinfo->Name;
+		$newhostinfo['Name'] =  $newhostname;
+		$newhostinfo['CloudID'] = $hostinfo->CloudID;
+		$newhostinfo['UserID'] = $data['userinfo']['UserID'];
+		$newhostinfo['Remark'] = $hostinfo->Remark;
+		$newhostinfo['Createtime'] = date('Y-m-d H:i:s',time());
+		$newhostinfo['Modifytime'] = date('Y-m-d H:i:s',time());
+		$newhostinfo['Modifyuser'] = $data['userinfo']['UserID'];
+		$newhostinfo['flag'] = 0;
+		$newhostidobj = $this->clone_model->insertCloneHost($newhostinfo);
+		$hostinfo = $this->clone_model->selectCloneHost($newhostname,$newhostidobj->HostID);
+		print(json_encode($hostinfo,JSON_UNESCAPED_UNICODE));
+		}
 	
+	//收集舊的software資訊by oldhostid
+	public function cloneSoftwareByHostID($newhostid,$oldhostid){
+		$data['userinfo'] = $this->session->userdata('userinfo');
+		$softwareinfo = $this->clone_model->selectCloneSoftware($oldhostid);
+		if($softwareinfo!=null){
+		print(json_encode($softwareinfo,JSON_UNESCAPED_UNICODE));
+			}
+		else{
+			print(json_encode(""));
+			}
+
+		}
+	//insert新的software
+	public function setnewsoftwarepath($newhostid,$oldhostid){
+		$data['userinfo'] = $this->session->userdata('userinfo');
+		$softwareinfo = $this->clone_model->selectCloneSoftware($oldhostid);
+		if($softwareinfo!=null){
+			//循序改變為新的hostid  並且清空PathID
+			foreach($softwareinfo as $key =>$item){
+				$softwareinfo[$key]['HostID'] = $newhostid;
+				$softwareinfo[$key]['PathID'] = '';
+				$softwareinfo[$key]['Createtime'] = date('Y-m-d H:i:s',time());
+				$softwareinfo[$key]['Modifytime'] = date('Y-m-d H:i:s',time());
+				$softwareinfo[$key]['Modifyuser'] = $data['userinfo']['UserID'];;
+				}
+			
+			$result = $this->clone_model->insertSoftwarepath($softwareinfo);
+			//var_dump($result);
+			print json_encode($softwareinfo,JSON_UNESCAPED_UNICODE);
+			}
+		else{
+			print(json_encode(""));
+			}
+		}
+		
 	
-	
+	//收集舊的data資訊by oldhostid
+	public function cloneDataByHostID($newhostid,$oldhostid){
+		$data['userinfo'] = $this->session->userdata('userinfo');
+		$datainfo = $this->clone_model->selectCloneData($oldhostid);
+		if($datainfo!=null){
+			print(json_encode($datainfo,JSON_UNESCAPED_UNICODE));
+			}
+		else{
+			print(json_encode(""));
+			}
+		}
+	//insert新的data
+	public function setnewdatapath($newhostid,$oldhostid){
+		$data['userinfo'] = $this->session->userdata('userinfo');
+		$datainfo = $this->clone_model->selectCloneData($oldhostid);
+		//循序改變為新的hostid  並且清空PathID
+		if($datainfo!=null){
+			foreach($datainfo as $key =>$item){
+			$datainfo[$key]['HostID'] = $newhostid;
+			$datainfo[$key]['PathID'] = '';
+			$datainfo[$key]['Createtime'] = date('Y-m-d H:i:s',time());
+			$datainfo[$key]['Modifytime'] = date('Y-m-d H:i:s',time());
+			$datainfo[$key]['Modifyuser'] = $data['userinfo']['UserID'];;
+			}
+			$result = $this->clone_model->insertDatapath($datainfo);
+			//var_dump($result);
+			print json_encode($datainfo,JSON_UNESCAPED_UNICODE);
+			}
+		else{
+			print(json_encode(""));
+			}
+		}
 	//顯示單元 for index
 	public function showClonePage($newhostname,$oldhostid){
-		$data['newhostname'] = $newhostname;
+		$data['newhostname'] = urldecode($newhostname);
 		$data['oldhostid'] = $oldhostid;
 		$this->load->view('clonehost/clone',$data);
 		/*
