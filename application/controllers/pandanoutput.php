@@ -34,10 +34,12 @@ class Pandanoutput extends CI_Controller{
 				$PathIDtag->appendChild($text);*/
 				
 				//PathID
+				/*
 				$PathIDtag = $dom->createElement('PathID');
 				$child->appendChild($PathIDtag);
 				$text = $dom->createTextNode($row["PathID"]);
 				$PathIDtag->appendChild($text);
+				*/
 				//host.name
 				$Hostnametag = $dom->createElement('Hostname');
 				$child->appendChild($Hostnametag);
@@ -69,6 +71,7 @@ class Pandanoutput extends CI_Controller{
 				$text = $dom->createTextNode($row["Group"]);
 				$Grouptag->appendChild($text);
 				//settingtype.name
+				/*
 				$SettingFiletag = $dom->createElement('SettingFile');
 				$child->appendChild($SettingFiletag);
 				$text = $dom->createTextNode($row["SettingFile"]);
@@ -88,6 +91,7 @@ class Pandanoutput extends CI_Controller{
 				$child->appendChild($Log_pathtag);
 				$text = $dom->createTextNode($row["Log_path"]);
 				$Log_pathtag->appendChild($text);
+				*/
 				//user.name 
 				$Keepertag = $dom->createElement('Keeper');
 				$child->appendChild($Keepertag);
@@ -174,10 +178,12 @@ class Pandanoutput extends CI_Controller{
 				$PathIDtag->appendChild($text);*/
 				
 				//PathID
+				/*
 				$PathIDtag = $dom->createElement('PathID');
 				$child->appendChild($PathIDtag);
 				$text = $dom->createTextNode($row["PathID"]);
 				$PathIDtag->appendChild($text);
+				*/
 				//host.name
 				$Hostnametag = $dom->createElement('Hostname');
 				$child->appendChild($Hostnametag);
