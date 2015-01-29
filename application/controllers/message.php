@@ -7,6 +7,7 @@ class Message extends CI_Controller{
 			redirect('signout','refresh');
 			return;
 			}
+		$this->load->model('message_model');
 		}
 	public function view()
 	{
@@ -23,6 +24,17 @@ class Message extends CI_Controller{
 		$this->load->view('message/message',$data);
 		$this->load->view('templates/footer');
 	}
+	
+	public function showPiePandanCountByUser(){
+		$data['userinfo'] = $this->session->userdata('userinfo');
+		$this->load->view('message/piepandancount');
+		}
+	
+	public function PandanNumByUser(){
+		$result = $this->message_model->get_pandan_count();
+		print(json_encode($result,JSON_UNESCAPED_UNICODE));
+		}
+
 	
 	
 }

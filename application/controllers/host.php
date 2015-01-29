@@ -93,6 +93,7 @@ class Host extends CI_Controller{
 			}
 		$this->showHostPage($data);
 		}	
+		
 	
 	//顯示單元 for view
 	private function showHostPage($data){

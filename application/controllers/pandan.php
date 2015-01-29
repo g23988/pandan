@@ -179,6 +179,27 @@ class Pandan extends CI_Controller{
 		
 		}
 		
+	public function editSoftwarePath($HostID){
+		//修改softwarepath by softwarepathid 
+		$this->form_validation->set_rules('hostid','hostid','required');
+		$this->form_validation->set_rules('softwarecloud','softwarecloud','required');
+		$this->form_validation->set_rules('software','software','required');
+		$this->form_validation->set_rules('settingtype','settingtype','required');
+		$this->form_validation->set_rules('logtype','logtype','required');
+		$this->form_validation->set_rules('bg','bg','required');
+		if($this->form_validation->run() === false){ 
+			$this->showPandanPageHost($data);
+			return;
+		};
+		$this->pandan_model->update_SoftwarePath();
+		$username = $this->session->userdata('username');
+		$data['username'] = $username;
+		$data['hostdetail'] = $this->pandan_model->get_wherehosts($HostID);
+		$this->showPandanPageHost($data);
+		
+		}
+		
+		
 	public function addDataPath($HostID){
 		//新增datapath
 		$this->form_validation->set_rules('hostid','hostid','required');
@@ -195,13 +216,37 @@ class Pandan extends CI_Controller{
 		$this->showPandanPageHost($data);
 		
 		}
+		
+	public function editDataPath($HostID){
+		//更新datapath
+		$this->form_validation->set_rules('hostid','hostid','required');
+		$this->form_validation->set_rules('datatype','datatype','required');
+		$this->form_validation->set_rules('bg','bg','required');
+		if($this->form_validation->run() === false){ 
+			$this->showPandanPageHost($data);
+			return;
+		};
+		$this->pandan_model->update_DataPath();
+		$username = $this->session->userdata('username');
+		$data['username'] = $username;
+		$data['hostdetail'] = $this->pandan_model->get_wherehosts($HostID);
+		$this->showPandanPageHost($data);
+		
+		}
 	
 	//頁面中設定flag
 	public function chageFlag($HostID,$flag){
 		$this->pandan_model->update_flag($HostID,$flag);
 		}
 		
-
+	//頁面中設定remark
+	public function changeRemark($HostID){
+		$this->pandan_model->update_hostRemark($HostID);
+		$username = $this->session->userdata('username');
+		$data['username'] = $username;
+		$data['hostdetail'] = $this->pandan_model->get_wherehosts($HostID);
+		$this->showPandanPageHost($data);
+		}
 
 	//顯示單元 for view
 	public function showPandanPage($data){
