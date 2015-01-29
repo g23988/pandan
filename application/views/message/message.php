@@ -1,3 +1,11 @@
+<script src="<?=base_url()?>resources/js/Chart.min.js"></script>
+<script>
+//盤點資料
+$(function(){
+	$('#piepandancount').load('<?=base_url()?>index.php/message/showPiePandanCountByUser');
+	
+	});
+</script>
 <div class="container">
       <!-- Main component for a primary marketing message or call to action -->
       <div class="jumbotron">
@@ -16,10 +24,10 @@
             </div>
             <div class="panel panel-default">
                <div class="panel-heading">
-                  <h3 class="panel-title">系統通知</h3>
+                  <h3 class="panel-title">盤點吃派</h3>
                </div>
-               <div class="panel-body">
-                  內容<br />
+               <div id="piepandancount" class="panel-body">
+                  
                   
                </div>
             </div>
@@ -30,7 +38,9 @@
                   <h3 class="panel-title">系統通知</h3>
                </div>
                <div class="panel-body">
-                  內容<br />
+                  <div id="canvas-holder">
+			<canvas id="chart-area" width="300" height="300"/>
+		</div><br />
                   
                </div>
             </div>

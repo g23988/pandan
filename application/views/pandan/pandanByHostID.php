@@ -29,6 +29,10 @@ $(function () {
 	  $.ajax({url:"<?php echo base_url().'index.php/pandan/chageFlag/'.$hostdetail["HostID"].'/2'?>",async:false});
 	  $("#dropdownflag").removeClass('btn-warning btn-success btn-danger').addClass('btn-success').text('Done');
 	  });
+	//修改備註
+	$('#editRemarkbtn').click(function(){
+		$('#editRemark').modal('show');
+		});
 })
 </script>
 <div class="container">
@@ -37,9 +41,18 @@ $(function () {
       <div class="jumbotron">
         <div class="row">
         <div class="col-md-4">
-        	<h2><?php echo $hostdetail["hostname"] ?>附掛作業<br /><small>列出所有歸屬於這台機器的軟體</small></h2>
-			<p class="text-right"><a class="btn btn-default btn-md dropdown-toggle" href="<?=base_url()."index.php/pandan/pandanByHost"?>">回機器列表</a></p>
+        	<h2><?php echo $hostdetail["hostname"] ?> 附掛作業<br /><small>列出所有歸屬於這台機器的軟體</small></h2>
+            <div class="panel panel-default">
+            	<div class="panel-heading">
+                <button id="editRemarkbtn" class="glyphicon glyphicon-pencil btn btn-sm btn-default"></button>
+                </div>
+                <div class="panel-body">
+                <?php echo $hostdetail["Remark"]?>
+                </div>
+            </div>
+            <p class="text-right"><a class="btn btn-default btn-md dropdown-toggle" href="<?=base_url()."index.php/pandan/pandanByHost"?>">回機器列表</a></p>
         </div>
+        
       	<div class="col-md-8">
         	<div class="panel panel-default">
             	<div class="panel-heading">
@@ -49,9 +62,13 @@ $(function () {
                 
                  <table class="table table-striped" style="font-size:100%;">
                     <tbody>
+                    	<tr>
+                            <td style="width:50%;">主機群</td>
+                            <td style="width:50%;"><?php echo $hostdetail["CloudName"] ?></td>
+                        </tr>
 						<tr>
-                            <td style="width:50%;">軟體數量</td>
-                            <td style="width:50%;"><?php echo count($softwarepaths)?></td>
+                            <td>軟體數量</td>
+                            <td><?php echo count($softwarepaths)?></td>
                         </tr>
                         <tr>
                             <td>資料數量</td>
@@ -109,14 +126,90 @@ $(function () {
       </div>
 
 
-      
+      <script>
+	  $(function(){
+		  $('#hostSoftwareDetail div table tbody tr').click(function(){
+			  
+			 
+			  //alert( $(this).children('td:eq(0)').html());
+			  $('#editsoftwaredialog').modal('show');
+			  $('#editsoftwarepathid').val($(this).children('td:eq(0)').html());
+			  $('#editversion').val($(this).children('td:eq(3)').html());
+			  $('#editsettingpath').val($(this).children('td:eq(5)').html());
+			  $('#editlogpath').val($(this).children('td:eq(7)').html());
+			  var org_softwarecloudoption = $(this).children('td:eq(1)').html();
+			  var org_softwareoption = $(this).children('td:eq(2)').html();
+			  var org_settingtype = $(this).children('td:eq(4)').html();
+			  var org_logtype = $(this).children('td:eq(6)').html();
+			  var org_bg = $(this).children('td:eq(9)').html();
+				$("#editsoftwarecloud").children().each(function(){
+						if ($(this).html()==org_softwarecloudoption){
+							$(this).attr("selected", true); 
+							 }
+				});
+				dochangeforedit();
+				$("#editsoftware").children().each(function(){
+						if ($(this).html()==org_softwareoption){
+							$(this).attr("selected", true); 
+							 }
+				});
+				$("#editsettingtype").children().each(function(){
+						if ($(this).html()==org_settingtype){
+							$(this).attr("selected", true); 
+							 }
+				});
+				$("#editlogtype").children().each(function(){
+						if ($(this).html()==org_logtype){
+							$(this).attr("selected", true); 
+							 }
+				});
+				$("#editbg").children().each(function(){
+						if ($(this).html()==org_bg){
+							$(this).attr("selected", true); 
+							 }
+				});
+						
+			});
+			$('#editsoftwarecloud').change(function(){
+			 dochangeforedit();
+		 	}) 
+			
+			 
+			
+		  })
+			//給修改software用
+		function dochangeforedit(){
+			$.ajax({
+					 //+$("#select").find(":selected").val()
+						  url: "<?=base_url()."index.php/pandan/getJsonSoftwareByCloud/"?>"+$("#editsoftwarecloud").find(":selected").val(),
+						  type: "GET",
+						  dataType: "json",
+						  async: false,
+						  contentType: "application/json; charset=utf-8",
+						  success: function(JData) {
+							 
+							$("#editsoftware option").remove();
+							var NumOfJData = JData.length;
+							for (var i = 0; i < NumOfJData; i++) {
+							  //alert(JData[i]["Name"]);   //i=0→Wing; i=1→Wind; i=2→Edge
+							  $("#editsoftware").append($("<option></option>").attr("value", JData[i]["SoftwareID"]).text(JData[i]["Name"]));
+							}
+							//alert("SUCCESS!!!");
+						  },
+						  
+						  error: function() {
+							//alert("ERROR!!!");
+						  }
+					}); 
+			}
+	  </script>
       
       
       
       <div class="row">
       	
  		<div class="col-md-12" id="hostSoftwareDetail">
-         	<div class="panel panel-info">
+         	<div class="panel panel-primary">
             	<div class="panel-heading">
                 <h4><?php echo $hostdetail["hostname"] ?> 中的軟體列表</h4>
                 </div>
@@ -139,6 +232,7 @@ $(function () {
                         <tbody>
                           <?php foreach($softwarepaths as $softwarepath):?>
                             <tr>
+                            	<td style="display:none;"><?php echo $softwarepath['PathID']?></td>
                                 <td><?php echo $softwarepath['SoftwareCloudName']?></td>
                                 <td><?php echo $softwarepath['SoftwareName']?></td>
                                 <td><?php echo $softwarepath['Version']?></td>
@@ -164,12 +258,39 @@ $(function () {
          </div>
       </div>
       
-  
+<script>
+//修改資料
+$(function(){
+	 $('#hostDataDetail div table tbody tr').click(function(){
+		 
+		 $('#editdatapathid').val($(this).children('td:eq(0)').html());
+		 $('#editdatapath').val($(this).children('td:eq(2)').html());
+		 var org_datatypeoption = $(this).children('td:eq(1)').html();
+		 var org_databg = $(this).children('td:eq(4)').html();
+		 $("#editdatatype").children().each(function(){
+						if ($(this).html()==org_datatypeoption){
+							$(this).attr("selected", true); 
+							 }
+				});
+	 	$("#editdatabg").children().each(function(){
+						if ($(this).html()==org_databg){
+							$(this).attr("selected", true); 
+							 }
+				});
+		 $('#editdatadialog').modal('show');
+		 });
+	
+	
+	
+	})
+
+
+</script>
       
 	<div class="row">
       	
- 		<div class="col-md-12" id="hostSoftwareDetail">
-         	<div class="panel panel-info">
+ 		<div class="col-md-12" id="hostDataDetail">
+         	<div class="panel panel-primary">
             	<div class="panel-heading">
                 <h4><?php echo $hostdetail["hostname"] ?> 中的資料列表</h4>
                 </div>
@@ -187,6 +308,7 @@ $(function () {
                         <tbody>
                             <?php foreach($datapaths as $datapath):?>
                             <tr>
+                            	<td style="display:none;"><?php echo $datapath['PathID']?></td>
                                 <td><?php echo $datapath['DatatypeName']?></td>
                                 <td><?php echo $datapath['Datapath']?></td>
                                 <td <?php if($datapath['UserName']==$userinfo['Name']) echo 'style="color:red;"'?>><?php echo $datapath['UserName']?></td>
@@ -370,12 +492,165 @@ function dochange(){
 </div>
 
       
-      
+<!-- 修改備註-->
+<div class="modal fade" id="editRemark" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="exampleModalLabel">修改備註</h4>
+      </div>
+      <div class="modal-body">
+        <?php echo form_open('pandan/changeRemark/'.$hostdetail["HostID"])?>
+          <div class="form-group">
+            <input type="hidden" class="form-control" id="EditRemarkID" name="EditRemarkID" value="<?php echo $hostdetail["HostID"]?>" readonly="readonly">
+            <label for="EditRemarkText" class="control-label">備註:</label>
+            <textarea class="form-control" id="EditRemarkText" name="EditRemarkText" rows="6"><?php echo $hostdetail["Remark"]?></textarea>
+          </div>
+<!--	     <div class="form-group">
+            <label for="message-text" class="control-label">Message:</label>
+            <textarea class="form-control" id="message-text"></textarea>
+          </div>-->
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">關閉</button>
+        <input class="btn btn-primary" type="submit" name="submit" value="送出" >
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
   
       
 
+<!-- 修改software明細-->
+<div class="modal fade" id="editsoftwaredialog" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+      
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="exampleModalLabel">修改軟體資料</h4>
+      </div>
+      <div class="modal-body">
+
+        <div class="row">
+        	<div class="col-md-4">
+            	<?php echo form_open('pandan/editSoftwarePath/'.$hostdetail["HostID"])?>
+                    <input type="hidden" class="form-control" id="editsoftwarepathid" name="editsoftwarepathid" value="">
+                	<input type="hidden" name="hostid" id="hostid" value="<?php echo $hostdetail["HostID"]?>"/>
+                    <input type="hidden" name="hostcloudid" id="hostcloudid" value="<?php echo $hostdetail["CloudID"]?>"/>
+                    <label for="softwarecloud" class="control-label">軟體群:</label><br />
+                    <select  class="form-control" id="editsoftwarecloud" name="softwarecloud">
+                    	<?php foreach($softwareclouds as $item):?>
+                        	<option value="<?php echo $item['CloudID']?>"><?php echo $item['Name']?></option>
+                        <?php endforeach?>
+                    </select>
+                    
+            </div>
+            <div class="col-md-4">
+          	        <label for="software" class="control-label">軟體名稱:</label><br />
+                    <select  class="form-control" id="editsoftware" name="software">
+                    	
+                    </select>
+            
+            </div>
+            <div class="col-md-4">
+          	        
+                    <label for="version" class="control-label">版本:</label>
+         	        <input type="text" class="form-control" id="editversion" name="version">
+            
+            </div>
+        </div>
+        
+         			<hr />
+        <div class="row">
+        	<div class="col-md-6">
+      				 <label for="settingtype" class="control-label">設定檔類型:</label><br />
+                    <select  class="form-control" id="editsettingtype" name="settingtype">
+                    	<?php foreach($settingtypes as $item):?>
+                        <option value="<?php echo $item['SettingTypeID']?>"><?php echo $item['Name']?></option>
+                        <?php endforeach?>
+                    </select>
+                    <label for="settingpath" class="control-label">設定檔Path:</label>
+         	        <input type="text" class="form-control" id="editsettingpath" name="settingpath">
+            </div>
+            <div class="col-md-6">
+      				<label for="logtype" class="control-label">紀錄檔類型:</label><br />
+                    <select  class="form-control" id="editlogtype" name="logtype">
+                    	<?php foreach($logtypes as $item):?>
+                        <option value="<?php echo $item['LogTypeID']?>"><?php echo $item['Name']?></option>
+                        <?php endforeach?>
+                    </select>
+                    <label for="logpath" class="control-label">紀錄檔Path:</label>
+         	        <input type="text" class="form-control" id="editlogpath" name="logpath">
+            </div>
+        </div>
+					<hr />
+        <label for="bg" class="control-label">使用單位:</label><br />
+        <select  class="form-control" id="editbg" name="bg">
+        	<?php foreach($bgs as $item):?>
+				<option value="<?php echo $item['BgID']?>"><?php echo $item['Name']?></option>
+            <?php endforeach?>
+        </select>
+
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">關閉</button>
+        <input class="btn btn-primary" type="submit" name="submit" value="確認修改" >
+        </form>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
 
 
+
+<!-- 修改detail明細-->
+<div class="modal fade" id="editdatadialog" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+     <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="exampleModalLabel">修改資料</h4>
+      </div>
+      <div class="modal-body">
+		<?php echo form_open('pandan/editDataPath/'.$hostdetail["HostID"])?>
+                	<input type="hidden" name="editdatapathid" id="editdatapathid" value=""/>
+                    <input type="hidden" name="hostid" id="hostid" value="<?php echo $hostdetail["HostID"]?>"/>
+                    <input type="hidden" name="hostcloudid" id="hostcloudid" value="<?php echo $hostdetail["CloudID"]?>"/>
+      				 <label for="datatype" class="control-label">資料類型:</label><br />
+                    <select  class="form-control" id="editdatatype" name="datatype">
+                    	<?php foreach($datatypes as $item):?>
+                        <option value="<?php echo $item['DataTypeID']?>"><?php echo $item['Name']?></option>
+                        <?php endforeach?>
+                    </select>
+                    <label for="datapath" class="control-label">資料Path:</label>
+         	        <input type="text" class="form-control" id="editdatapath" name="datapath">
+
+
+					<hr />
+        <label for="bg" class="control-label">使用單位:</label><br />
+        <select  class="form-control" id="editdatabg" name="bg">
+        	<?php foreach($bgs as $item):?>
+				<option value="<?php echo $item['BgID']?>"><?php echo $item['Name']?></option>
+            <?php endforeach?>
+        </select>
+
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">關閉</button>
+        <input class="btn btn-primary" type="submit" name="submit" value="送出" >
+        </form>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
 
 
       

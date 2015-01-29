@@ -8,29 +8,41 @@ class Pandan_model extends CI_Model{
 		$userinfo = $this->session->userdata('userinfo');
 		$username = $this->session->userdata('username');
 		if($username ==='admin'){
-			$query = $this->db->get('host');
+			$this->db->select('host.*,hostcloud.Name as CloudName');
+			$this->db->from('host');
+			$this->db->join('hostcloud','host.CloudID = hostcloud.CloudID');
+			$query = $this->db->get();
 			}
 		else{
-			$this->db->select('*');
+			$this->db->select('host.*,hostcloud.Name as CloudName');
 			$this->db->from('host');
-			$query = $this->db->where('UserID',$userinfo['UserID']);
-			//admin館的就開放大家讀取
-			$query = $this->db->or_where('UserID','1');
+			$this->db->join('hostcloud','host.CloudID = hostcloud.CloudID');
+			$query = $this->db->where('host.UserID',$userinfo['UserID']);
+				//admin館的就開放大家讀取
+			$query = $this->db->or_where('host.UserID','1');
 			$query = $this->db->get();
 			}
 		return $query->result_array();
 		}
 	public function get_wherehosts($hostid){
 		//單純讀取hostid指定的host
-		$this->db->select('*,host.Name as hostname,user.Name as username');
+		$this->db->select('host.*,host.Name as hostname,user.Name as username,hostcloud.Name as CloudName');
 		$this->db->from('host');
 		$this->db->join('user','host.UserID=user.UserID');
+		$this->db->join('hostcloud','host.CloudID = hostcloud.CloudID');
 		$this->db->where('host.HostID',$hostid);
 		$query = $this->db->get();
 		//$query = $this->db->get_where('host',array('HostID'=>$hostid));
 		return $query->row_array();
 		}
 		
+	public function update_hostRemark($hostid){
+		$data = array(
+				'Remark' => $this->input->post('EditRemarkText')
+			);
+		$this->db->update('host',$data,array('HostID'=>$hostid));
+		}
+	
 		
 	public function get_softwarepathByhost($hostid){
 		//透過機器名稱讀取他的軟體列表
@@ -137,6 +149,28 @@ on datapath.KeeperID=user.UserID
 		return $this->db->insert('softwarepath',$data);
 		}
 		
+	public function update_SoftwarePath(){
+		//更新資料by softwarePath
+		$userinfo = $this->session->userdata('userinfo');
+		$data = array(
+			'SoftwareID' => $this->input->post('software'),
+			'SoftwareCloudID' => $this->input->post('softwarecloud'),
+			'Version' => $this->input->post('version'),
+			'SettingTypeID' => $this->input->post('settingtype'),
+			'SettingPath' => $this->input->post('settingpath'),
+			'LogTypeID' => $this->input->post('logtype'),
+			'LogPath' => $this->input->post('logpath'),
+			'BGID' => $this->input->post('bg'),
+			'HostID' => $this->input->post('hostid'),
+			'HostCloudID' => $this->input->post('hostcloudid'),
+			'Modifytime' => date('Y-m-d H:i:s',time()),
+			'Createtime' => date('Y-m-d H:i:s',time()),
+			'KeeperID' => $userinfo['UserID'],
+			'Modifyuser' => $userinfo['UserID']
+		);
+		$this->db->update('softwarepath',$data,array("PathID"=>$this->input->post('editsoftwarepathid')));
+		}	
+	
 	public function insert_DataPath(){
 		//新增資料到datapath
 		$userinfo = $this->session->userdata('userinfo');
@@ -153,6 +187,25 @@ on datapath.KeeperID=user.UserID
 		);
 		return $this->db->insert('datapath',$data);
 		}
+
+	public function update_DataPath(){
+		//更新dataPath
+		$userinfo = $this->session->userdata('userinfo');
+		$data = array(
+			'DataTypeID' => $this->input->post('datatype'),
+			'DataPath' => $this->input->post('datapath'),
+			'BGID' => $this->input->post('bg'),
+			'HostID' => $this->input->post('hostid'),
+			'HostCloudID' => $this->input->post('hostcloudid'),
+			'Modifytime' => date('Y-m-d H:i:s',time()),
+			'Createtime' => date('Y-m-d H:i:s',time()),
+			'KeeperID' => $userinfo['UserID'],
+			'Modifyuser' => $userinfo['UserID']
+		);
+		$this->db->update('datapath',$data,array("PathID"=>$this->input->post('editdatapathid')));
+		}	
+
+
 
 	public function get_softwarecloud(){
 		//讀取softwarecloud
@@ -404,6 +457,8 @@ order by Hostname
 				*/
 				return $query->result_array();
 				}
+			
+			
 			
 	
 	}

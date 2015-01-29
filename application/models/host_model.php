@@ -42,7 +42,7 @@ class Host_model extends CI_Model{
 				'Modifyuser' => $userinfo['UserID']
 			);
 		//檢查是否有重複的值
-		$query = $this->db->get_where('host',array('Name'=>$this->input->post('hostname')));
+		//$query = $this->db->get_where('host',array('Name'=>$this->input->post('hostname')));
 		/*if($query->result_array()!=null){
 			echo "<script type='text/javascript'>alert('機器名稱重複');</script>";
 			}
@@ -76,13 +76,8 @@ class Host_model extends CI_Model{
 		);
 		//檢查是否有重複的值
 		$query = $this->db->get_where('host',array('Name'=>$this->input->post('hostname')));
-		if($query->result_array()!=null){
-			echo "<script type='text/javascript'>alert('機器名稱重複');</script>";
-			}
-		else{
-			$this->db->insert('host',$data);
-			
-			}
+		$this->db->insert('host',$data);
+
 		
 		
 		}
