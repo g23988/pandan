@@ -2,6 +2,10 @@
 <script>
 //盤點資料
 $(function(){
+	//系統通知
+	$('#systemnotice').load('<?=base_url()?>index.php/message/showSysnoticeByUser');
+	
+	//吃派
 	$('#piepandancount').load('<?=base_url()?>index.php/message/showPiePandanCountByUser');
 	
 	});
@@ -17,14 +21,14 @@ $(function(){
                <div class="panel-heading">
                   <h3 class="panel-title">系統通知</h3>
                </div>
-               <div class="panel-body">
-                  內容<br />
+               <div id="systemnotice" class="panel-body">
+                 
                   
                </div>
             </div>
             <div class="panel panel-default">
                <div class="panel-heading">
-                  <h3 class="panel-title">盤點吃派</h3>
+                  <h3 class="panel-title">盤點資料數量 <span id="pandancounttotal"></span></h3>
                </div>
                <div id="piepandancount" class="panel-body">
                   

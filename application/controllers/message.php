@@ -30,6 +30,16 @@ class Message extends CI_Controller{
 		$this->load->view('message/piepandancount');
 		}
 	
+	public function showSysnoticeByUser(){
+		$data['userinfo'] = $this->session->userdata('userinfo');
+		$countFlagNeverResult = $this->message_model->get_pandan_flagNever_count($data['userinfo']['UserID']);
+		$countFlagDNFResult = $this->message_model->get_pandan_flagDNF_count($data['userinfo']['UserID']);
+		$data['count_pandan_nerver'] = $countFlagNeverResult['num'];
+		$data['count_pandan_dnf'] = $countFlagDNFResult['num'];
+		$this->load->view('message/systemnotice',$data);
+		}
+	
+	
 	public function PandanNumByUser(){
 		$result = $this->message_model->get_pandan_count();
 		print(json_encode($result,JSON_UNESCAPED_UNICODE));

@@ -19,11 +19,13 @@ $(function(){
 						});
 				});
 				
+			var total = 0;
 			for(var key in pieDatax){
 				var html = '<span class="glyphicon glyphicon-user" style=" color:' + pieDatax[key]['color'] + '; font-size:20px;"></span>';
 				$('#test').append(html+ ' ' +pieDatax[key]['label'] + ' ' +pieDatax[key]['value']+ '<br>');
+				total += pieDatax[key]['value'];
 				}
-			
+			$('#pandancounttotal').html(total);
 			
 			var ctx = document.getElementById("chart-area").getContext("2d");
 			window.myPie = new Chart(ctx).Pie(pieDatax,{

@@ -27,6 +27,20 @@ GROUP BY a.KeeperID
 ORDER BY value DESC*/
 		
 		}
+	
+	public function get_pandan_flagNever_count($userid){
+		//為盤點的數量
+		$sqlstring = "select count(*) as num from host where userid = ".$userid." and flag = 0";
+		$query = $this->db->query($sqlstring);
+		return $query->row_array();
+		}
+		
+	public function get_pandan_flagDNF_count($userid){
+		//盤點鐘的數量
+		$sqlstring = "select count(*) as num from host where userid = ".$userid." and flag = 1";
+		$query = $this->db->query($sqlstring);
+		return $query->row_array();
+		}
 		/*
 	public function get_bgs(){
 		$query = $this->db->get('bg');
