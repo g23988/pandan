@@ -102,6 +102,7 @@ $(function () {
                         </tr>
                     </tbody>            
                 </table>
+                    
                 <script>
 					$(function(){
 						$('[data-toggle="tooltip"]').tooltip();

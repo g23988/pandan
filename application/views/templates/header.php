@@ -9,6 +9,7 @@
     <link href="<?=base_url()?>resources/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="<?=base_url()?>resources/css/sticky-footer-navbar.css" rel="stylesheet">
+
 	
 </head>
 <body>
@@ -124,3 +125,19 @@
     <!-- <script src="<?//=base_url()?>resources/assets/jquery.js"></script> -->
     <script src="<?=base_url()?>resources/js/jquery.min.js"></script>
     <script src="<?=base_url()?>resources/js/bootstrap.min.js"></script>
+
+<script>
+var isAlt = false;
+//快速進入start偵測 複合健alt + s
+function quickstart(event){
+	 if (event.keyCode == 18) {
+		 isAlt = true;
+		 };
+	 if (event.keyCode == 83 && isAlt) {
+	 	window.location.replace("<?=base_url()."index.php/pandan/pandanByHost"?>");
+	 	};
+	};
+$(function(){
+	$(window).bind('keydown', quickstart);
+	});
+</script>
