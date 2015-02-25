@@ -34,10 +34,10 @@ class Host_model extends CI_Model{
 		$username = $this->session->userdata('username');
 		$userinfo = $this->session->userdata('userinfo');
 		$data = array(
-				'Name' => $this->input->post('hostname'),
-				'CloudID' => $this->input->post('hostcloudid'),
-				'UserID' => $this->input->post('userid'),
-				'Remark' => $this->input->post('remark'),
+				'Name' => htmlentities($this->input->post('hostname')),
+				'CloudID' => htmlentities($this->input->post('hostcloudid')),
+				'UserID' => htmlentities($this->input->post('userid')),
+				'Remark' => htmlentities($this->input->post('remark')),
 				'Modifytime' => date('Y-m-d H:i:s',time()),
 				'Modifyuser' => $userinfo['UserID']
 			);
@@ -66,10 +66,10 @@ class Host_model extends CI_Model{
 		$username = $this->session->userdata('username');
 		$userinfo = $this->session->userdata('userinfo');
 		$data = array(
-			'Name' => $this->input->post('hostname'),
-			'CloudID' => $this->input->post('hostcloudid'),
+			'Name' => htmlentities($this->input->post('hostname')),
+			'CloudID' => htmlentities($this->input->post('hostcloudid')),
 			'UserID' => $userinfo['UserID'],
-			'Remark' => $this->input->post('remark'),
+			'Remark' => htmlentities($this->input->post('remark')),
 			'Modifytime' => date('Y-m-d H:i:s',time()),
 			'Createtime' => date('Y-m-d H:i:s',time()),
 			'Modifyuser' => $userinfo['UserID']

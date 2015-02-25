@@ -10,8 +10,8 @@ class Signin extends CI_Controller{
 		$this->form_validation->set_rules('username','username','required');
 		$this->form_validation->set_rules('password','password','required');
 		
-		$username = $this->input->post('username');
-		$password = $this->input->post('password');
+		$username = htmlentities($this->input->post('username'));
+		$password = htmlentities($this->input->post('password'));
 		
 		if($this->form_validation->run() === false){ 
 			$this->session->sess_destroy(); //destrioy all session

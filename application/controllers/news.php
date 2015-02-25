@@ -28,9 +28,8 @@ class News extends CI_Controller{
 		$this->load->library('form_validation');
 		
 		$data['title'] = 'Create a new item';
-		
 		$this->form_validation->set_rules('title','標題','required');
-		$this->form_validation->set_rules('text','內文','required');
+		$this->form_validation->set_rules('text','內文','trim|required|xss_clean');
 		
 		if($this->form_validation->run() === false){
 			$this->load->view('templates/header',$data);

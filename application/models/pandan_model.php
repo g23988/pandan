@@ -38,7 +38,7 @@ class Pandan_model extends CI_Model{
 		
 	public function update_hostRemark($hostid){
 		$data = array(
-				'Remark' => $this->input->post('EditRemarkText')
+				'Remark' => htmlentities($this->input->post('EditRemarkText'))
 			);
 		$this->db->update('host',$data,array('HostID'=>$hostid));
 		}
@@ -131,16 +131,16 @@ on datapath.KeeperID=user.UserID
 		//新增資料到softwarepath
 		$userinfo = $this->session->userdata('userinfo');
 		$data = array(
-			'SoftwareID' => $this->input->post('software'),
-			'SoftwareCloudID' => $this->input->post('softwarecloud'),
-			'Version' => $this->input->post('version'),
-			'SettingTypeID' => $this->input->post('settingtype'),
-			'SettingPath' => $this->input->post('settingpath'),
-			'LogTypeID' => $this->input->post('logtype'),
-			'LogPath' => $this->input->post('logpath'),
-			'BGID' => $this->input->post('bg'),
-			'HostID' => $this->input->post('hostid'),
-			'HostCloudID' => $this->input->post('hostcloudid'),
+			'SoftwareID' => htmlentities($this->input->post('software')),
+			'SoftwareCloudID' => htmlentities($this->input->post('softwarecloud')),
+			'Version' => htmlentities($this->input->post('version')),
+			'SettingTypeID' => htmlentities($this->input->post('settingtype')),
+			'SettingPath' => htmlentities($this->input->post('settingpath')),
+			'LogTypeID' => htmlentities($this->input->post('logtype')),
+			'LogPath' => htmlentities($this->input->post('logpath')),
+			'BGID' => htmlentities($this->input->post('bg')),
+			'HostID' => htmlentities($this->input->post('hostid')),
+			'HostCloudID' => htmlentities($this->input->post('hostcloudid')),
 			'Modifytime' => date('Y-m-d H:i:s',time()),
 			'Createtime' => date('Y-m-d H:i:s',time()),
 			'KeeperID' => $userinfo['UserID'],
@@ -153,16 +153,16 @@ on datapath.KeeperID=user.UserID
 		//更新資料by softwarePath
 		$userinfo = $this->session->userdata('userinfo');
 		$data = array(
-			'SoftwareID' => $this->input->post('software'),
-			'SoftwareCloudID' => $this->input->post('softwarecloud'),
-			'Version' => $this->input->post('version'),
-			'SettingTypeID' => $this->input->post('settingtype'),
-			'SettingPath' => $this->input->post('settingpath'),
-			'LogTypeID' => $this->input->post('logtype'),
-			'LogPath' => $this->input->post('logpath'),
-			'BGID' => $this->input->post('bg'),
-			'HostID' => $this->input->post('hostid'),
-			'HostCloudID' => $this->input->post('hostcloudid'),
+			'SoftwareID' => htmlentities($this->input->post('software')),
+			'SoftwareCloudID' => htmlentities($this->input->post('softwarecloud')),
+			'Version' => htmlentities($this->input->post('version')),
+			'SettingTypeID' => htmlentities($this->input->post('settingtype')),
+			'SettingPath' => htmlentities($this->input->post('settingpath')),
+			'LogTypeID' => htmlentities($this->input->post('logtype')),
+			'LogPath' => htmlentities($this->input->post('logpath')),
+			'BGID' => htmlentities($this->input->post('bg')),
+			'HostID' => htmlentities($this->input->post('hostid')),
+			'HostCloudID' => htmlentities($this->input->post('hostcloudid')),
 			'Modifytime' => date('Y-m-d H:i:s',time()),
 			'Createtime' => date('Y-m-d H:i:s',time()),
 			'KeeperID' => $userinfo['UserID'],
@@ -175,11 +175,11 @@ on datapath.KeeperID=user.UserID
 		//新增資料到datapath
 		$userinfo = $this->session->userdata('userinfo');
 		$data = array(
-			'DataTypeID' => $this->input->post('datatype'),
-			'DataPath' => $this->input->post('datapath'),
-			'BGID' => $this->input->post('bg'),
-			'HostID' => $this->input->post('hostid'),
-			'HostCloudID' => $this->input->post('hostcloudid'),
+			'DataTypeID' => htmlentities($this->input->post('datatype')),
+			'DataPath' => htmlentities($this->input->post('datapath')),
+			'BGID' => htmlentities($this->input->post('bg')),
+			'HostID' => htmlentities($this->input->post('hostid')),
+			'HostCloudID' => htmlentities($this->input->post('hostcloudid')),
 			'Modifytime' => date('Y-m-d H:i:s',time()),
 			'Createtime' => date('Y-m-d H:i:s',time()),
 			'KeeperID' => $userinfo['UserID'],
@@ -192,11 +192,11 @@ on datapath.KeeperID=user.UserID
 		//更新dataPath
 		$userinfo = $this->session->userdata('userinfo');
 		$data = array(
-			'DataTypeID' => $this->input->post('datatype'),
-			'DataPath' => $this->input->post('datapath'),
-			'BGID' => $this->input->post('bg'),
-			'HostID' => $this->input->post('hostid'),
-			'HostCloudID' => $this->input->post('hostcloudid'),
+			'DataTypeID' => htmlentities($this->input->post('datatype')),
+			'DataPath' => htmlentities($this->input->post('datapath')),
+			'BGID' => htmlentities($this->input->post('bg')),
+			'HostID' => htmlentities($this->input->post('hostid')),
+			'HostCloudID' => htmlentities($this->input->post('hostcloudid')),
 			'Modifytime' => date('Y-m-d H:i:s',time()),
 			'Createtime' => date('Y-m-d H:i:s',time()),
 			'KeeperID' => $userinfo['UserID'],
