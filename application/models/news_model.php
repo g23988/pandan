@@ -16,6 +16,7 @@ class News_model extends CI_Model{
 		//新增公告
 		$username = $this->session->userdata('username');
 		$userinfo = $this->session->userdata('userinfo');
+		$this->form_validation->set_rules('text','text','trim|required|xss_clean');
 		$data = array(
 			'Createuser' => $userinfo['UserID'],
 			'Text' => $this->input->post('text'),
