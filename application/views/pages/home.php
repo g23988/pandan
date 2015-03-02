@@ -22,6 +22,9 @@
                                 <th width="130px">使用者</th>
                                 <th>內容</th>
                                 <th width="200px">時間</th>
+                                <?php if($username ==="admin"):?>
+                                <th width="60px">刪除</th>
+                                <?php endif;?>
                             </tr>
                         </thead>
                         <tbody>
@@ -30,6 +33,9 @@
                                 <td><?php echo $new['Name']?></td>
                                 <td><?php echo $new['Text']?></td>
                                 <td><?php echo $new['Createtime']?></td>
+                                <?php if($username === "admin"):?>
+                                <td><a style="color:red;text-decoration:none;" href="<?=base_url()."index.php/news/delete/".$new['NewsID']?>">&#10006;</a></td>
+                                <?php endif;?>
                             </tr>
                             <?php endforeach;?>
                         </tbody>            

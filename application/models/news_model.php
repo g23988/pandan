@@ -5,7 +5,7 @@ class News_model extends CI_Model{
 		$this->load->database();
 		}
 	public function get_news(){
-		$this->db->select('news.Text as Text,news.Createtime as Createtime,user.Nickname as Name');
+		$this->db->select('news.NewsID,news.Text as Text,news.Createtime as Createtime,user.Nickname as Name');
 		$this->db->from('news');
 		$this->db->join('user','news.Createuser = user.UserID');
 		$this->db->order_by("NewsID", "desc"); 
@@ -24,7 +24,14 @@ class News_model extends CI_Model{
 		return $this->db->insert('news',$data);
 		
 		}
-	
+	public function delete_news($newsid){
+		//刪除公告
+		if($this->session->userdata('username')===false){
+			redirect('signout','refresh');
+			return;
+			}//檢察身分
+		$this->db->delete('news', array('NewsID' => $newsid));
+		}
 	
 	
 	}
