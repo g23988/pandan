@@ -30,11 +30,12 @@ class Clonehost extends CI_Controller{
 		//檢查是否相同名稱
 		$checkSameName = $this->clone_model->checkSameHost($newhostname);
 				//false不存在可使用 true存在回應空
-		if($checkSameName){
+		/*if($checkSameName){
 			print(json_encode(""));
 			}
 		else{print(json_encode($hostinfo,JSON_UNESCAPED_UNICODE));
-			}
+			}*/
+		print(json_encode($hostinfo,JSON_UNESCAPED_UNICODE));
 		}
 	
 	//insert新的host

@@ -125,14 +125,14 @@ $(function(){
 						  dataType: "json",
 						  contentType: "application/json; charset=utf-8",
 						  success: function(JData) {
-							  
+							  /*
 							  if(JData==""||JData==null){
 								  fail("機器名稱重複！");
 								  $("#getOldHostInfoDetail").html('').append('機器名稱重複');
 								  $('#getOldHostInfo').removeClass('panel-default').addClass('panel-danger');
 								  return;
 								  }
-							  else{
+							  else{*/
 								  $("#getOldHostInfoDetail").html('').append('HostID：'+JData["HostID"]);
 								  $("#getOldHostInfoDetail").append('<br>').append('Name：'+JData["Name"]);
 								  //調整viewbar
@@ -142,7 +142,7 @@ $(function(){
 
 								//等待兩秒 執行重塑機器模型
 								setTimeout(function(){resetHostInfo()},1000);
-								  }
+								  //}
 							  
 											  },
 						  error: function() {
