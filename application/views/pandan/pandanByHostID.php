@@ -143,6 +143,7 @@ $(function () {
 			  var org_settingtype = $(this).children('td:eq(4)').html();
 			  var org_logtype = $(this).children('td:eq(6)').html();
 			  var org_bg = $(this).children('td:eq(9)').html();
+			  var org_user = $(this).children('td:eq(8)').html();
 				$("#editsoftwarecloud").children().each(function(){
 						if ($(this).html()==org_softwarecloudoption){
 							$(this).attr("selected", true); 
@@ -166,6 +167,11 @@ $(function () {
 				});
 				$("#editbg").children().each(function(){
 						if ($(this).html()==org_bg){
+							$(this).attr("selected", true); 
+							 }
+				});
+				$("#edituser").children().each(function(){
+						if ($(this).html()==org_user){
 							$(this).attr("selected", true); 
 							 }
 				});
@@ -268,6 +274,7 @@ $(function(){
 		 $('#editdatapath').val($(this).children('td:eq(2)').html());
 		 var org_datatypeoption = $(this).children('td:eq(1)').html();
 		 var org_databg = $(this).children('td:eq(4)').html();
+		 var org_datauser = $(this).children('td:eq(3)').html();
 		 $("#editdatatype").children().each(function(){
 						if ($(this).html()==org_datatypeoption){
 							$(this).attr("selected", true); 
@@ -275,6 +282,11 @@ $(function(){
 				});
 	 	$("#editdatabg").children().each(function(){
 						if ($(this).html()==org_databg){
+							$(this).attr("selected", true); 
+							 }
+				});
+		$("#editdatauser").children().each(function(){
+						if ($(this).html()==org_datauser){
 							$(this).attr("selected", true); 
 							 }
 				});
@@ -589,14 +601,25 @@ function dochange(){
             </div>
         </div>
 					<hr />
+        <div class="row">
+       		 <div class="col-md-6">
         <label for="bg" class="control-label">使用單位:</label><br />
         <select  class="form-control" id="editbg" name="bg">
         	<?php foreach($bgs as $item):?>
 				<option value="<?php echo $item['BgID']?>"><?php echo $item['Name']?></option>
             <?php endforeach?>
         </select>
-
-        
+        	</div>
+            <div class="col-md-6">
+		<label for="user" class="control-label">管理者:</label><br />
+        <select  class="form-control" id="edituser" name="user">
+        	<?php foreach($users as $item):?>
+				<option value="<?php echo $item['UserID']?>"><?php echo $item['Name']?></option>
+            <?php endforeach?>
+        </select>
+        	</div>
+        </div>
+        <!-- row end-->
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">關閉</button>
@@ -634,13 +657,25 @@ function dochange(){
 
 
 					<hr />
+		<div class="row">
+       		 <div class="col-md-6">
         <label for="bg" class="control-label">使用單位:</label><br />
         <select  class="form-control" id="editdatabg" name="bg">
         	<?php foreach($bgs as $item):?>
 				<option value="<?php echo $item['BgID']?>"><?php echo $item['Name']?></option>
             <?php endforeach?>
         </select>
-
+        	</div>
+            <div class="col-md-6">
+		<label for="user" class="control-label">管理者:</label><br />
+        <select  class="form-control" id="editdatauser" name="user">
+        	<?php foreach($users as $item):?>
+				<option value="<?php echo $item['UserID']?>"><?php echo $item['Name']?></option>
+            <?php endforeach?>
+        </select>
+        	</div>
+        </div>
+        <!-- row end-->
         
       </div>
       <div class="modal-footer">

@@ -187,6 +187,7 @@ class Pandan extends CI_Controller{
 		$this->form_validation->set_rules('settingtype','settingtype','required');
 		$this->form_validation->set_rules('logtype','logtype','required');
 		$this->form_validation->set_rules('bg','bg','required');
+		$this->form_validation->set_rules('user','user','required');
 		if($this->form_validation->run() === false){ 
 			$this->showPandanPageHost($data);
 			return;
@@ -205,6 +206,7 @@ class Pandan extends CI_Controller{
 		$this->form_validation->set_rules('hostid','hostid','required');
 		$this->form_validation->set_rules('datatype','datatype','required');
 		$this->form_validation->set_rules('bg','bg','required');
+		$this->form_validation->set_rules('user','user','required');
 		if($this->form_validation->run() === false){ 
 			$this->showPandanPageHost($data);
 			return;
@@ -263,6 +265,7 @@ class Pandan extends CI_Controller{
 			$data['settingtypes'] = $this->pandan_model->get_settingTypeList();
 			$data['logtypes'] = $this->pandan_model->get_logTypeList();
 			$data['bgs'] = $this->pandan_model->get_bgList();
+			$data['users'] = $this->pandan_model->get_userList();
 			$data['datatypes'] = $this->pandan_model->get_dataList();
 			$this->load->view('templates/header',$data);
 			$this->load->view('pandan/pandanByHostID',$data);

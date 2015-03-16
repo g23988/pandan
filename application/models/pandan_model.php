@@ -165,7 +165,7 @@ on datapath.KeeperID=user.UserID
 			'HostCloudID' => htmlentities($this->input->post('hostcloudid')),
 			'Modifytime' => date('Y-m-d H:i:s',time()),
 			'Createtime' => date('Y-m-d H:i:s',time()),
-			'KeeperID' => $userinfo['UserID'],
+			'KeeperID' => htmlentities($this->input->post('user')),
 			'Modifyuser' => $userinfo['UserID']
 		);
 		$this->db->update('softwarepath',$data,array("PathID"=>$this->input->post('editsoftwarepathid')));
@@ -199,7 +199,7 @@ on datapath.KeeperID=user.UserID
 			'HostCloudID' => htmlentities($this->input->post('hostcloudid')),
 			'Modifytime' => date('Y-m-d H:i:s',time()),
 			'Createtime' => date('Y-m-d H:i:s',time()),
-			'KeeperID' => $userinfo['UserID'],
+			'KeeperID' => htmlentities($this->input->post('user')),
 			'Modifyuser' => $userinfo['UserID']
 		);
 		$this->db->update('datapath',$data,array("PathID"=>$this->input->post('editdatapathid')));
@@ -231,6 +231,11 @@ on datapath.KeeperID=user.UserID
 	public function get_bgList(){
 		//讀取bg表
 		$query = $this->db->get('bg');
+		return $query->result_array();
+		}
+	public function get_userList(){
+		//讀取user表
+		$query = $this->db->get('user');
 		return $query->result_array();
 		}
 	public function get_dataList(){
