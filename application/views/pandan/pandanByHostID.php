@@ -66,14 +66,7 @@ $(function () {
                             <td style="width:50%;">主機群</td>
                             <td style="width:50%;"><?php echo $hostdetail["CloudName"] ?></td>
                         </tr>
-						<tr>
-                            <td>軟體數量</td>
-                            <td><?php echo count($softwarepaths)?></td>
-                        </tr>
-                        <tr>
-                            <td>資料數量</td>
-                            <td><?php echo count($datapaths)?></td>
-                        </tr>
+						
                         <tr>
                             <td>保管者</td>
                             <td><?php echo $hostdetail["username"]?></td>
@@ -97,25 +90,43 @@ $(function () {
                             </div>
                             </td>
                         </tr>
+                        
                         <tr>
-                        	<td><input id="cloneHostname" type="text" style="width:100%;display:none;" value="<?php echo $hostdetail["hostname"]."_clone"?>" data-toggle="tooltip" data-placement="bottom" title="輸入新的主機名稱"/></td><td><span id="clonelock" class="btn btn-primary btn-sm glyphicon glyphicon-lock" aria-hidden="true"> 解鎖複製</span><span id="cloneopen" class="btn btn-success btn-sm glyphicon glyphicon-share" aria-hidden="true" style="display:none;" data-toggle="tooltip" data-placement="right" title="複製途中請勿關閉瀏覽器"> 複製</span></td>
-                        </tr>
+                        	<td><input id="cloneHostname" type="text" style="width:100%;display:none;" value="<?php echo $hostdetail["hostname"]."_clone"?>" data-toggle="tooltip" data-placement="bottom" title="輸入新的主機名稱"/></td><td><span id="clonelock" class="btn btn-primary btn-sm glyphicon glyphicon-new-window" aria-hidden="true"> 複製</span><span id="cloneopen" class="btn btn-success btn-sm glyphicon glyphicon-share" aria-hidden="true" style="display:none;" data-toggle="tooltip" data-placement="right" title="複製途中請勿關閉瀏覽器"> 複製</span>
+                        	<span id="translock" class="btn btn-primary btn-sm glyphicon glyphicon-random" aria-hidden="true"> 轉移</span><span id="transopen" class="btn btn-success btn-sm glyphicon glyphicon-gift" aria-hidden="true" style="display:none;"> 轉移</span></td>
+						</tr>
+                        
+                            
+                            
                     </tbody>            
                 </table>
                     
                 <script>
 					$(function(){
 						$('[data-toggle="tooltip"]').tooltip();
-
+						//解鎖複製
 						$('#clonelock').click(function(){
 							$('#clonelock').css('display','none');
 							$('#cloneopen').css('display','');
 							$('#cloneHostname').css('display','');
-
+							$('#translock').css('display','none');
 							});
 						$('#cloneopen').click(function(){
 							var url = '<?=base_url()."index.php/clonehost/showClonePage/"?>'+$('#cloneHostname').val()+'/'+'<?php echo $hostdetail["HostID"]?>';
 							window.location = url;
+							});
+						//解鎖轉移
+						$('#translock').click(function(){
+							var left = $('#transopen').offset().left;
+							//alert(left);
+							//$('#clonelock').css('display','none');
+							$('#translock').css('display','none');
+							$('#transopen').css('display','').animate({"right":left},500);
+							//alert($('#transopen').position().right);
+							//$('#clonelock').css('display','none');
+							});
+						$('#transopen').click(function(){
+							alert('hi');
 							});
 						});
 				</script>
@@ -218,7 +229,7 @@ $(function () {
  		<div class="col-md-12" id="hostSoftwareDetail">
          	<div class="panel panel-primary">
             	<div class="panel-heading">
-                <h4><?php echo $hostdetail["hostname"] ?> 中的軟體列表</h4>
+                <h4><?php echo $hostdetail["hostname"] ?> 中的軟體列表 - 總數：<?php echo count($softwarepaths)?></h4>
                 </div>
                 <div class="panel-body">
                     <table class="table table-hover" style="font-size:100%;">
@@ -305,7 +316,7 @@ $(function(){
  		<div class="col-md-12" id="hostDataDetail">
          	<div class="panel panel-primary">
             	<div class="panel-heading">
-                <h4><?php echo $hostdetail["hostname"] ?> 中的資料列表</h4>
+                <h4><?php echo $hostdetail["hostname"] ?> 中的資料列 - 總數：<?php echo count($datapaths)?></h4>
                 </div>
                 <div class="panel-body">
                     <table class="table table-hover" style="font-size:100%;">
