@@ -234,8 +234,13 @@ on datapath.KeeperID=user.UserID
 		return $query->result_array();
 		}
 	public function get_userList(){
-		//讀取user表
-		$query = $this->db->get('user');
+		//讀取user表 left join usergroup.name.nickname
+		$this->db->select('user.*,usergroup.Name as GroupName,usergroup.Nickname as GroupNickname');
+		$this->db->from('user');
+		$this->db->join('usergroup','user.GroupID = usergroup.GroupID');
+		$this->db->order_by("GroupID", "asc"); 
+		$query = $this->db->get();
+		//$query = $this->db->get('user');
 		return $query->result_array();
 		}
 	public function get_dataList(){
@@ -299,6 +304,33 @@ on datapath.KeeperID=user.UserID
 		$this->db->update('host',$data,array('HostID'=>$hostid));
 		}
 		
+	public function updateHostKeeper($newuser,$hostid){
+		//pandanByHostID 更新keeper 一併轉移keeper擁有的資料
+		//透過指定的host id 更新資料
+		$username = $this->session->userdata('username');
+		$userinfo = $this->session->userdata('userinfo');
+		//更新Host管理者
+		$updatehostdata = array(
+				'UserID' => htmlentities($newuser),
+				'Modifytime' => date('Y-m-d H:i:s',time()),
+				'Modifyuser' => $userinfo['UserID']
+			);
+		$this->db->update('host',$updatehostdata,array('HostID'=>$hostid));
+		//更新DATAPATH KEEPER
+		$updateDataPathData = array(
+				'KeeperID' => htmlentities($newuser),
+				'Modifytime' => date('Y-m-d H:i:s',time()),
+				'Modifyuser' => $userinfo['UserID']
+			);
+		$this->db->update('datapath',$updateDataPathData,array('HostID'=>$hostid,'KeeperID'=>$userinfo['UserID']));
+		//更新SOFTWAREPATH KEEPER
+		$updateSoftwarePathData = array(
+				'KeeperID' => htmlentities($newuser),
+				'Modifytime' => date('Y-m-d H:i:s',time()),
+				'Modifyuser' => $userinfo['UserID']
+			);
+		$this->db->update('softwarepath',$updateSoftwarePathData,array('HostID'=>$hostid,'KeeperID'=>$userinfo['UserID']));
+		}
 		
 		
 		//get path api for softwarepath

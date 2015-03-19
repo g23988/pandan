@@ -147,6 +147,7 @@ class Pandan extends CI_Controller{
 		$data['hostdetail'] = $this->pandan_model->get_wherehosts($HostID);
 		$this->pandan_model->delete_softwarepath($PathID);
 		$this->showPandanPageHost($data);
+		
 		}
 	public function deleteDataPath($HostID,$PathID){
 		//刪除datapath
@@ -234,6 +235,13 @@ class Pandan extends CI_Controller{
 		$data['hostdetail'] = $this->pandan_model->get_wherehosts($HostID);
 		$this->showPandanPageHost($data);
 		
+		}
+	
+	//盤點頁面中轉移保管者
+	public function transkeeper($Newuser,$HostID){
+		$this->pandan_model->updateHostKeeper($Newuser,$HostID);
+		//$this->pandanByHost();
+		redirect('pandan/pandanByHost','refresh');
 		}
 	
 	//頁面中設定flag

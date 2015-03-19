@@ -78,24 +78,44 @@ $(function () {
                             <?php echoLabel($hostdetail["flag"])?>
                             <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownflag">
                               <li role="presentation">
-                                 <a id="chageflag0" role="menuitem" tabindex="-1"><span class="label label-danger" >Never</span></a>
+                                 <a id="chageflag0" role="menuitem" tabindex="-1">未完成 <span class="label label-danger" >Never</span> </a>
                               </li>
                               <li role="presentation">
-                                 <a id="chageflag1" role="menuitem" tabindex="-1"><span class="label label-warning">DNF</span></a>
+                                 <a id="chageflag1" role="menuitem" tabindex="-1">檢查中 <span class="label label-warning">DNF</span></a>
                               </li>
                               <li role="presentation">
-                                 <a id="chageflag2" role="menuitem" tabindex="-1"><span class="label label-success">Done</span></a>
+                                 <a id="chageflag2" role="menuitem" tabindex="-1">已完成 <span class="label label-success">Done</span></a>
                               </li>
                            </ul>
                             </div>
                             </td>
                         </tr>
-                        
+                        <?php if($hostdetail["username"]==$userinfo['Name']||$userinfo['Account']=='admin'):?>
                         <tr>
-                        	<td><input id="cloneHostname" type="text" style="width:100%;display:none;" value="<?php echo $hostdetail["hostname"]."_clone"?>" data-toggle="tooltip" data-placement="bottom" title="輸入新的主機名稱"/></td><td><span id="clonelock" class="btn btn-primary btn-sm glyphicon glyphicon-new-window" aria-hidden="true"> 複製</span><span id="cloneopen" class="btn btn-success btn-sm glyphicon glyphicon-share" aria-hidden="true" style="display:none;" data-toggle="tooltip" data-placement="right" title="複製途中請勿關閉瀏覽器"> 複製</span>
-                        	<span id="translock" class="btn btn-primary btn-sm glyphicon glyphicon-random" aria-hidden="true"> 轉移</span><span id="transopen" class="btn btn-success btn-sm glyphicon glyphicon-gift" aria-hidden="true" style="display:none;"> 轉移</span></td>
+                        	<td>
+                            <input id="cloneHostname" type="text" style="width:100%;display:none;" value="<?php echo $hostdetail["hostname"]."_clone"?>" data-toggle="tooltip" data-placement="bottom" title="輸入新的主機名稱"/>	
+                            <select  class="form-control" id="transUsername" name="user" style="width:100%;display:none;">
+								<?php foreach($users as $item):?>
+                                	<?php if($userinfo['Account']=='admin'):?>
+                                    <option value="<?php echo $item['UserID']?>"><?php echo $item['Name']?> ( <?php echo $item['Nickname']?> )</option>
+                                	<?php elseif($item['UserID']=='1'):?>
+                                    <option value="<?php echo $item['UserID']?>"><?php echo $item['Name']?> ( <?php echo $item['Nickname']?> )</option>
+                                    <?php elseif($item['GroupID']==$userinfo['GroupID']):?>
+                                    <option value="<?php echo $item['UserID']?>"><?php echo $item['Name']?> ( <?php echo $item['Nickname']?> )</option>
+                                    <?php endif;?>
+                                <?php endforeach?>
+                            </select>
+                            <!--
+                            <input id="transUsername" type="text" style="width:100%;display:none;" value="<?php echo $hostdetail["hostname"]."_clone"?>" data-toggle="tooltip" data-placement="bottom" title="輸入新的主機名稱"/>	-->
+                            </td>
+                            <td>
+                            <span id="clonelock" class="btn btn-primary btn-sm glyphicon glyphicon-new-window" aria-hidden="true"  data-toggle="tooltip" data-placement="bottom" title="完整複製整台資料並更名"> 複製</span>
+                            <span id="cloneopen" class="btn btn-success btn-sm glyphicon glyphicon-share" aria-hidden="true" style="display:none;" data-toggle="tooltip" data-placement="right" title="複製途中請勿關閉瀏覽器"> 複製</span>
+                        	<span id="translock" class="btn btn-primary btn-sm glyphicon glyphicon-random" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="轉移給同使用者群內的成員"> 轉移</span>
+                            <span id="transopen" class="btn btn-success btn-sm glyphicon glyphicon-gift" aria-hidden="true" style="display:none;" data-toggle="tooltip" data-placement="right" title="屬於原管理者的資料將會一併轉移"> 轉移</span>
+                            </td>
 						</tr>
-                        
+                        <?php endif;?>
                             
                             
                     </tbody>            
@@ -117,16 +137,17 @@ $(function () {
 							});
 						//解鎖轉移
 						$('#translock').click(function(){
-							var left = $('#transopen').offset().left;
-							//alert(left);
-							//$('#clonelock').css('display','none');
+							//計算移動距離
+							var a = $('#translock').offset().left;
+							var b = $('#clonelock').offset().left;
+							var movelen = a - b;
 							$('#translock').css('display','none');
-							$('#transopen').css('display','').animate({"right":left},500);
-							//alert($('#transopen').position().right);
-							//$('#clonelock').css('display','none');
+							$('#transopen').css('display','').animate({"right":movelen},500);
+							$('#transUsername').css('display','');
 							});
 						$('#transopen').click(function(){
-							alert('hi');
+							var url = '<?=base_url()."index.php/pandan/transkeeper/"?>'+$('#transUsername').val()+'/'+'<?php echo $hostdetail["HostID"]?>';
+							window.location = url;
 							});
 						});
 				</script>
