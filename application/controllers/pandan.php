@@ -204,6 +204,26 @@ class Pandan extends CI_Controller{
 		
 	public function addDataPath($HostID){
 		//新增datapath
+		$username = $this->session->userdata('username');
+		$data['username'] = $username;
+		$data['hostdetail'] = $this->pandan_model->get_wherehosts($HostID);
+		$this->form_validation->set_rules('hostid','hostid','required');
+		$this->form_validation->set_rules('datatype','datatype','required');
+		$this->form_validation->set_rules('bg','bg','required');
+		if($this->form_validation->run() === false){ 
+			$this->showPandanPageHost($data);
+			return;
+		};
+		$this->pandan_model->insert_DataPath();
+		$this->showPandanPageHost($data);
+		
+		}
+		
+	public function editDataPath($HostID){
+		//更新datapath
+		$username = $this->session->userdata('username');
+		$data['username'] = $username;
+		$data['hostdetail'] = $this->pandan_model->get_wherehosts($HostID);
 		$this->form_validation->set_rules('hostid','hostid','required');
 		$this->form_validation->set_rules('datatype','datatype','required');
 		$this->form_validation->set_rules('bg','bg','required');
@@ -212,27 +232,8 @@ class Pandan extends CI_Controller{
 			$this->showPandanPageHost($data);
 			return;
 		};
-		$this->pandan_model->insert_DataPath();
-		$username = $this->session->userdata('username');
-		$data['username'] = $username;
-		$data['hostdetail'] = $this->pandan_model->get_wherehosts($HostID);
-		$this->showPandanPageHost($data);
-		
-		}
-		
-	public function editDataPath($HostID){
-		//更新datapath
-		$this->form_validation->set_rules('hostid','hostid','required');
-		$this->form_validation->set_rules('datatype','datatype','required');
-		$this->form_validation->set_rules('bg','bg','required');
-		if($this->form_validation->run() === false){ 
-			$this->showPandanPageHost($data);
-			return;
-		};
 		$this->pandan_model->update_DataPath();
-		$username = $this->session->userdata('username');
-		$data['username'] = $username;
-		$data['hostdetail'] = $this->pandan_model->get_wherehosts($HostID);
+
 		$this->showPandanPageHost($data);
 		
 		}
