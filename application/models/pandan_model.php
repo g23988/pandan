@@ -495,7 +495,18 @@ order by Hostname
 				return $query->result_array();
 				}
 			
+		//get hostgroup api for hostgroup
+		public function get_hostgroupXML(){
+				//讀取datatype表
+				$query = $this->db->query("select host.Name as HostName,hostcloud.Name as HostcloudName from host
+left join hostcloud on host.CloudID = hostcloud.CloudID
+order by hostcloud.Name ASC,host.Name ASC");
+				
+				return $query->result_array();
+				}
 			
+			
+					
 			
 	
 	}

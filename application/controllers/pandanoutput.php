@@ -264,4 +264,59 @@ class Pandanoutput extends CI_Controller{
 
 		
 		}
+		
+		
+	public function GetAllHostGroupData($user,$pwd){
+		if($user==="root" && $pwd==="Admin123"){
+			$data = $this->pandan_model->get_hostgroupXML();
+			/*foreach($data as $row){
+				echo $row['PathID']."<br>";
+				}*/
+			
+			ob_start();
+			header('Content-Type: text/xml');
+			
+			$dom = new DOMDocument('1.0');
+			$dom->encoding = 'UTF-8';
+			
+			// 建立母節點 $root
+			$root = $dom->createElement('hostclouds');
+			$dom->appendChild($root);
+			
+			// 設定屬性
+			//$root->setAttribute('name', 'xxx');
+			foreach($data as $row){
+				$child = $dom->createElement('hostcloud');
+				$root->appendChild($child);
+
+				//host.name
+				$Hostnametag = $dom->createElement('HostName');
+				$child->appendChild($Hostnametag);
+				$text = $dom->createTextNode($row["HostName"]);
+				$Hostnametag->appendChild($text);
+				//hostcloud.name
+				$Cloudtag = $dom->createElement('HostcloudName');
+				$child->appendChild($Cloudtag);
+				$text = $dom->createTextNode($row["HostcloudName"]);
+				$Cloudtag->appendChild($text);
+				}
+			
+			$xmlStr = $dom->saveXML();
+			echo $xmlStr;
+			
+				
+				
+			}
+		else{
+			redirect('signout','refresh');
+			return;
+			}
+
+
+		
+		}
+		
+		
+		
+		
 }
