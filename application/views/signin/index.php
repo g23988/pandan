@@ -32,7 +32,7 @@
         <div id="loginbox" class="mainbox col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3"> 
               	<h1 class="form-signin-heading">Pandan<br>
         <small>104 系統盤點</small></h1><br>
-        <div class="panel panel-default" >
+        <div class="panel panel-primary" >
             <div class="panel-heading">
                 <div class="panel-title text-center">網域帳密認證</div>
             </div>     
