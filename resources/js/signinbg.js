@@ -40,7 +40,7 @@
 function(){for(var a=0,b=["ms","moz","webkit","o"],c=0;c<b.length&&!window.requestAnimationFrame;++c)window.requestAnimationFrame=window[b[c]+"RequestAnimationFrame"],window.cancelAnimationFrame=window[b[c]+"CancelAnimationFrame"]||window[b[c]+"CancelRequestAnimationFrame"];window.requestAnimationFrame||(window.requestAnimationFrame=function(b){var c=(new Date).getTime(),d=Math.max(0,16-(c-a)),e=window.setTimeout(function(){b(c+d)},d);return a=c+d,e}),window.cancelAnimationFrame||(window.cancelAnimationFrame=function(a){clearTimeout(a)})}();
 
 $(function(){
-    $('#particles').particleground({
+   /* $('#particles').particleground({
         minSpeedX: 0.1,
         maxSpeedX: 0.7,
         minSpeedY: 0.1,
@@ -48,13 +48,13 @@ $(function(){
         directionX: 'center', // 'center', 'left' or 'right'. 'center' = dots bounce off edges
         directionY: 'down', // 'center', 'up' or 'down'. 'center' = dots bounce off edges
         density: 10000, // How many particles will be generated: one particle every n pixels
-        dotColor: '#AAAAAA',
-        lineColor: '#AAAAAA',
+        dotColor: '#DDDDDD',
+        lineColor: '#DDDDDD',
         particleRadius: 7, // Dot size
-        lineWidth: 2,
+        lineWidth: 1,
         curvedLines: true,
         proximity: 100, // How close two dots need to be before they join
         parallax: false
-    });
+    });*/
 
 });

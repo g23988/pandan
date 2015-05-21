@@ -73,5 +73,7 @@ body {
     right: 0;
     position: absolute;
     z-index: -2;
+	-webkit-filter:grayscale(1);
+	-webkit-filter:opacity(.3);
 }
 
