@@ -11,18 +11,19 @@ $(function(){
 </script>
 
 
-<div class="container">
 
-      <!-- Main component for a primary marketing message or call to action -->
-      <div class="jumbotron">
-      	<h2>主機總覽 <small>列出受 <?php echo $username;?> 管理的主機</small></h2>
-      </div>
 
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">主機總覽<small> 列出受 <?php echo $username;?> 管理的主機</small></h1>
+            </div>
+                <!-- /.col-lg-12 -->
+        </div>
       	<div class="row">
         	<div class="col-md-3">
             	<div class="panel panel-default">
             		<div class="panel-heading">
-                    <h3>主機群</h3>
+                    <h4>主機群</h4>
                     </div>
                     <div class="panel-body">
                         <table class="table table-hover" style="font-size:100%;" id="cloudlist">
@@ -45,5 +46,3 @@ $(function(){
                 </div>
             </div>
         </div>
-
-    </div> <!-- /container -->

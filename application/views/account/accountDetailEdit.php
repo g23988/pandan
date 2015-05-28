@@ -11,14 +11,14 @@ $(function(){
 
 	})
 </script>
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">使用者明細 <small>修改 <?php echo $username;?> 的明細</small></h1>
+            </div>
+                <!-- /.col-lg-12 -->
+        </div>
 
 
-<div class="container">
-
-      <!-- Main component for a primary marketing message or call to action -->
-      <div class="jumbotron">
-      	<h2>使用者明細 <small>修改 <?php echo $username;?> 的明細</small></h2>
-      </div>
       <div class="panel panel-default">
       <div class="panel-body">
            <?php echo form_open('user/UpdateAccountDetail') ?>
@@ -53,4 +53,3 @@ $(function(){
           </form>          
 </div>
 </div>
-    </div> <!-- /container -->

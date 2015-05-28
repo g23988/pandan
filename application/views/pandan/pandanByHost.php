@@ -63,7 +63,6 @@ function echoLabel($flag){
 ?>
 
 
-<div class="container">
       <!-- Main component for a primary marketing message or call to action 
       <div class="jumbotron">
       	<h2>記錄新增<br /><small>從機器開始盤點軟體</small></h2>
@@ -653,9 +652,3 @@ function echoLabel($flag){
     </div>-->
 
 
-
-
-
-
-
-    </div> <!-- /container -->

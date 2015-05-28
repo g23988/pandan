@@ -1,9 +1,9 @@
-
-<div class="container">
-      <!-- Main component for a primary marketing message or call to action -->
-      <div class="jumbotron">
-      	<h2>切換身分<br /><small>賦予您天神的力量，化身為任何人</small></h2>
-      </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">切換身分 <small>賦予您天神的力量，化身為任何人量</small></h1>
+            </div>
+                <!-- /.col-lg-12 -->
+        </div>
 <script>
 //切換身分
 $(function(){
@@ -50,7 +50,3 @@ $(function(){
 </div>
 
 
-
-
-
-    </div> <!-- /container -->

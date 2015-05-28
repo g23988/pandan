@@ -1,9 +1,10 @@
-<div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">軟體新增 <small>新增由 <?php echo $username;?> 管理的軟體</small></h1>
+            </div>
+                <!-- /.col-lg-12 -->
+        </div>
 
-      <!-- Main component for a primary marketing message or call to action -->
-      <div class="jumbotron">
-      	<h2>軟體新增 <small>新增由 <?php echo $username;?> 管理的軟體</small></h2>
-      </div>
       <div class="panel panel-default">
       <div class="panel-body">
            <?php echo form_open('software/add') ?>
@@ -45,4 +46,3 @@
           </form>          
 </div>
 </div>
-    </div> <!-- /container -->

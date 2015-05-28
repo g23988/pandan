@@ -35,10 +35,9 @@ $(function () {
 		});
 })
 </script>
-<div class="container">
 
       <!-- Main component for a primary marketing message or call to action -->
-      <div class="jumbotron">
+
         <div class="row">
         <div class="col-md-4">
         	<h2><?php echo $hostdetail["hostname"] ?> 附掛作業<br /><small>列出所有歸屬於這台機器的軟體</small></h2>
@@ -156,7 +155,7 @@ $(function () {
         </div>
       </div>
       
-      </div>
+
 
 
       <script>
@@ -720,7 +719,3 @@ function dochange(){
   </div>
 </div>
 
-
-      
-
-    </div> <!-- /container -->

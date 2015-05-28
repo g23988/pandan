@@ -1,8 +1,11 @@
-<div class="container">
-      <!-- Main component for a primary marketing message or call to action -->
-      <div class="jumbotron">
-      	<h2>管理使用單位<br /><small>管理軟體與設定的終端使用對象</small></h2>
-      </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">管理使用單位 <small>管理軟體與設定的終端使用對象</small></h1>
+            </div>
+                <!-- /.col-lg-12 -->
+        </div>
+
+
       
       <div class="panel panel-default">
       <div class="panel-body">
@@ -66,7 +69,3 @@
 
 
 
-
-
-
-    </div> <!-- /container -->

@@ -1,8 +1,9 @@
-<div class="container">
-      <!-- Main component for a primary marketing message or call to action -->
-      <div class="jumbotron">
-      	<h2>管理主機群<br /><small>管理主機歸納群組</small></h2>
-      </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">管理主機群 <small>管理主機歸納群組</small></h1>
+            </div>
+                <!-- /.col-lg-12 -->
+        </div>
       <div class="panel panel-default">
       <div class="panel-body">
         <table class="table table-hover" style="font-size:112%;">
@@ -68,8 +69,3 @@
 </div>
 
 
-
-
-
-
-    </div> <!-- /container -->
