@@ -34,10 +34,21 @@ ORDER BY value DESC*/
 		$query = $this->db->query($sqlstring);
 		return $query->row_array();
 		}
-		
 	public function get_pandan_flagDNF_count($userid){
 		//盤點鐘的數量
 		$sqlstring = "select count(*) as num from host where userid = ".$userid." and flag = 1";
+		$query = $this->db->query($sqlstring);
+		return $query->row_array();
+		}
+	public function get_pandan_flagDone_count($userid){
+		//盤點鐘的數量
+		$sqlstring = "select count(*) as num from host where userid = ".$userid." and flag = 2";
+		$query = $this->db->query($sqlstring);
+		return $query->row_array();
+		}
+	public function get_pandan_total_count($userid){
+		//機器總數
+		$sqlstring = "select count(*) as num from host where userid = ".$userid."";
 		$query = $this->db->query($sqlstring);
 		return $query->row_array();
 		}

@@ -31,65 +31,67 @@
                     </div>
                 </div>-->
                 <div class="col-lg-4 col-md-6">
-                    <div class="panel panel-green">
+                    <div class="panel panel-red">
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-3">
-                                    <i class="fa fa-tasks fa-5x"></i>
+                                    <i class="fa fa-eye-slash fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">12</div>
-                                    <div>New Tasks!</div>
+                                    <div class="huge"><?php echo $count_pandan_nerver;?></div>
+                                    <div>沒動過！</div>
                                 </div>
                             </div>
                         </div>
                         <a href="#">
                             <div class="panel-footer">
-                                <span class="pull-left">View Details</span>
+                                <span class="pull-left">查看明細</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                 <div class="clearfix"></div>
                             </div>
                         </a>
                     </div>
                 </div>
+                
                 <div class="col-lg-4 col-md-6">
                     <div class="panel panel-yellow">
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-3">
-                                    <i class="fa fa-shopping-cart fa-5x"></i>
+                                    <i class="fa fa-eye fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">124</div>
-                                    <div>New Orders!</div>
+                                    <div class="huge"><?php echo $count_pandan_dnf;?></div>
+                                    <div>盤到一半！</div>
                                 </div>
                             </div>
                         </div>
                         <a href="#">
                             <div class="panel-footer">
-                                <span class="pull-left">View Details</span>
+                                <span class="pull-left">查看明細</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                 <div class="clearfix"></div>
                             </div>
                         </a>
                     </div>
                 </div>
+                
                 <div class="col-lg-4 col-md-6">
-                    <div class="panel panel-red">
+                    <div class="panel panel-green">
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-3">
-                                    <i class="fa fa-support fa-5x"></i>
+                                    <i class="fa fa-book fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">13</div>
-                                    <div>Support Tickets!</div>
+                                    <div class="huge"><?php echo $count_pandan_done;?></div>
+                                    <div>已完成！</div>
                                 </div>
                             </div>
                         </div>
                         <a href="#">
                             <div class="panel-footer">
-                                <span class="pull-left">View Details</span>
+                                <span class="pull-left">查看明細</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                 <div class="clearfix"></div>
                             </div>
@@ -99,34 +101,47 @@
             </div>
             <!-- /.row -->
             <div class="row">
+            	<div class="col-lg-12">
+                		<div class="progress progress-striped active">
+                                        <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="<?php echo $count_pandan_persent;?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $count_pandan_persent;?>%">
+                                            完成 <?php echo $count_pandan_persent;?>%<span class="sr-only"><?php echo $count_pandan_persent;?>% Complete</span>
+                                        </div>
+                        </div>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-lg-8">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <i class="fa fa-bar-chart-o fa-fw"></i> Area Chart Example
-                            
-                            <div class="pull-right">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-                                        Actions
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu pull-right" role="menu">
-                                        <li><a href="#">Action</a>
-                                        </li>
-                                        <li><a href="#">Another action</a>
-                                        </li>
-                                        <li><a href="#">Something else here</a>
-                                        </li>
-                                        <li class="divider"></li>
-                                        <li><a href="#">Separated link</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
+                            <i class="fa fa-newspaper-o fa-fw"></i> 公告訊息
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                            <div id="morris-area-chart"></div>
+                       		<table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th width="130px">使用者</th>
+                                        <th>內容</th>
+                                        <th width="200px">時間</th>
+                                        <?php if($username ==="admin"):?>
+                                        <th width="60px">刪除</th>
+                                        <?php endif;?>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach($news as $new):?>
+                                    <tr>
+                                        <td><?php echo $new['Name']?></td>
+                                        <td><?php echo $new['Text']?></td>
+                                        <td><?php echo $new['Createtime']?></td>
+                                        <?php if($username === "admin"):?>
+                                        <td><a style="color:red;text-decoration:none;" href="<?=base_url()."index.php/news/delete/".$new['NewsID']?>">&#10006;</a></td>
+                                        <?php endif;?>
+                                    </tr>
+                                    <?php endforeach;?>
+                                </tbody>            
+                            </table>
+                            <p class="text-right"><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">+</button></p>
                         </div>
                         <!-- /.panel-body -->
                     </div>
@@ -350,23 +365,23 @@
                 <div class="col-lg-4">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <i class="fa fa-bell fa-fw"></i> Notifications Panel
+                            <i class="fa fa-envelope fa-fw"></i> 新訊息
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                             <div class="list-group">
                                 <a href="#" class="list-group-item">
-                                    <i class="fa fa-comment fa-fw"></i> New Comment
+                                    <i class="fa fa-comment fa-fw"></i> 幹
                                     <span class="pull-right text-muted small"><em>4 minutes ago</em>
                                     </span>
                                 </a>
                                 <a href="#" class="list-group-item">
-                                    <i class="fa fa-twitter fa-fw"></i> 3 New Followers
+                                    <i class="fa fa-twitter fa-fw"></i> 測試2
                                     <span class="pull-right text-muted small"><em>12 minutes ago</em>
                                     </span>
                                 </a>
                                 <a href="#" class="list-group-item">
-                                    <i class="fa fa-envelope fa-fw"></i> Message Sent
+                                    <i class="fa fa-envelope fa-fw"></i> 測試3
                                     <span class="pull-right text-muted small"><em>27 minutes ago</em>
                                     </span>
                                 </a>
