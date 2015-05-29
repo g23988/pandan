@@ -1,44 +1,6 @@
 <script src="<?=base_url()?>resources/js/typeahead.bundle.min.js"></script>
 <script>
 $(function(){
-	//按鍵快速查找
-	function onKeydown(event){
-		var keycode = event.which;
-		$("div.panel-info").removeClass('panel-danger');
-		changeColor(String.fromCharCode(keycode));
-		switch(keycode){
-			//a case
-			case 65:case 66:case 67:case 68:
-				location.href = "#ABCD";
-				break;
-			case 69:case 70:case 71:case 72:
-				location.href = "#EFGH";
-				break;
-			case 73:case 74:case 75:case 76:
-				location.href = "#IJKL";
-				break;
-			case 77:case 78:case 79:case 80:
-				location.href = "#MNOP";
-				break;
-			case 81:case 82:case 83:case 84:
-				location.href = "#QRST";
-				break;
-			case 85:case 86:case 87:case 88:
-				location.href = "#UVWX";
-				break;
-			case 89:case 90:case 90:case 48:case 49:case 50:case 51:case 52:case 53:case 54:case 55:case 56:case 57:
-				location.href = "#YZnum";
-				break;
-			}
-		}
-	function changeColor(keycode){
-		$('#'+keycode).addClass('panel-danger');
-		//特別處理0~9
-		if(keycode==='0'||keycode==='1'||keycode==='2'||keycode==='3'||keycode==='4'||keycode==='5'||keycode==='6'||keycode==='7'||keycode==='8'||keycode==='9')
-			$('#numpanel').addClass('panel-danger');
-		}
-
-	$(window).bind('keydown', onKeydown);
 	//tips
 	$('[data-toggle="tooltip"]').tooltip();
 	});
@@ -68,34 +30,22 @@ function echoLabel($flag){
       	<h2>記錄新增<br /><small>從機器開始盤點軟體</small></h2>
       </div>
 		-->
+     <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">開始</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+   </div>
       <!-- 快速導覽-->
     <div class="row">
-    	<div class="col-md-9">
-    	<div class="panel panel-default">
-        	<div class="panel-heading">
-        		<h3 class="panel-title">機器名稱快速連結 <small>字首導覽，可以直接鍵入字首跳頁</small></h3>
-        	</div>
-        	<div class="panel-body">
-           	    <a class="btn btn-default btn-lg" href="#ABCD" style="width:12%;">A B C D</a>
-                <a class="btn btn-default btn-lg" href="#EFGH" style="width:12%;">E F G H</a>
-                <a class="btn btn-default btn-lg" href="#IJKL" style="width:12%;">I J K L</a>
-                <a class="btn btn-default btn-lg" href="#MNOP" style="width:12%;">M N O P</a>
-                <a class="btn btn-default btn-lg" href="#QRST" style="width:12%;">Q R S T</a>
-                <a class="btn btn-default btn-lg" href="#UVWX" style="width:12%;">U V W X</a>
-                <a class="btn btn-default btn-lg" href="#YZnum" style="width:12%;">Y Z 0~9</a>
-   
-            </div>
-        </div>
-        </div>
         <!--檢是filter按鈕-->
-        <div class="col-md-3">
-        	<!--filter tab-->
-        <ul class="nav nav-tabs" id="filtertab">
-          <li><a href="#filterByFlag" data-toggle="tab">依狀態</a></li>
-          <li><a href="#filterByGroup" data-toggle="tab">依機器群</a></li>
-          <li class="active"><a href="#filterByHostname" data-toggle="tab">依名稱</a></li>
-        </ul>
-        
+        <div class="col-lg-12 col-md-6">
+                <!--filter tab-->
+            <ul class="nav nav-tabs" id="filtertab">
+              <li><a href="#filterByFlag" data-toggle="tab">依狀態</a></li>
+              <li><a href="#filterByGroup" data-toggle="tab">依機器群</a></li>
+              <li class="active"><a href="#filterByHostname" data-toggle="tab">依名稱</a></li>
+            </ul>
         
         <div class="tab-content">
           <div class="tab-pane" id="filterByFlag">
@@ -105,7 +55,7 @@ function echoLabel($flag){
                         <h3 class="panel-title">過濾</h3>
                     </div>-->
                     <div class="panel-body">
-                        <div class="btn-group" data-toggle="buttons-checkbox">
+                        <div class="btn-group" data-toggle="buttons-checkbox" style="width:100%;">
                         <script>
                         $(function(){
                             $('#filterDone').click(function(){
@@ -140,9 +90,9 @@ function echoLabel($flag){
                                 });
                             })
                         </script>
-                        <button id="filterDone" class="btn btn-default active filter" type="button"><span class="label label-success">Done</span></button>
-                        <button id="filterDNF" class="btn btn-default active filter" type="button"><span class="label label-warning">DNF</span></button>
-                        <button id="filterNever" class="btn btn-default active filter" type="button"><span class="label label-danger">Never</span></button>
+                        <button id="filterDone" class="btn btn-default active filter" type="button" style="width:33%;"><span class="label label-success">Done</span></button>
+                        <button id="filterDNF" class="btn btn-default active filter" type="button" style="width:33%;"><span class="label label-warning">DNF</span></button>
+                        <button id="filterNever" class="btn btn-default active filter" type="button" style="width:33%;"><span class="label label-danger">Never</span></button>
                         </div>
                     </div>
                 </div>
@@ -188,7 +138,7 @@ function echoLabel($flag){
           <div class="tab-pane active" id="filterByHostname">
           	<div class="panel panel-primary">
             	<div class="panel-body">
-            	<input id="aheadByHostname" class="typeahead" type="text" style="width:100%;" value=""/>
+            	<input id="aheadByHostname" class="form-control typeahead" type="text" value="" placeholder="Hostname..."/>
                 <link href="<?=base_url()?>resources/css/typeahead.css" rel="stylesheet">
                 <script>
 				var substringMatcher = function(strs) {
@@ -247,9 +197,7 @@ function echoLabel($flag){
     	<div class="panel-body">
 
     <!--切割row ABCD-->
-    <div id="ABCD" class="page-header" >
-   		<h2>A B C D</h2>
-	</div>
+
     <div class="row">
     	<div class="col-md-3">
         	<div class="panel panel-info" id="A">
@@ -304,9 +252,7 @@ function echoLabel($flag){
 <!-- 切割row abcd-->
 
  <!--切割row EFGH-->
-    <div id="EFGH" class="page-header">
-   		<h2>E F G H</h2>
-	</div>
+
     <div class="row">
     	<div class="col-md-3">
         	<div class="panel panel-info" id="E">
@@ -359,9 +305,7 @@ function echoLabel($flag){
     </div>
 <!-- 切割row EFGH-->
  <!--切割row IJKL-->
-    <div id="IJKL" class="page-header">
-   		<h2>I J K L</h2>
-	</div>
+
     <div class="row">
     	<div class="col-md-3">
         	<div class="panel panel-info" id="I">
@@ -414,9 +358,7 @@ function echoLabel($flag){
     </div>
 <!-- 切割row IJKL-->
  <!--切割row MNOP-->
-    <div id="MNOP" class="page-header">
-   		<h2>M N O P</h2>
-	</div>
+
     <div class="row">
     	<div class="col-md-3">
         	<div class="panel panel-info" id="M">
@@ -469,9 +411,7 @@ function echoLabel($flag){
     </div>
 <!-- 切割row MNOP-->
  <!--切割row QRST-->
-    <div id="QRST" class="page-header">
-   		<h2>Q R S T</h2>
-	</div>
+
     <div class="row">
     	<div class="col-md-3">
         	<div class="panel panel-info" id="Q">
@@ -524,9 +464,7 @@ function echoLabel($flag){
     </div>
 <!-- 切割row QRST-->
  <!--切割row UVWX-->
-    <div id="UVWX" class="page-header">
-   		<h2>U V W X</h2>
-	</div>
+
     <div id="UVWX" class="row">
     	<div class="col-md-3">
         	<div class="panel panel-info" id="U">
@@ -579,9 +517,7 @@ function echoLabel($flag){
     </div>
 <!-- 切割row UVWX-->
  <!--切割row YZ-->
-    <div id="YZnum" class="page-header">
-   		<h2>Y Z 0~9</h2>
-	</div>
+
     <div class="row">
     	<div class="col-md-3">
         	<div class="panel panel-info" id="Y">

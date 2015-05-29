@@ -37,10 +37,14 @@ $(function () {
 </script>
 
       <!-- Main component for a primary marketing message or call to action -->
-
+     <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header"><?php echo $hostdetail["hostname"] ?> </h1>
+                </div>
+                <!-- /.col-lg-12 -->
+ 	  </div>
         <div class="row">
         <div class="col-md-4">
-        	<h2><?php echo $hostdetail["hostname"] ?> 附掛作業<br /><small>列出所有歸屬於這台機器的軟體</small></h2>
             <div class="panel panel-default">
             	<div class="panel-heading">
                 <button id="editRemarkbtn" class="glyphicon glyphicon-pencil btn btn-sm btn-default"></button>
@@ -49,13 +53,14 @@ $(function () {
                 <?php echo $hostdetail["Remark"]?>
                 </div>
             </div>
-            <p class="text-right"><a class="btn btn-default btn-md dropdown-toggle" href="<?=base_url()."index.php/pandan/pandanByHost"?>">回機器列表</a></p>
+            <p class="pull-left"><a class="btn btn-default btn-md dropdown-toggle" href="<?=base_url()."index.php/pandan/view/".$hostdetail["HostID"]?>">刷新此面</a></p>
+            <p class="pull-right"><a class="btn btn-default btn-md dropdown-toggle" href="<?=base_url()."index.php/pandan/pandanByHost"?>">回機器列表</a></p>
         </div>
         
       	<div class="col-md-8">
         	<div class="panel panel-default">
             	<div class="panel-heading">
-                <h4><?php echo $hostdetail["hostname"] ?> 詳細資訊</h4> 
+                <h4>詳細資訊</h4> 
                 </div>
                 <div class="panel-body">
                 
