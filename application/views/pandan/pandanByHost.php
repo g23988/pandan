@@ -138,7 +138,7 @@ function echoLabel($flag){
           <div class="tab-pane active" id="filterByHostname">
           	<div class="panel panel-primary">
             	<div class="panel-body">
-            	<input id="aheadByHostname" class="form-control typeahead" type="text" value="" placeholder="Hostname..."/>
+            	<input id="aheadByHostname" class="form-control typeahead" type="text" value="" placeholder="Search..."/>
                 <link href="<?=base_url()?>resources/css/typeahead.css" rel="stylesheet">
                 <script>
 				var substringMatcher = function(strs) {

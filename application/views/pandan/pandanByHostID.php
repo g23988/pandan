@@ -53,7 +53,7 @@ $(function () {
                 <?php echo $hostdetail["Remark"]?>
                 </div>
             </div>
-            <p class="pull-left"><a class="btn btn-default btn-md dropdown-toggle" href="<?=base_url()."index.php/pandan/view/".$hostdetail["HostID"]?>">刷新此面</a></p>
+            <p class="pull-left"><a class="btn btn-default btn-md dropdown-toggle" href="<?=base_url()."index.php/pandan/view/".$hostdetail["HostID"]?>">重整此頁面</a></p>
             <p class="pull-right"><a class="btn btn-default btn-md dropdown-toggle" href="<?=base_url()."index.php/pandan/pandanByHost"?>">回機器列表</a></p>
         </div>
         

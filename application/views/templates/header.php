@@ -206,6 +206,9 @@
                         <li>
                             <a href="index.php/pandan/pandanByHost"><i class="fa fa-power-off fa-fw"></i> 開始</a>
                         </li>
+						<li>
+                            <a href="index.php/pandan/pandanByHost"><i class="fa fa-group fa-fw"></i> 群組共用主機</a>
+                        </li>
                         <li>
                             <a href="#"><i class="fa fa-desktop fa-fw"></i> 主機<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
