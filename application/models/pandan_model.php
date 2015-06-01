@@ -8,19 +8,19 @@ class Pandan_model extends CI_Model{
 		$userinfo = $this->session->userdata('userinfo');
 		$username = $this->session->userdata('username');
 		if($username ==='admin'){
-			$this->db->select('host.*,hostcloud.Name as CloudName');
+			$this->db->select('host.*,hostcloud.Name as CloudName,user.GroupID');
 			$this->db->from('host');
 			$this->db->join('hostcloud','host.CloudID = hostcloud.CloudID');
+			$this->db->join('user','host.UserID = user.UserID');
 			$query = $this->db->get();
 			}
 		else{
-			$this->db->select('host.*,hostcloud.Name as CloudName');
-			$this->db->from('host');
-			$this->db->join('hostcloud','host.CloudID = hostcloud.CloudID');
-			$query = $this->db->where('host.UserID',$userinfo['UserID']);
+			$query = $this->db->query("select host.*,hostcloud.Name as CloudName,user.GroupID from host
+left join hostcloud on host.CloudID = hostcloud.CloudID
+left join user on host.UserID = user.UserID
+WHERE host.UserID in (".$userinfo['UserID'].",1) or (GroupID = ".$userinfo['GroupID']." and Groupuse = 1)");
+				//如果groupuse=1的也拉出來
 				//admin館的就開放大家讀取
-			$query = $this->db->or_where('host.UserID','1');
-			$query = $this->db->get();
 			}
 		return $query->result_array();
 		}
@@ -37,12 +37,19 @@ class Pandan_model extends CI_Model{
 		}
 		
 	public function update_hostRemark($hostid){
+		//頁面中改變remark
 		$data = array(
 				'Remark' => htmlentities($this->input->post('EditRemarkText'))
 			);
 		$this->db->update('host',$data,array('HostID'=>$hostid));
 		}
-	
+	public function update_hostGroupuse($hostid,$groupuse){
+		//頁面中改變groupuse
+		$data = array(
+				'Groupuse' => $groupuse
+			);
+		$this->db->update('host',$data,array('HostID'=>$hostid));
+		}
 		
 	public function get_softwarepathByhost($hostid){
 		//透過機器名稱讀取他的軟體列表

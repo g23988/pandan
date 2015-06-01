@@ -18,8 +18,9 @@ class Pandan extends CI_Controller{
 		//取得資料資訊
 		$this->showPandanPageHost($data);
 		}
-	public function pandanByHost(){
+	public function pandanByHost($filter){
 		//確認身分
+		$data['filter'] = $filter;
 		$username = $this->session->userdata('username');
 		$data['username'] = $username;
 		//取出使用者的host
@@ -242,7 +243,7 @@ class Pandan extends CI_Controller{
 	public function transkeeper($Newuser,$HostID){
 		$this->pandan_model->updateHostKeeper($Newuser,$HostID);
 		//$this->pandanByHost();
-		redirect('pandan/pandanByHost','refresh');
+		redirect('pandan/pandanByHost/all','refresh');
 		}
 	
 	//頁面中設定flag
@@ -257,6 +258,10 @@ class Pandan extends CI_Controller{
 		$data['username'] = $username;
 		$data['hostdetail'] = $this->pandan_model->get_wherehosts($HostID);
 		$this->showPandanPageHost($data);
+		}
+	//頁面中改變groupuse
+	public function changeGroupuse($HostID,$Groupuse){
+			$this->pandan_model->update_hostGroupuse($HostID,$Groupuse);
 		}
 
 	//顯示單元 for view

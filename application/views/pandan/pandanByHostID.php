@@ -54,7 +54,7 @@ $(function () {
                 </div>
             </div>
             <p class="pull-left"><a class="btn btn-default btn-md dropdown-toggle" href="<?=base_url()."index.php/pandan/view/".$hostdetail["HostID"]?>">重整此頁面</a></p>
-            <p class="pull-right"><a class="btn btn-default btn-md dropdown-toggle" href="<?=base_url()."index.php/pandan/pandanByHost"?>">回機器列表</a></p>
+            <p class="pull-right"><a class="btn btn-default btn-md dropdown-toggle" href="<?=base_url()."index.php/pandan/pandanByHost/all"?>">回機器列表</a></p>
         </div>
         
       	<div class="col-md-8">
@@ -95,6 +95,25 @@ $(function () {
                             </td>
                         </tr>
                         <?php if($hostdetail["username"]==$userinfo['Name']||$userinfo['Account']=='admin'):?>
+                        <tr>
+                            <td>群組共用</td>
+                        	<td><input type="checkbox" name="my-checkbox" <?php if($hostdetail['Groupuse'] == '1') echo "checked"?> data-size="small"></td>
+                            	<script>
+								$(function () {
+									$("[name='my-checkbox']").bootstrapSwitch();
+									$("[name='my-checkbox']").on('switchChange.bootstrapSwitch',function(event, state){
+										if(state){
+											$.ajax({url:"<?php echo base_url().'index.php/pandan/changeGroupuse/'.$hostdetail["HostID"].'/1'?>",async:false});
+											console.log(state);
+											}
+										else{
+											$.ajax({url:"<?php echo base_url().'index.php/pandan/changeGroupuse/'.$hostdetail["HostID"].'/0'?>",async:false});		
+											}
+									});
+									
+								})
+								</script>
+                        </tr>
                         <tr>
                         	<td>
                             <input id="cloneHostname" type="text" style="width:100%;display:none;" value="<?php echo $hostdetail["hostname"]."_clone"?>" data-toggle="tooltip" data-placement="bottom" title="輸入新的主機名稱"/>	

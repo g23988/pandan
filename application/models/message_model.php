@@ -52,6 +52,16 @@ ORDER BY value DESC*/
 		$query = $this->db->query($sqlstring);
 		return $query->row_array();
 		}
+	public function get_pandan_Groupuse_count($userid,$usergroupid){
+		//機器總數
+		$sqlstring = "select count(host.HostID) as num
+		from host
+		left join hostcloud on host.CloudID = hostcloud.CloudID
+		left join user on host.UserID = user.UserID where user.GroupID = ".$usergroupid." and host.Groupuse = 1";
+		$query = $this->db->query($sqlstring);
+		return $query->row_array();
+		}
+		
 		/*
 	public function get_bgs(){
 		$query = $this->db->get('bg');

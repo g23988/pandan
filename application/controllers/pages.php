@@ -18,10 +18,12 @@ class Pages extends CI_Controller{
 		$countFlagNeverResult = $this->message_model->get_pandan_flagNever_count($data['userinfo']['UserID']);
 		$countFlagDNFResult = $this->message_model->get_pandan_flagDNF_count($data['userinfo']['UserID']);
 		$countFlagDoneResult = $this->message_model->get_pandan_flagDone_count($data['userinfo']['UserID']);
+		$countFlagGroupuseResult = $this->message_model->get_pandan_Groupuse_count($data['userinfo']['UserID'],$data['userinfo']['GroupID']);
 		$countFlagTotalResult = $this->message_model->get_pandan_total_count($data['userinfo']['UserID']);
 		$data['count_pandan_nerver'] = $countFlagNeverResult['num'];
 		$data['count_pandan_dnf'] = $countFlagDNFResult['num'];
 		$data['count_pandan_done'] = $countFlagDoneResult['num'];
+		$data['count_pandan_groupuse'] = $countFlagGroupuseResult['num'];
 		$data['count_pandan_total'] = $countFlagTotalResult['num'];
 		$data['count_pandan_persent'] = round(($countFlagDoneResult['num'] / $countFlagTotalResult['num']) * 100);
  		$this->load->view('templates/header', $data);

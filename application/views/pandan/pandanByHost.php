@@ -3,12 +3,18 @@
 $(function(){
 	//tips
 	$('[data-toggle="tooltip"]').tooltip();
+
 	});
 
 </script>
 <?php
 //echo host標籤
-function echoLabel($flag){
+function echoLabel($flag,$Groupuse){
+	//如果群組共用就顯示標籤
+	if($Groupuse==1){
+		echo '<span class="label label-primary pull-right groupusebtn"><i class="fa fa-group fa-fw"></i> Group</span><br>';
+	}
+	//添加flag
 	switch($flag){
 		case 0:
 			echo '<span class="label label-danger pull-right neverbtn">Never</span>';
@@ -32,7 +38,7 @@ function echoLabel($flag){
 		-->
      <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">開始</h1>
+                    <h1 class="page-header">開始 <small></small></h1>
                 </div>
                 <!-- /.col-lg-12 -->
    </div>
@@ -88,11 +94,22 @@ function echoLabel($flag){
                                     $('.neverbtn').parent().css('display','none');
                                     }
                                 });
+							$('#filterGroupuse').click(function(){
+                                if(!($('#filterGroupuse').hasClass('active'))){
+                                    //如果被選擇
+                                    $('.groupusebtn').parent().css('display','');
+                                    }
+                                else{
+                                    //沒被選
+                                    $('.groupusebtn').parent().css('display','none');
+                                    }
+                                });
                             })
                         </script>
-                        <button id="filterDone" class="btn btn-default active filter" type="button" style="width:33%;"><span class="label label-success">Done</span></button>
-                        <button id="filterDNF" class="btn btn-default active filter" type="button" style="width:33%;"><span class="label label-warning">DNF</span></button>
-                        <button id="filterNever" class="btn btn-default active filter" type="button" style="width:33%;"><span class="label label-danger">Never</span></button>
+                        <button id="filterDone" class="btn btn-default active filter" type="button" style="width:25%;"><span class="label label-success">Done</span></button>
+                        <button id="filterDNF" class="btn btn-default active filter" type="button" style="width:25%;"><span class="label label-warning">DNF</span></button>
+                        <button id="filterNever" class="btn btn-default active filter" type="button" style="width:25%;"><span class="label label-danger">Never</span></button>
+                        <button id="filterGroupuse" class="btn btn-default active filter" type="button" style="width:25%;"><span class="label label-primary"><i class="fa fa-group fa-fw"></i> Group</span></button>
                         </div>
                     </div>
                 </div>
@@ -194,6 +211,9 @@ function echoLabel($flag){
     
     <!-- 大包panel -->
     <div class="panel panel-default">
+    	<div class="panel-heading">
+        	試試 <kbd><kbd>alt</kbd> + <kbd>a</kbd></kbd> , <kbd><kbd>alt</kbd> + <kbd>n</kbd></kbd>
+        </div>
     	<div class="panel-body">
 
     <!--切割row ABCD-->
@@ -206,7 +226,7 @@ function echoLabel($flag){
                </div>
                <div class="panel-body">
 				<?php foreach($ownhost['A'] as $item):?>
-					<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" href="<?=base_url()."index.php/pandan/view/".$item['HostID']?>"><span><?php echo $item['Name']?></span> <?php echoLabel($item['flag']);?><br /></a> 
+					<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" href="<?=base_url()."index.php/pandan/view/".$item['HostID']?>"><span><?php echo $item['Name']?></span> <?php echoLabel($item['flag'],$item['Groupuse']);?><br /></a> 
 				<?php endforeach?>
                </div>
             </div>
@@ -218,7 +238,7 @@ function echoLabel($flag){
                </div>
                <div class="panel-body">
                   <?php foreach($ownhost['B'] as $item):?>
-					<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" href="<?=base_url()."index.php/pandan/view/".$item['HostID']?>"><span><?php echo $item['Name']?></span> <?php echoLabel($item['flag']);?><br /></a> 
+					<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" href="<?=base_url()."index.php/pandan/view/".$item['HostID']?>"><span><?php echo $item['Name']?></span> <?php echoLabel($item['flag'],$item['Groupuse']);?><br /></a> 
 				<?php endforeach?>
                   
                </div>
@@ -231,7 +251,7 @@ function echoLabel($flag){
                </div>
                <div class="panel-body">
                   <?php foreach($ownhost['C'] as $item):?>
-					<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" href="<?=base_url()."index.php/pandan/view/".$item['HostID']?>"><span><?php echo $item['Name']?></span> <?php echoLabel($item['flag']);?><br /></a> 
+					<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" href="<?=base_url()."index.php/pandan/view/".$item['HostID']?>"><span><?php echo $item['Name']?></span> <?php echoLabel($item['flag'],$item['Groupuse']);?><br /></a> 
 				<?php endforeach?>
                </div>
             </div>
@@ -243,7 +263,7 @@ function echoLabel($flag){
                </div>
                <div class="panel-body">
                   <?php foreach($ownhost['D'] as $item):?>
-					<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" href="<?=base_url()."index.php/pandan/view/".$item['HostID']?>"><span><?php echo $item['Name']?></span> <?php echoLabel($item['flag']);?><br /></a> 
+					<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" href="<?=base_url()."index.php/pandan/view/".$item['HostID']?>"><span><?php echo $item['Name']?></span> <?php echoLabel($item['flag'],$item['Groupuse']);?><br /></a> 
 				<?php endforeach?>
                </div>
             </div>
@@ -261,7 +281,7 @@ function echoLabel($flag){
                </div>
                <div class="panel-body">
                   <?php foreach($ownhost['E'] as $item):?>
-					<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" href="<?=base_url()."index.php/pandan/view/".$item['HostID']?>"><span><?php echo $item['Name']?></span> <?php echoLabel($item['flag']);?><br /></a> 
+					<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" href="<?=base_url()."index.php/pandan/view/".$item['HostID']?>"><span><?php echo $item['Name']?></span> <?php echoLabel($item['flag'],$item['Groupuse']);?><br /></a> 
 				<?php endforeach?>
                </div>
             </div>
@@ -273,7 +293,7 @@ function echoLabel($flag){
                </div>
                <div class="panel-body">
                   <?php foreach($ownhost['F'] as $item):?>
-					<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" href="<?=base_url()."index.php/pandan/view/".$item['HostID']?>"><span><?php echo $item['Name']?></span> <?php echoLabel($item['flag']);?><br /></a> 
+					<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" href="<?=base_url()."index.php/pandan/view/".$item['HostID']?>"><span><?php echo $item['Name']?></span> <?php echoLabel($item['flag'],$item['Groupuse']);?><br /></a> 
 				<?php endforeach?>
                </div>
             </div>
@@ -285,7 +305,7 @@ function echoLabel($flag){
                </div>
                <div class="panel-body">
                   <?php foreach($ownhost['G'] as $item):?>
-					<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" href="<?=base_url()."index.php/pandan/view/".$item['HostID']?>"><span><?php echo $item['Name']?></span> <?php echoLabel($item['flag']);?><br /></a> 
+					<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" href="<?=base_url()."index.php/pandan/view/".$item['HostID']?>"><span><?php echo $item['Name']?></span> <?php echoLabel($item['flag'],$item['Groupuse']);?><br /></a> 
 				<?php endforeach?>
                </div>
             </div>
@@ -297,7 +317,7 @@ function echoLabel($flag){
                </div>
                <div class="panel-body">
                   <?php foreach($ownhost['H'] as $item):?>
-					<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" href="<?=base_url()."index.php/pandan/view/".$item['HostID']?>"><span><?php echo $item['Name']?></span> <?php echoLabel($item['flag']);?><br /></a> 
+					<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" href="<?=base_url()."index.php/pandan/view/".$item['HostID']?>"><span><?php echo $item['Name']?></span> <?php echoLabel($item['flag'],$item['Groupuse']);?><br /></a> 
 				<?php endforeach?>
                </div>
             </div>
@@ -314,7 +334,7 @@ function echoLabel($flag){
                </div>
                <div class="panel-body">
                   <?php foreach($ownhost['I'] as $item):?>
-					<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" href="<?=base_url()."index.php/pandan/view/".$item['HostID']?>"><span><?php echo $item['Name']?></span> <?php echoLabel($item['flag']);?><br /></a> 
+					<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" href="<?=base_url()."index.php/pandan/view/".$item['HostID']?>"><span><?php echo $item['Name']?></span> <?php echoLabel($item['flag'],$item['Groupuse']);?><br /></a> 
 				<?php endforeach?>
                </div>
             </div>
@@ -326,7 +346,7 @@ function echoLabel($flag){
                </div>
                <div class="panel-body">
                   <?php foreach($ownhost['J'] as $item):?>
-					<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" href="<?=base_url()."index.php/pandan/view/".$item['HostID']?>"><span><?php echo $item['Name']?></span> <?php echoLabel($item['flag']);?><br /></a> 
+					<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" href="<?=base_url()."index.php/pandan/view/".$item['HostID']?>"><span><?php echo $item['Name']?></span> <?php echoLabel($item['flag'],$item['Groupuse']);?><br /></a> 
 				<?php endforeach?>
                </div>
             </div>
@@ -338,7 +358,7 @@ function echoLabel($flag){
                </div>
                <div class="panel-body">
                   <?php foreach($ownhost['K'] as $item):?>
-					<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" href="<?=base_url()."index.php/pandan/view/".$item['HostID']?>"><span><?php echo $item['Name']?></span> <?php echoLabel($item['flag']);?><br /></a> 
+					<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" href="<?=base_url()."index.php/pandan/view/".$item['HostID']?>"><span><?php echo $item['Name']?></span> <?php echoLabel($item['flag'],$item['Groupuse']);?><br /></a> 
 				<?php endforeach?>
                </div>
             </div>
@@ -350,7 +370,7 @@ function echoLabel($flag){
                </div>
                <div class="panel-body">
                   <?php foreach($ownhost['L'] as $item):?>
-					<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" href="<?=base_url()."index.php/pandan/view/".$item['HostID']?>"><span><?php echo $item['Name']?></span> <?php echoLabel($item['flag']);?><br /></a> 
+					<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" href="<?=base_url()."index.php/pandan/view/".$item['HostID']?>"><span><?php echo $item['Name']?></span> <?php echoLabel($item['flag'],$item['Groupuse']);?><br /></a> 
 				<?php endforeach?>
                </div>
             </div>
@@ -367,7 +387,7 @@ function echoLabel($flag){
                </div>
                <div class="panel-body">
                   <?php foreach($ownhost['M'] as $item):?>
-					<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" href="<?=base_url()."index.php/pandan/view/".$item['HostID']?>"><span><?php echo $item['Name']?></span> <?php echoLabel($item['flag']);?><br /></a> 
+					<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" href="<?=base_url()."index.php/pandan/view/".$item['HostID']?>"><span><?php echo $item['Name']?></span> <?php echoLabel($item['flag'],$item['Groupuse']);?><br /></a> 
 				<?php endforeach?>
                </div>
             </div>
@@ -379,7 +399,7 @@ function echoLabel($flag){
                </div>
                <div class="panel-body">
                   <?php foreach($ownhost['N'] as $item):?>
-					<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" href="<?=base_url()."index.php/pandan/view/".$item['HostID']?>"><span><?php echo $item['Name']?></span> <?php echoLabel($item['flag']);?><br /></a> 
+					<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" href="<?=base_url()."index.php/pandan/view/".$item['HostID']?>"><span><?php echo $item['Name']?></span> <?php echoLabel($item['flag'],$item['Groupuse']);?><br /></a> 
 				<?php endforeach?>
                </div>
             </div>
@@ -391,7 +411,7 @@ function echoLabel($flag){
                </div>
                <div class="panel-body">
                   <?php foreach($ownhost['O'] as $item):?>
-					<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" href="<?=base_url()."index.php/pandan/view/".$item['HostID']?>"><span><?php echo $item['Name']?></span> <?php echoLabel($item['flag']);?><br /></a> 
+					<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" href="<?=base_url()."index.php/pandan/view/".$item['HostID']?>"><span><?php echo $item['Name']?></span> <?php echoLabel($item['flag'],$item['Groupuse']);?><br /></a> 
 				<?php endforeach?>
                </div>
             </div>
@@ -403,7 +423,7 @@ function echoLabel($flag){
                </div>
                <div class="panel-body">
                   <?php foreach($ownhost['P'] as $item):?>
-					<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" href="<?=base_url()."index.php/pandan/view/".$item['HostID']?>"><span><?php echo $item['Name']?></span> <?php echoLabel($item['flag']);?><br /></a> 
+					<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" href="<?=base_url()."index.php/pandan/view/".$item['HostID']?>"><span><?php echo $item['Name']?></span> <?php echoLabel($item['flag'],$item['Groupuse']);?><br /></a> 
 				<?php endforeach?>
                </div>
             </div>
@@ -420,7 +440,7 @@ function echoLabel($flag){
                </div>
                <div class="panel-body">
                   <?php foreach($ownhost['Q'] as $item):?>
-					<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" href="<?=base_url()."index.php/pandan/view/".$item['HostID']?>"><span><?php echo $item['Name']?></span> <?php echoLabel($item['flag']);?><br /></a> 
+					<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" href="<?=base_url()."index.php/pandan/view/".$item['HostID']?>"><span><?php echo $item['Name']?></span> <?php echoLabel($item['flag'],$item['Groupuse']);?><br /></a> 
 				<?php endforeach?>
                </div>
             </div>
@@ -432,7 +452,7 @@ function echoLabel($flag){
                </div>
                <div class="panel-body">
                   <?php foreach($ownhost['R'] as $item):?>
-					<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" href="<?=base_url()."index.php/pandan/view/".$item['HostID']?>"><span><?php echo $item['Name']?></span> <?php echoLabel($item['flag']);?><br /></a> 
+					<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" href="<?=base_url()."index.php/pandan/view/".$item['HostID']?>"><span><?php echo $item['Name']?></span> <?php echoLabel($item['flag'],$item['Groupuse']);?><br /></a> 
 				<?php endforeach?>
                </div>
             </div>
@@ -444,7 +464,7 @@ function echoLabel($flag){
                </div>
                <div class="panel-body">
                   <?php foreach($ownhost['S'] as $item):?>
-					<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" href="<?=base_url()."index.php/pandan/view/".$item['HostID']?>"><span><?php echo $item['Name']?></span> <?php echoLabel($item['flag']);?><br /></a> 
+					<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" href="<?=base_url()."index.php/pandan/view/".$item['HostID']?>"><span><?php echo $item['Name']?></span> <?php echoLabel($item['flag'],$item['Groupuse']);?><br /></a> 
 				<?php endforeach?>
                </div>
             </div>
@@ -456,7 +476,7 @@ function echoLabel($flag){
                </div>
                <div class="panel-body">
                   <?php foreach($ownhost['T'] as $item):?>
-					<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" href="<?=base_url()."index.php/pandan/view/".$item['HostID']?>"><span><?php echo $item['Name']?></span> <?php echoLabel($item['flag']);?><br /></a> 
+					<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" href="<?=base_url()."index.php/pandan/view/".$item['HostID']?>"><span><?php echo $item['Name']?></span> <?php echoLabel($item['flag'],$item['Groupuse']);?><br /></a> 
 				<?php endforeach?>
                </div>
             </div>
@@ -473,7 +493,7 @@ function echoLabel($flag){
                </div>
                <div class="panel-body">
                   <?php foreach($ownhost['U'] as $item):?>
-					<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" href="<?=base_url()."index.php/pandan/view/".$item['HostID']?>"><span><?php echo $item['Name']?></span> <?php echoLabel($item['flag']);?><br /></a> 
+					<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" href="<?=base_url()."index.php/pandan/view/".$item['HostID']?>"><span><?php echo $item['Name']?></span> <?php echoLabel($item['flag'],$item['Groupuse']);?><br /></a> 
 				<?php endforeach?>
                </div>
             </div>
@@ -485,7 +505,7 @@ function echoLabel($flag){
                </div>
                <div class="panel-body">
                   <?php foreach($ownhost['V'] as $item):?>
-					<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" href="<?=base_url()."index.php/pandan/view/".$item['HostID']?>"><span><?php echo $item['Name']?></span> <?php echoLabel($item['flag']);?><br /></a> 
+					<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" href="<?=base_url()."index.php/pandan/view/".$item['HostID']?>"><span><?php echo $item['Name']?></span> <?php echoLabel($item['flag'],$item['Groupuse']);?><br /></a> 
 				<?php endforeach?>
                </div>
             </div>
@@ -497,7 +517,7 @@ function echoLabel($flag){
                </div>
                <div class="panel-body">
                   <?php foreach($ownhost['W'] as $item):?>
-					<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" href="<?=base_url()."index.php/pandan/view/".$item['HostID']?>"><span><?php echo $item['Name']?></span> <?php echoLabel($item['flag']);?><br /></a> 
+					<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" href="<?=base_url()."index.php/pandan/view/".$item['HostID']?>"><span><?php echo $item['Name']?></span> <?php echoLabel($item['flag'],$item['Groupuse']);?><br /></a> 
 				<?php endforeach?>
                </div>
             </div>
@@ -509,7 +529,7 @@ function echoLabel($flag){
                </div>
                <div class="panel-body">
                   <?php foreach($ownhost['X'] as $item):?>
-					<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" href="<?=base_url()."index.php/pandan/view/".$item['HostID']?>"><span><?php echo $item['Name']?></span> <?php echoLabel($item['flag']);?><br /></a> 
+					<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" href="<?=base_url()."index.php/pandan/view/".$item['HostID']?>"><span><?php echo $item['Name']?></span> <?php echoLabel($item['flag'],$item['Groupuse']);?><br /></a> 
 				<?php endforeach?>
                </div>
             </div>
@@ -526,7 +546,7 @@ function echoLabel($flag){
                </div>
                <div class="panel-body">
                   <?php foreach($ownhost['Y'] as $item):?>
-					<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" href="<?=base_url()."index.php/pandan/view/".$item['HostID']?>"><span><?php echo $item['Name']?></span> <?php echoLabel($item['flag']);?><br /></a> 
+					<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" href="<?=base_url()."index.php/pandan/view/".$item['HostID']?>"><span><?php echo $item['Name']?></span> <?php echoLabel($item['flag'],$item['Groupuse']);?><br /></a> 
 				<?php endforeach?>
                </div>
             </div>
@@ -538,7 +558,7 @@ function echoLabel($flag){
                </div>
                <div class="panel-body">
                   <?php foreach($ownhost['Z'] as $item):?>
-					<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" href="<?=base_url()."index.php/pandan/view/".$item['HostID']?>"><span><?php echo $item['Name']?></span> <?php echoLabel($item['flag']);?><br /></a> 
+					<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" href="<?=base_url()."index.php/pandan/view/".$item['HostID']?>"><span><?php echo $item['Name']?></span> <?php echoLabel($item['flag'],$item['Groupuse']);?><br /></a> 
 				<?php endforeach?>
                </div>
             </div>
@@ -550,7 +570,7 @@ function echoLabel($flag){
                </div>
                <div class="panel-body">
                   <?php foreach($ownhost['num'] as $item):?>
-					<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" href="<?=base_url()."index.php/pandan/view/".$item['HostID']?>"><span><?php echo $item['Name']?></span> <?php echoLabel($item['flag']);?><br /></a> 
+					<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" href="<?=base_url()."index.php/pandan/view/".$item['HostID']?>"><span><?php echo $item['Name']?></span> <?php echoLabel($item['flag'],$item['Groupuse']);?><br /></a> 
 				<?php endforeach?>
                </div>
             </div>
@@ -562,7 +582,7 @@ function echoLabel($flag){
                </div>
                <div class="panel-body">
                   <?php foreach($ownhost['other'] as $item):?>
-					<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" href="<?=base_url()."index.php/pandan/view/".$item['HostID']?>"><span><?php echo $item['Name']?></span> <?php echoLabel($item['flag']);?><br /></a> 
+					<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="<?php echo $item['CloudName']?>" hostgroup="<?php echo $item['CloudName']?>" href="<?=base_url()."index.php/pandan/view/".$item['HostID']?>"><span><?php echo $item['Name']?></span> <?php echoLabel($item['flag'],$item['Groupuse']);?><br /></a> 
 				<?php endforeach?>
                </div>
             </div>
@@ -587,4 +607,38 @@ function echoLabel($flag){
         </div>
     </div>-->
 
-
+<script>
+$(function(){
+		//get hostfilter
+		//這邊模擬點擊狀態 做為一個簡單的trigger
+	var urlfilter = "<?php echo $filter;?>";
+	switch(urlfilter){
+		case "done":
+			$('#filterDNF').click();
+			$('#filterNever').click();
+			$('#filterGroupuse').click();
+			break;
+		case "dnf":
+			$('#filterDone').click();
+			$('#filterNever').click();
+			$('#filterGroupuse').click();
+			break;
+		case "never":
+			$('#filterDone').click();
+			$('#filterDNF').click();
+			$('#filterGroupuse').click();
+			break;
+		case "groupuse":
+			$('#filterDone').click();
+			$('#filterDNF').click();
+			$('#filterNever').click();
+			$('#filterGroupuse').click();
+			$('#filterGroupuse').click();
+			break;
+		default:
+			break;
+		}
+	
+	
+	})
+</script>

@@ -23,6 +23,7 @@
     <!--<link href="base_url()resources/css/morris.css" rel="stylesheet">-->
     <!-- Custom Fonts -->
     <link href="<?=base_url()?>resources/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="<?=base_url()?>resources/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css">
     <base href="<?=base_url()?>">
     
 </head>
@@ -41,6 +42,8 @@
     <script src="resources/js/morris-data.js"></script>-->
     <!-- Custom Theme JavaScript -->
     <script src="<?=base_url()?>resources/js/sb-admin-2.js"></script>
+    <!-- get bootstrap-switch.js-->
+    <script src="<?=base_url()?>resources/js/bootstrap-switch.min.js"></script>
     <div id="wrapper">
 
         <!-- Navigation -->
@@ -204,10 +207,7 @@
                             <a href="index.php/pages/view"><i class="fa fa-dashboard fa-fw"></i> 訊息</a>
                         </li>
                         <li>
-                            <a href="index.php/pandan/pandanByHost"><i class="fa fa-power-off fa-fw"></i> 開始</a>
-                        </li>
-						<li>
-                            <a href="index.php/pandan/pandanByHost"><i class="fa fa-group fa-fw"></i> 群組共用主機</a>
+                            <a href="index.php/pandan/pandanByHost/all"><i class="fa fa-power-off fa-fw"></i> 開始</a>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-desktop fa-fw"></i> 主機<span class="fa arrow"></span></a>

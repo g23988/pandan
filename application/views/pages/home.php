@@ -20,7 +20,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
+                        <a href="index.php/pandan/pandanByHost/never">
                             <div class="panel-footer">
                                 <span class="pull-left">查看明細</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -43,7 +43,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
+                        <a href="index.php/pandan/pandanByHost/dnf">
                             <div class="panel-footer">
                                 <span class="pull-left">查看明細</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -66,7 +66,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
+                        <a href="index.php/pandan/pandanByHost/done">
                             <div class="panel-footer">
                                 <span class="pull-left">查看明細</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -85,12 +85,12 @@
                                     <i class="fa fa-group fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">26</div>
+                                    <div class="huge"><?php echo $count_pandan_groupuse;?></div>
                                     <div>群組共用</div>
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
+                        <a href="index.php/pandan/pandanByHost/groupuse">
                             <div class="panel-footer">
                                 <span class="pull-left">查看明細</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
