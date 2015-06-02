@@ -169,7 +169,7 @@ $(function () {
 							$('#transUsername').css('display','');
 							});
 						$('#transopen').click(function(){
-							var url = '<?=base_url()."index.php/pandan/transkeeper/"?>'+$('#transUsername').val()+'/'+'<?php echo $hostdetail["HostID"]?>';
+							var url = '<?=base_url()."index.php/pandan/transkeeper/"?>'+$('#transUsername').val()+'/'+'<?php echo $hostdetail["HostID"]?>/'+'<?php echo $hostdetail["Name"]?>';
 							window.location = url;
 							});
 						});

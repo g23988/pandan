@@ -240,8 +240,12 @@ class Pandan extends CI_Controller{
 		}
 	
 	//盤點頁面中轉移保管者
-	public function transkeeper($Newuser,$HostID){
+	public function transkeeper($Newuser,$HostID,$HostName){
 		$this->pandan_model->updateHostKeeper($Newuser,$HostID);
+		$this->load->model('message_model');
+		//寫訊息給轉移的人
+		$data['userinfo'] = $this->session->userdata('userinfo');
+		$this->message_model->InsertMessage($data['userinfo']['UserID'],$Newuser,'轉移了 '.$HostName." 給您!",'index.php/pandan/view/'.$HostID);
 		//$this->pandanByHost();
 		redirect('pandan/pandanByHost/all','refresh');
 		}

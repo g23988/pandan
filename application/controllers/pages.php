@@ -25,7 +25,13 @@ class Pages extends CI_Controller{
 		$data['count_pandan_done'] = $countFlagDoneResult['num'];
 		$data['count_pandan_groupuse'] = $countFlagGroupuseResult['num'];
 		$data['count_pandan_total'] = $countFlagTotalResult['num'];
-		$data['count_pandan_persent'] = round(($countFlagDoneResult['num'] / $countFlagTotalResult['num']) * 100);
+		//避免total =0 無法運算
+		if($countFlagTotalResult['num'] != 0 ){
+			$data['count_pandan_persent'] = round(($countFlagDoneResult['num'] / $countFlagTotalResult['num']) * 100);
+			}
+		else{
+			$data['count_pandan_persent'] = 0;
+			}
  		$this->load->view('templates/header', $data);
 		$this->load->view('pages/home', $data);
 		$this->load->view('templates/footer', $data);

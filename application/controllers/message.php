@@ -45,6 +45,26 @@ class Message extends CI_Controller{
 		print(json_encode($result,JSON_UNESCAPED_UNICODE));
 		}
 
+	//訊息用json
+	public function UserMessageJson($max){
+		$data['userinfo'] = $this->session->userdata('userinfo');
+		$messages = $this->message_model->get_message_byuser($data['userinfo']['UserID'],$max);
+		print(json_encode($messages,JSON_UNESCAPED_UNICODE));
+		}
+	//header用訊息
+	public function UserMessageHtmlUl($max){
+		$data['userinfo'] = $this->session->userdata('userinfo');
+		$data['messages'] = $this->message_model->get_message_byuser($data['userinfo']['UserID'],$max);
+		$this->load->view('message/messageHtmlUl',$data);
+		}
+	//home用訊息
+	public function UserMessageHtmlHome($max){
+		$data['userinfo'] = $this->session->userdata('userinfo');
+		$data['messages'] = $this->message_model->get_message_byuser($data['userinfo']['UserID'],$max);
+		$this->load->view('message/messageHtmlhome',$data);
+		}
+
+
 	
 	
 }

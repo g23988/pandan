@@ -62,6 +62,15 @@ ORDER BY value DESC*/
 		return $query->row_array();
 		}
 		
+	//找出訊息
+	public function get_message_byuser($userid,$max){
+		$sqlstring = "select message.Text,user.Nickname as 'From',b.Nickname as 'To',message.Link,message.Createtime from message
+left join user on message.From = user.UserID
+left join user as b on message.To = b.UserID where message.To =".$userid." order by message.MessageID DESC limit ".$max;
+		$query = $this->db->query($sqlstring);
+		return $query->result_array();
+		}	
+		
 		/*
 	public function get_bgs(){
 		$query = $this->db->get('bg');
@@ -80,8 +89,22 @@ ORDER BY value DESC*/
 		);
 		return $this->db->insert('bg',$data);
 		
+		}*/
+		
+	//insert訊息
+	public function InsertMessage($from,$to,$message,$link){
+		$data = array(
+			'From' => $from,
+			'To' => $to,
+			'Text' => $message,
+			'Createtime' => date('Y-m-d H:i:s',time()),
+			'Link' => $link
+		);
+		return $this->db->insert('message',$data);
 		}
-	*/
+	
 	}
+	
+
 
 ?>
