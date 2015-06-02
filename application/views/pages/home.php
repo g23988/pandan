@@ -118,9 +118,9 @@
                 <div class="col-lg-8">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <i class="fa fa-newspaper-o fa-fw"></i> 公告訊息
+                            <i class="fa fa-newspaper-o fa-fw"></i> 公告訊息 <div class="pull-right"> <button type="button" class="btn btn-default btn-xs glyphicon glyphicon-pencil" data-toggle="modal" data-target="#myModal"></button></div>
                         </div>
-                        <!-- /.panel-heading -->
+                        <!-- /.panel-heading <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal"> </button>-->
                         <div class="panel-body">
                        		<table class="table table-hover">
                                 <thead>
@@ -146,7 +146,6 @@
                                     <?php endforeach;?>
                                 </tbody>            
                             </table>
-                            <p class="text-right"><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">+</button></p>
                         </div>
                         <!-- /.panel-body -->
                     </div>
@@ -560,4 +559,29 @@
                 <!-- /.col-lg-4 -->
             </div>
             <!-- /.row -->
-        
+
+
+<!--新增公告頁面-->
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+    <?php echo form_open('pages/insert_news')?>
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">新增公告</h4>
+      </div>
+      <div class="modal-body">
+         <div class="form-group" style="font-size:115%;">
+        	 <label for="text" class="control-label">內容：</label>
+            <textarea rows="5" class="form-control" id="text" name="text"></textarea>
+         </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">關閉</button>
+        <input class="btn btn-primary" type="submit" name="submit" value="發布" >
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
