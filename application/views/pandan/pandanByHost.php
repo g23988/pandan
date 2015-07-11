@@ -174,7 +174,7 @@ function echoLabel($flag,$Groupuse){
 				//main 抓取選取的直處發redirect
 				$(function(){
 					var typeaheadarray = [];
-					$('.btn-md[hostgroup] span:even').each(function(index, element) {
+					$('.btn-md[hostgroup] span:not(.label)').each(function(index, element) {
 						typeaheadarray.push($(this).html());
                     	});
 					$('#aheadByHostname').typeahead({
@@ -190,7 +190,7 @@ function echoLabel($flag,$Groupuse){
 					$('#aheadByHostname').focus();
 				});
 				function onSelected($e, datum) {
-					$('.btn-md[hostgroup] span:even').each(function(index, element) {
+					$('.btn-md[hostgroup] span:not(.label)').each(function(index, element) {
                        if($(this).html()===datum.value){
 						   $(this).click();
 						   } 
