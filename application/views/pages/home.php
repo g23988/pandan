@@ -1,7 +1,7 @@
 
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">訊息</h1>
+                    <h1 class="page-header">總覽</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -156,7 +156,7 @@
                 <div class="col-lg-4">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <i class="fa fa-envelope fa-fw"></i> 訊息
+                            <i class="fa fa-envelope fa-fw"></i> 最新五筆訊息
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -164,13 +164,13 @@
                             <script>
 								$(function(){
 									//$('#homemessage').html('asd');
-									$('#homemessage').load('index.php/message/UserMessageHtmlHome/10');
+									$('#homemessage').load('index.php/message/UserMessageHtmlHome/5');
 									});
 							</script>
                                 
                             </div>
                             <!-- /.list-group -->
-                            <a href="#" class="btn btn-default btn-block">全部訊息</a>
+                            <a href="index.php/message/view" class="btn btn-default btn-block">全部訊息</a>
                         </div>
                         <!-- /.panel-body -->
                     </div>

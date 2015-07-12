@@ -13,7 +13,7 @@
 <li class="divider"></li>
 <?php endforeach?>
 <li>
-    <a class="text-center" href="#">
+    <a class="text-center" href="index.php/message/view">
     <strong>全部訊息</strong>
     <i class="fa fa-angle-right"></i>
     </a>

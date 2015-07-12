@@ -3,10 +3,7 @@
 
     </div>
 
-<script>
 
-
-</script>
 <footer class="footer">
 	
 

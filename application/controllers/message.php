@@ -14,12 +14,11 @@ class Message extends CI_Controller{
 		//確認身分
 		$username = $this->session->userdata('username');
 		$data['username'] = $username;
+		$data['userinfo'] = $this->session->userdata('userinfo');
 		$this->showMessagePage($data);
 
 	}
 	public function showMessagePage($data){
-		//$data['bgs'] = $this->bg_model->get_bgs();
-		$data['userinfo'] = $this->session->userdata('userinfo');
 		$this->load->view('templates/header',$data);
 		$this->load->view('message/message',$data);
 		$this->load->view('templates/footer');
@@ -45,10 +44,24 @@ class Message extends CI_Controller{
 		print(json_encode($result,JSON_UNESCAPED_UNICODE));
 		}
 
-	//訊息用json
-	public function UserMessageJson($max){
+	//訊息頁面用json
+	public function UserMessageJson(){
 		$data['userinfo'] = $this->session->userdata('userinfo');
-		$messages = $this->message_model->get_message_byuser($data['userinfo']['UserID'],$max);
+		$message_array = $this->message_model->get_message_byuser_nolimit($data['userinfo']['UserID']);
+		$message2= array();
+		foreach($message_array as $item){
+			$message = array($item['From'],$item['Text'],base_url().$item['Link'],$item['Createtime']);
+			array_push($message2,$message);
+		}
+		/*
+		$message = array("Tiger Nixon",
+      "System Architect",
+      "Edinburgh",
+      "5421",
+      "2011/04/25",
+      "$320,800");*/
+	    //$message2 = array($message,$message);
+		$messages = array("data"=>$message2);
 		print(json_encode($messages,JSON_UNESCAPED_UNICODE));
 		}
 	//header用訊息
@@ -63,7 +76,11 @@ class Message extends CI_Controller{
 		$data['messages'] = $this->message_model->get_message_byuser($data['userinfo']['UserID'],$max);
 		$this->load->view('message/messageHtmlhome',$data);
 		}
-
+	//message頁面用訊息總覽
+	public function showMessageOverview(){
+		$data['userinfo'] = $this->session->userdata('userinfo');
+		$this->load->view('message/messageOverview',$data);
+		}
 
 	
 	

@@ -24,6 +24,9 @@
     <!-- Custom Fonts -->
     <link href="<?=base_url()?>resources/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="<?=base_url()?>resources/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css">
+    <!-- 表格工具css -->
+    <link href="<?=base_url()?>resources/css/dataTables.bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="<?=base_url()?>resources/css/dataTables.responsive.css" rel="stylesheet" type="text/css">
     <base href="<?=base_url()?>">
    
     
@@ -39,6 +42,9 @@
     <script src="<?=base_url()?>resources/js/metisMenu.min.js"></script>
     <!-- 快速鍵js-->
     <script src="<?=base_url()?>resources/js/hotkey.js"></script>
+    <!-- 表格工具js-->
+    <script src="<?=base_url()?>resources/js/jquery.dataTables.min.js"></script>
+    <script src="<?=base_url()?>resources/js/dataTables.bootstrap.min.js"></script>
     <!-- Morris Charts JavaScript -->
     <!--<script src="resources/js/raphael-min.js"></script>
     <script src="resources/js/morris.min.js"></script>
@@ -70,6 +76,7 @@
                     
                     <ul class="dropdown-menu dropdown-messages" id="ulmessage">
                     	<script>
+						//右上角下拉是訊息
 							$(function(){
 								$('#ulmessage').load('index.php/message/UserMessageHtmlUl/3');
 								})
@@ -111,7 +118,10 @@
                             <!-- /input-group -->
                         </li>
                         <li>
-                            <a href="index.php/pages/view"><i class="fa fa-dashboard fa-fw"></i> 訊息</a>
+                            <a href="index.php/pages/view"><i class="fa fa-dashboard fa-fw"></i> 總覽</a>
+                        </li>
+                        <li>
+                            <a href="index.php/message/view"><i class="fa fa-envelope fa-fw"></i> 訊息</a>
                         </li>
                         <li>
                             <a href="index.php/pandan/pandanByHost/all"><i class="fa fa-power-off fa-fw"></i> 開始</a>
