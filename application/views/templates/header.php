@@ -25,6 +25,7 @@
     <link href="<?=base_url()?>resources/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="<?=base_url()?>resources/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css">
     <base href="<?=base_url()?>">
+   
     
 </head>
 <body>
@@ -36,6 +37,8 @@
     <script src="<?=base_url()?>resources/js/bootstrap.min.js"></script>
     <!-- Metis Menu Plugin JavaScript -->
     <script src="<?=base_url()?>resources/js/metisMenu.min.js"></script>
+    <!-- 快速鍵js-->
+    <script src="<?=base_url()?>resources/js/hotkey.js"></script>
     <!-- Morris Charts JavaScript -->
     <!--<script src="resources/js/raphael-min.js"></script>
     <script src="resources/js/morris.min.js"></script>
