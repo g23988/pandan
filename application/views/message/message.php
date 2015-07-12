@@ -4,9 +4,7 @@
 $(function(){
 	//所有訊息總覽
 	$('#messageoverview').load('<?=base_url()?>index.php/message/showMessageOverview');
-	
-	//系統通知
-	$('#systemnotice').load('<?=base_url()?>index.php/message/showSysnoticeByUser');
+
 	
 	//吃派
 	$('#piepandancount').load('<?=base_url()?>index.php/message/showPiePandanCountByUser');
@@ -37,15 +35,6 @@ $(function(){
     
 	<div class="row">
     	<div class="col-md-6">
-        	<div class="panel panel-default">
-               <div class="panel-heading">
-                  <h3 class="panel-title">系統通知</h3>
-               </div>
-               <div id="systemnotice" class="panel-body">
-                 
-                  
-               </div>
-            </div>
             <div class="panel panel-default">
                <div class="panel-heading">
                   <h3 class="panel-title">盤點資料數量 <span id="pandancounttotal"></span></h3>

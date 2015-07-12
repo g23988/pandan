@@ -29,14 +29,15 @@ class Message extends CI_Controller{
 		$this->load->view('message/piepandancount');
 		}
 	
-	public function showSysnoticeByUser(){
+/*	public function showSysnoticeByUser(){
+		盤點數量提醒(下線)
 		$data['userinfo'] = $this->session->userdata('userinfo');
 		$countFlagNeverResult = $this->message_model->get_pandan_flagNever_count($data['userinfo']['UserID']);
 		$countFlagDNFResult = $this->message_model->get_pandan_flagDNF_count($data['userinfo']['UserID']);
 		$data['count_pandan_nerver'] = $countFlagNeverResult['num'];
 		$data['count_pandan_dnf'] = $countFlagDNFResult['num'];
 		$this->load->view('message/systemnotice',$data);
-		}
+		}*/
 	
 	
 	public function PandanNumByUser(){
