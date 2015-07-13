@@ -21,8 +21,9 @@
 </div>
 <script>
 $(document).ready(function() {
+	var baseHref = document.getElementsByTagName('base')[0].href
     $('#messagetable').dataTable( {
-        "ajax": "http://g23988.synology.me/pandan/index.php/message/UserMessageJson"
+        "ajax": baseHref+"index.php/message/UserMessageJson"
     } );
 	$('#messagetable tbody').on( 'click', 'tr td:nth-child(3)', function () {
        document.location.href=$(this).html()
