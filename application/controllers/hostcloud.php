@@ -38,7 +38,7 @@ class Hostcloud extends CI_Controller{
 		$data['username'] = $username;
 		//驗證cloud資料
 		$this->form_validation->set_rules('cloudname','cloudname','required');
-		
+		$this->form_validation->set_rules('location','location','required');
 		if($this->form_validation->run() === false){ 
 			$this->showHostCloudPage($data);
 			return;
@@ -52,6 +52,20 @@ class Hostcloud extends CI_Controller{
 			show_404();
 			}
 		}
+	//修改hostcloud明細
+	public function edit(){
+		$username = $this->session->userdata('username');
+		$data['username'] = $username;
+		if($username ==='admin'){
+			$this->hostcloud_model->update_hostclouds();
+			$this->showHostCloudPage($data);
+			}
+		else{
+			show_404();
+			}
+		
+		}
+
 	//顯示單元 for view
 	public function showHostCloudPage($data){
 			$data['hostclouds'] = $this->hostcloud_model->get_hostclouds();
@@ -60,7 +74,18 @@ class Hostcloud extends CI_Controller{
 			$this->load->view('admin/hostcloud/hostcloudEdit',$data);
 			$this->load->view('templates/footer');
 		}
-	
+		//訊息頁面用json
+	public function HostCloudJson(){
+		$data['userinfo'] = $this->session->userdata('userinfo');
+		$message_array = $this->hostcloud_model->get_hostclouds();
+		$message2= array();
+		foreach($message_array as $item){
+			$message = array($item['CloudID'],$item['Name'],$item['Location'],$item['Description']);
+			array_push($message2,$message);
+		}
+		$messages = array("data"=>$message2);
+		print(json_encode($messages,JSON_UNESCAPED_UNICODE));
+		}
 	
 	}
 		
