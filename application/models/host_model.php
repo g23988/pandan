@@ -11,7 +11,7 @@ class Host_model extends CI_Model{
 	public function get_whereuserid($userid){
 		//給header.php searchinput用的json格式資料
 		$userinfo = $this->session->userdata('userinfo');
-		if($userinfo['UserID'] ===1){
+		if($userinfo['UserID'] ==='1'){
 			//admin可以看到全部
 			$query = $this->db->query("select host.HostID as id,host.Name as name,hostcloud.Name as cloudname from host
 					left join hostcloud on host.CloudID = hostcloud.CloudID
