@@ -27,6 +27,9 @@
     <!-- 表格工具css -->
     <link href="<?=base_url()?>resources/css/dataTables.bootstrap.css" rel="stylesheet" type="text/css">
     <link href="<?=base_url()?>resources/css/dataTables.responsive.css" rel="stylesheet" type="text/css">
+	<!-- twitter typeahead     -->   
+    <link href="<?=base_url()?>resources/css/typeahead.css" rel="stylesheet">
+
     <base href="<?=base_url()?>">
    
     
@@ -53,6 +56,9 @@
     <script src="<?=base_url()?>resources/js/sb-admin-2.js"></script>
     <!-- get bootstrap-switch.js-->
     <script src="<?=base_url()?>resources/js/bootstrap-switch.min.js"></script>
+    <!--twitter typeahead-->
+	<script src="<?=base_url()?>resources/js/bloodhound.js"></script>
+    <script src="<?=base_url()?>resources/js/typeahead.bundle.js"></script>
     <div id="wrapper">
 
         <!-- Navigation -->
@@ -107,14 +113,6 @@
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li class="sidebar-search">
-                            <div class="input-group custom-search-form">
-                                <input type="text" class="form-control" placeholder="Search...">
-                                <span class="input-group-btn">
-                                <button class="btn btn-default" type="button">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </span>
-                            </div>
                             <!-- /input-group -->
                         </li>
                         <li>

@@ -8,6 +8,16 @@ class Host_model extends CI_Model{
 		$query = $this->db->get('host');
 		return $query->result_array();
 		}
+	public function get_whereuserid($userid){
+		//用userid去尋找負責的機器 groupuse還沒做
+		$this->db->select('host.HostID as id,host.Name as name,hostcloud.Name as cloudname');
+		$this->db->from('host');
+		$this->db->join('hostcloud','host.CloudID = hostcloud.CloudID');
+		$this->db->where('UserID',$userid);
+		$query = $this->db->get();
+		return $query->result_array();
+		}
+		
 	public function get_wherehosts($hostid){
 		//單純讀取hostid指定的host
 		$query = $this->db->get_where('host',array('HostID'=>$hostid));

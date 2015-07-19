@@ -1,4 +1,4 @@
-<script src="<?=base_url()?>resources/js/typeahead.bundle.min.js"></script>
+
 <script>
 $(function(){
 	//tips
@@ -155,8 +155,7 @@ function echoLabel($flag,$Groupuse){
           <div class="tab-pane active" id="filterByHostname">
           	<div class="panel panel-primary">
             	<div class="panel-body">
-            	<input id="aheadByHostname" class="form-control typeahead" type="text" value="" placeholder="Search..."/>
-                <link href="<?=base_url()?>resources/css/typeahead.css" rel="stylesheet">
+            	<input id="aheadByHostname" class="form-control" type="text" value="" placeholder="Search..."/>
                 <script>
 				var substringMatcher = function(strs) {
 				  return function findMatches(q, cb) {

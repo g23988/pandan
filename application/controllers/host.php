@@ -93,6 +93,15 @@ class Host extends CI_Controller{
 			}
 		$this->showHostPage($data);
 		}	
+	
+	public function showUserAllHostJson(){
+		//輸出該使用者全部的資料 採用json格式
+		$userinfo = $this->session->userdata('userinfo');
+		$input = $this->host_model->get_whereuserid($userinfo['UserID']);
+
+		print json_encode($input,JSON_UNESCAPED_UNICODE);
+		
+		}
 		
 	
 	//顯示單元 for view
