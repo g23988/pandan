@@ -113,7 +113,8 @@
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li class="sidebar-search">
-                            <!-- /input-group -->
+                                <input id="searchinput" type="text" class="form-control typeahead" placeholder="Search for host..." data-provide="typeahead" autocomplete="off">
+								<script src="<?=base_url()?>resources/js/searchtypeahead.js"></script>
                         </li>
                         <li>
                             <a href="index.php/pages/view"><i class="fa fa-dashboard fa-fw"></i> 總覽</a>

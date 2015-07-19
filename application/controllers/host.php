@@ -97,9 +97,12 @@ class Host extends CI_Controller{
 	public function showUserAllHostJson(){
 		//輸出該使用者全部的資料 採用json格式
 		$userinfo = $this->session->userdata('userinfo');
-		$input = $this->host_model->get_whereuserid($userinfo['UserID']);
-
-		print json_encode($input,JSON_UNESCAPED_UNICODE);
+		$result = $this->host_model->get_whereuserid($userinfo['UserID']);
+		/*
+		foreach($input as $item){
+					$item['name'] = $item['name'] + "\\t" + $item['cloudname'];
+			}-*/
+		print json_encode($result,JSON_UNESCAPED_UNICODE);
 		
 		}
 		

@@ -9,12 +9,25 @@ class Host_model extends CI_Model{
 		return $query->result_array();
 		}
 	public function get_whereuserid($userid){
-		//用userid去尋找負責的機器 groupuse還沒做
-		$this->db->select('host.HostID as id,host.Name as name,hostcloud.Name as cloudname');
-		$this->db->from('host');
-		$this->db->join('hostcloud','host.CloudID = hostcloud.CloudID');
-		$this->db->where('UserID',$userid);
-		$query = $this->db->get();
+		//給header.php searchinput用的json格式資料
+		$userinfo = $this->session->userdata('userinfo');
+		if($userinfo['UserID'] ===1){
+			//admin可以看到全部
+			$query = $this->db->query("select host.HostID as id,host.Name as name,hostcloud.Name as cloudname from host
+					left join hostcloud on host.CloudID = hostcloud.CloudID
+					left join user on host.UserID = user.UserID
+				");
+			}
+		else{
+			//把群組共用的野拉出來 還有admin管理的全域共用也拉出來
+			$query = $this->db->query("select host.HostID as id,host.Name as name,hostcloud.Name as cloudname from host
+					left join hostcloud on host.CloudID = hostcloud.CloudID
+					left join user on host.UserID = user.UserID
+					WHERE host.UserID in (".$userinfo['UserID'].",1) or (GroupID = ".$userinfo['GroupID']." and Groupuse = 1) 
+				");
+			}
+		
+
 		return $query->result_array();
 		}
 		
