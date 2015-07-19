@@ -48,13 +48,12 @@ function echoLabel($flag,$Groupuse){
         <div class="col-lg-12 col-md-6">
                 <!--filter tab-->
             <ul class="nav nav-tabs" id="filtertab">
-              <li><a href="#filterByFlag" data-toggle="tab">依狀態</a></li>
+              <li class="active"><a href="#filterByFlag" data-toggle="tab">依狀態</a></li>
               <li><a href="#filterByGroup" data-toggle="tab">依機器群</a></li>
-              <li class="active"><a href="#filterByHostname" data-toggle="tab">依名稱</a></li>
             </ul>
         
         <div class="tab-content">
-          <div class="tab-pane" id="filterByFlag">
+          <div class="tab-pane active" id="filterByFlag">
           		<!--filter by flag-->
           		<div class="panel panel-primary">
                     <!--<div class="panel-heading">
@@ -152,54 +151,6 @@ function echoLabel($flag,$Groupuse){
                     </div>
                 </div>
 		  </div>
-          <div class="tab-pane active" id="filterByHostname">
-          	<div class="panel panel-primary">
-            	<div class="panel-body">
-            	<input id="aheadByHostname" class="form-control" type="text" value="" placeholder="Search..."/>
-                <script>
-				var substringMatcher = function(strs) {
-				  return function findMatches(q, cb) {
-					var matches, substrRegex;
-					matches = [];
-					substrRegex = new RegExp(q, 'i');
-					$.each(strs, function(i, str) {
-					  if (substrRegex.test(str)) {
-						matches.push({ value: str });
-					  }
-					});
-					cb(matches);
-				  };
-				};
-				//main 抓取選取的直處發redirect
-				$(function(){
-					var typeaheadarray = [];
-					$('.btn-md[hostgroup] span:not(.label)').each(function(index, element) {
-						typeaheadarray.push($(this).html());
-                    	});
-					$('#aheadByHostname').typeahead({
-					  hint: true,
-					  highlight: true,
-					  minLength: 1
-					},
-					{
-					  name: 'typeaheadarray',
-					  displayKey: 'value',
-					  source: substringMatcher(typeaheadarray)
-					}).on('typeahead:selected', onSelected);
-					$('#aheadByHostname').focus();
-				});
-				function onSelected($e, datum) {
-					$('.btn-md[hostgroup] span:not(.label)').each(function(index, element) {
-                       if($(this).html()===datum.value){
-						   $(this).click();
-						   } 
-                    });
-				}
-				</script>
-                </div>
-            </div>
-          </div>
-          <div class="tab-pane" id="settings">...</div>
         </div>
         	<!--filter tab end-->
     	
