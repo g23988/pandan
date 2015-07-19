@@ -29,35 +29,69 @@ ORDER BY value DESC*/
 		}
 	
 	public function get_pandan_flagNever_count($userid){
-		//為盤點的數量
-		$sqlstring = "select count(*) as num from host where userid = ".$userid." and flag = 0";
+		//未盤點的數量
+		$userinfo = $this->session->userdata('userinfo');
+		if($userinfo['UserID']==='1'){
+				$sqlstring = "select count(*) as num from host where flag = 0";
+			}
+		else{
+				$sqlstring = "select count(*) as num from host where userid = ".$userid." and flag = 0";
+			}
 		$query = $this->db->query($sqlstring);
 		return $query->row_array();
 		}
 	public function get_pandan_flagDNF_count($userid){
-		//盤點鐘的數量
-		$sqlstring = "select count(*) as num from host where userid = ".$userid." and flag = 1";
+		//盤點中的數量
+		$userinfo = $this->session->userdata('userinfo');
+		if($userinfo['UserID']==='1'){
+				$sqlstring = "select count(*) as num from host where flag = 1";
+			}
+		else{
+				$sqlstring = "select count(*) as num from host where userid = ".$userid." and flag = 1";
+			}
 		$query = $this->db->query($sqlstring);
 		return $query->row_array();
 		}
 	public function get_pandan_flagDone_count($userid){
-		//盤點鐘的數量
-		$sqlstring = "select count(*) as num from host where userid = ".$userid." and flag = 2";
+		//盤點完的數量
+		$userinfo = $this->session->userdata('userinfo');
+		if($userinfo['UserID']==='1'){
+				$sqlstring = "select count(*) as num from host where flag = 2";
+			}
+		else{
+				$sqlstring = "select count(*) as num from host where userid = ".$userid." and flag = 2";
+			}
 		$query = $this->db->query($sqlstring);
 		return $query->row_array();
 		}
 	public function get_pandan_total_count($userid){
 		//機器總數
-		$sqlstring = "select count(*) as num from host where userid = ".$userid."";
+		$userinfo = $this->session->userdata('userinfo');
+		if($userinfo['UserID']==='1'){
+				$sqlstring = "select count(*) as num from host";
+			}
+		else{
+				$sqlstring = "select count(*) as num from host where userid = ".$userid;
+			}
 		$query = $this->db->query($sqlstring);
 		return $query->row_array();
 		}
 	public function get_pandan_Groupuse_count($userid,$usergroupid){
-		//機器總數
-		$sqlstring = "select count(host.HostID) as num
-		from host
-		left join hostcloud on host.CloudID = hostcloud.CloudID
-		left join user on host.UserID = user.UserID where user.GroupID = ".$usergroupid." and host.Groupuse = 1";
+		//機器總數 for groupuse
+		$userinfo = $this->session->userdata('userinfo');
+		if($userinfo['UserID']==='1'){
+				$sqlstring = "select count(host.HostID) as num
+				from host
+				left join hostcloud on host.CloudID = hostcloud.CloudID
+				left join user on host.UserID = user.UserID where host.Groupuse = 1";
+			}
+		else{
+				$sqlstring = "select count(host.HostID) as num
+				from host
+				left join hostcloud on host.CloudID = hostcloud.CloudID
+				left join user on host.UserID = user.UserID where user.GroupID = ".$usergroupid." and host.Groupuse = 1";
+			}	
+		
 		$query = $this->db->query($sqlstring);
 		return $query->row_array();
 		}
