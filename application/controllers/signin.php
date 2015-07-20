@@ -6,6 +6,8 @@ class Signin extends CI_Controller{
 
 		}
 	public function index(){
+		//讀取全域設定
+		$data['systemsetting'] = $this->Signin_model->loadinfo_systemsetting();
 		//驗證帳號密碼
 		$this->form_validation->set_rules('username','username','required');
 		$this->form_validation->set_rules('password','password','required');
@@ -30,13 +32,13 @@ class Signin extends CI_Controller{
 					}
 				}
 			else{
-				//測試環境不驗證
-				/*
-				if($this->checkLDAP($username,$password)===false){
-					$this->signout();
-					return;
+				 //如果系統使用ldap驗證 則作ldap
+				if($data['systemsetting']['useLDAP']==1){
+						if($this->checkLDAP($username,$password)===false){
+						$this->signout();
+						return;
+						}
 					}
-					*/
 				}
 			
 			//本基驗證
@@ -55,7 +57,9 @@ class Signin extends CI_Controller{
 	//登出
 	public function signout(){
 			$this->session->sess_destroy(); //destrioy all session
-			$this->load->view('signin/index');
+			//讀取全域設定 影片空廠部分
+			$data['systemsetting'] = $this->Signin_model->loadinfo_systemsetting();
+			$this->load->view('signin/index',$data);
 		}
 	
 	//admin切換身分登入
@@ -78,8 +82,9 @@ class Signin extends CI_Controller{
 	
 	//ad驗證功能實作
 	private function checkLDAP($username,$password){
+			$data['systemsetting'] = $this->Signin_model->loadinfo_systemsetting();
 			$checkok = true;
-			$domain = 'e104.com.tw';
+			$domain = $data['systemsetting']['LDAPLocation'];
 			//ldap bind
 			$ldaprdn = $username.'@'.$domain;
 			$ldappass = $password;

@@ -8,7 +8,7 @@ class Host_model extends CI_Model{
 		$query = $this->db->get('host');
 		return $query->result_array();
 		}
-	public function get_whereuserid($userid){
+	public function get_whereuserid_json($userid){
 		//給header.php searchinput用的json格式資料
 		$userinfo = $this->session->userdata('userinfo');
 		if($userinfo['UserID'] ==='1'){
@@ -30,6 +30,9 @@ class Host_model extends CI_Model{
 
 		return $query->result_array();
 		}
+
+
+
 		
 	public function get_wherehosts($hostid){
 		//單純讀取hostid指定的host

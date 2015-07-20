@@ -72,12 +72,24 @@
     </div> <!-- /container -->
 
 <div id="particles"></div>
+<?php
+//影片背景部分
+$mp4 = "";
+$ogv = "";
+$webm = "";
+if ($systemsetting['useSignMV']==1){
+	$mp4 = base_url()."resources/image/104.mp4";
+	$ogv = base_url()."resources/image/104.ogv";
+	$webm = base_url()."resources/image/104.webm";
+	}
+
+?>
 <script>
 $(function(){
 	$('#particles').videoBG({
-	mp4:'<?=base_url()?>resources/image/104.mp4',
-	ogv:'<?=base_url()?>resources/image/104.ogv',
-	webm:'<?=base_url()?>resources/image/104.webm',
+	mp4:'<? echo $mp4;?>',
+	ogv:'<? echo $ogv;?>',
+	webm:'<? echo $webm;?>',
 	poster:'<?=base_url()?>resources/image/tunnel_animation.jpg',
 	scale:true,
 	zIndex:-2

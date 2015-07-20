@@ -9,16 +9,13 @@ $(function(){
 
 
 </script>
+<div class="row">
+	<div class="col-lg-12">
+		<h1 class="page-header">主機總覽<small> 列出受 <?php echo $username;?> 管理的主機</small></h1>
+	</div>
+</div>
 
 
-
-
-        <div class="row">
-            <div class="col-lg-12">
-                <h1 class="page-header">主機總覽<small> 列出受 <?php echo $username;?> 管理的主機</small></h1>
-            </div>
-                <!-- /.col-lg-12 -->
-        </div>
       	<div class="row">
         	<div class="col-md-3">
             	<div class="panel panel-default">

@@ -9,20 +9,7 @@ class Usergroup extends CI_Controller{
 			}
 		$this->load->model('usergroup_model');
 		}
-/*	public function index(){
-		//確認身分
-		$username = $this->session->userdata('username');
-		$data['username'] = $username;
-		if($username === 'admin'){			
-			$this->load->view('templates/header',$data);
-			$this->load->view('userGroup/groupEdit');
-			$this->load->view('templates/footer');
-			}
-		else{
-			$this->load->view('signin/index');
-			}
-		}*/
-	
+
 	public function view(){
 		//確認身分
 		$username = $this->session->userdata('username');

@@ -295,11 +295,6 @@ class Pandan extends CI_Controller{
 	public function getJsonSoftwareByCloud($CloudID){
 			$data['data'] = $this->pandan_model->get_softwareByCloudID($CloudID);
 			print json_encode($data['data']);
-			/*foreach($data['data'] as $item){
-			print json_encode($item);
-			}*/
-
-		
 		}
 	
 	

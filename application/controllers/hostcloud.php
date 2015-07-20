@@ -74,7 +74,7 @@ class Hostcloud extends CI_Controller{
 			$this->load->view('admin/hostcloud/hostcloudEdit',$data);
 			$this->load->view('templates/footer');
 		}
-		//訊息頁面用json
+	//主機群頁面用json
 	public function HostCloudJson(){
 		$data['userinfo'] = $this->session->userdata('userinfo');
 		$message_array = $this->hostcloud_model->get_hostclouds();
