@@ -31,7 +31,7 @@
      <!-- <form class="form-signin">-->
         <div id="loginbox" class="mainbox col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3"> 
               	<h1 class="form-signin-heading">Pandan<br>
-        <small>104 系統盤點</small></h1><br>
+        <small><?php echo $systemsetting['subTitle'];?></small></h1><br>
         <div class="panel panel-primary" >
             <div class="panel-heading">
                 <div class="panel-title text-center">網域帳密認證</div>
@@ -77,6 +77,7 @@
 $mp4 = "";
 $ogv = "";
 $webm = "";
+//讀取系統參數
 if ($systemsetting['useSignMV']==1){
 	$mp4 = base_url()."resources/image/104.mp4";
 	$ogv = base_url()."resources/image/104.ogv";
