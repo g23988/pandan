@@ -199,6 +199,9 @@
 								<li>
                                     <a href="index.php/listadmin/logview"><i class="fa fa-archive fa-fw"></i> 記錄檔類型</a>
                                 </li>
+								<li>
+                                    <a href="index.php/system/view"><i class="fa fa-cog fa-fw"></i> 全域系統設定</a>
+                                </li>
                                 <li>
                                     <a href="#"><i class="fa fa-plug fa-fw"></i> XML API<span class="fa arrow"></span></a>
                                     <ul class="nav nav-third-level">

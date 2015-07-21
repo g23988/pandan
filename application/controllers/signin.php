@@ -3,11 +3,11 @@ class Signin extends CI_Controller{
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('Signin_model');
-
+		$this->load->model('System_model');
 		}
 	public function index(){
 		//讀取全域設定
-		$data['systemsetting'] = $this->Signin_model->loadinfo_systemsetting();
+		$data['systemsetting'] = $this->System_model->loadinfo_systemsetting();
 		//驗證帳號密碼
 		$this->form_validation->set_rules('username','username','required');
 		$this->form_validation->set_rules('password','password','required');
@@ -58,7 +58,7 @@ class Signin extends CI_Controller{
 	public function signout(){
 			$this->session->sess_destroy(); //destrioy all session
 			//讀取全域設定 影片空廠部分
-			$data['systemsetting'] = $this->Signin_model->loadinfo_systemsetting();
+			$data['systemsetting'] = $this->System_model->loadinfo_systemsetting();
 			$this->load->view('signin/index',$data);
 		}
 	
@@ -82,7 +82,7 @@ class Signin extends CI_Controller{
 	
 	//ad驗證功能實作
 	private function checkLDAP($username,$password){
-			$data['systemsetting'] = $this->Signin_model->loadinfo_systemsetting();
+			$data['systemsetting'] = $this->System_model->loadinfo_systemsetting();
 			$checkok = true;
 			$domain = $data['systemsetting']['LDAPLocation'];
 			//ldap bind
