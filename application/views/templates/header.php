@@ -131,9 +131,6 @@
                                 <li>
                                     <a href="index.php/host/view">總覽</a>
                                 </li>
-                                <li>
-                                    <a href="index.php/host/addHostDetail">新增</a>
-                                </li>
                                 <?php if($username==='admin'):?>
                                 <li>
 

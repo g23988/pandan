@@ -16,28 +16,23 @@ class Host extends CI_Controller{
 		$data['username'] = $username;
 		$this->showHostPage($data);
 		}
-	//細查cloud下的host 點選主機群後ajax在右方的頁面
-	public function viewHostCloudDetail($hostCloudID){
-			$data['hostCloudID'] = $hostCloudID;
-			$data['hostcloudDetail'] = $this->host_model->get_wherehostclouds($hostCloudID);
-			$this->load->view('host/hostCloudDetail',$data);
+
+
+		
+	//取得host資訊的json格式
+	public function getJsonHost($hostID){
+			$data['data'] = $this->host_model->get_wherehosts($hostID);
+			print json_encode($data['data']);
 		}
-	//取得host的資料
-	public function editHostDetail($hostID){
-			$data['hostclouds'] = $this->hostcloud_model->get_hostclouds();
-			$data['users'] = $this->user_model->get_users();
-			$data['hostDetail'] = $this->host_model->get_wherehosts($hostID);
-			$data['HostID'] = $hostID;
-			$this->load->view('host/hostDetailEdit',$data);
-		}
+	
 	
 	public function update(){
 		//修改host的資料 搭配表單hostDetailEdit
 			$username = $this->session->userdata('username');
 			$data['username'] = $username;
-			$this->form_validation->set_rules('hostname','hostname','required');
-			$this->form_validation->set_rules('hostcloudid','hostcloudid','required');
-			$this->form_validation->set_rules('userid','userid','required');
+			$this->form_validation->set_rules('edithostname','edithostname','required');
+			$this->form_validation->set_rules('editsoftwarecloudid','editsoftwarecloudid','required');
+			$this->form_validation->set_rules('edituserid','edituserid','required');
 			if($this->form_validation->run() === false){ 
 				$this->showHostPage($data);
 				return;
@@ -93,29 +88,38 @@ class Host extends CI_Controller{
 		}	
 	
 	public function showUserAllHostJson(){
-		//輸出該使用者全部的資料 採用json格式
+		//輸出該使用者全部的資料 採用json格式 給search用
 		$userinfo = $this->session->userdata('userinfo');
 		$result = $this->host_model->get_whereuserid_json($userinfo['UserID']);
 		print json_encode($result,JSON_UNESCAPED_UNICODE);
 		
 		}
 		
-	
+	//主機頁面用json jquery datatables用在hostOverview.php
+	public function HostJson($cloudid){
+		$data['userinfo'] = $this->session->userdata('userinfo');
+		$message_array = $this->host_model->get_hostclouds($cloudid);
+		$message2= array();
+		foreach($message_array as $item){
+			$message = array($item['HostID'],$item['Name'],$item['CloudName'],$item['Location'],$item['Remark']);
+			array_push($message2,$message);
+		}
+		$messages = array("data"=>$message2);
+		print(json_encode($messages,JSON_UNESCAPED_UNICODE));
+		}
+		
+
 	//顯示單元 for view
 	private function showHostPage($data){
 			$data['hostclouds'] = $this->hostcloud_model->get_hostclouds();
+			$data['hostcloudlocation'] = $this->host_model->get_hostcloudlocation();
+			$data['users'] = $this->user_model->get_users();
 			$data['userinfo'] = $this->session->userdata('userinfo');
 			$this->load->view('templates/header',$data);
 			$this->load->view('host/hostOverview',$data);
 			$this->load->view('templates/footer');
 		}
-	//顯示單元 for add
-	private function showAddHostPage($data){
-			$data['userinfo'] = $this->session->userdata('userinfo');
-			$this->load->view('templates/header',$data);
-			$this->load->view('host/hostDetailAdd',$data);
-			$this->load->view('templates/footer');
-		}
+
 	
 	
 	}

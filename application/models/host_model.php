@@ -4,10 +4,34 @@ class Host_model extends CI_Model{
 	public function __construct(){
 		$this->load->database();
 		}
-	public function get_hostclouds(){
-		$query = $this->db->get('host');
+	
+	public function get_hostcloudlocation(){
+		//只拉hostcloud中有的不重複location
+		$query = $this->db->query("select distinct Location from hostcloud");
 		return $query->result_array();
 		}
+	
+	public function get_hostclouds($hostcloud){
+		//hostOverview.php專用jquery datatable json model
+		$userinfo = $this->session->userdata('userinfo');
+		if($hostcloud=="all"){
+			$sql = "SELECT host.HostID,host.Name,hostcloud.Name as CloudName,hostcloud.Location,host.Remark FROM host
+				left join hostcloud on host.CloudID = hostcloud.CloudID ";
+			}
+		else{
+			$sql = "SELECT host.HostID,host.Name,hostcloud.Name as CloudName,hostcloud.Location,host.Remark FROM host
+				left join hostcloud on host.CloudID = hostcloud.CloudID ";
+			if($userinfo['UserID']==='1'){
+				$sql .= "WHERE hostcloud.CloudID = ".$hostcloud;
+				}
+			else{
+				$sql .= "WHERE host.UserID = ".$userinfo['UserID']." AND hostcloud.CloudID = ".$hostcloud;
+				}
+			}
+		$query = $this->db->query($sql);
+		return $query->result_array();
+		}
+	
 	public function get_whereuserid_json($userid){
 		//給header.php searchinput用的json格式資料
 		$userinfo = $this->session->userdata('userinfo');
@@ -26,57 +50,30 @@ class Host_model extends CI_Model{
 					WHERE host.UserID in (".$userinfo['UserID'].",1) or (GroupID = ".$userinfo['GroupID']." and Groupuse = 1) 
 				");
 			}
-		
-
 		return $query->result_array();
 		}
-
-
-
 		
 	public function get_wherehosts($hostid){
 		//單純讀取hostid指定的host
 		$query = $this->db->get_where('host',array('HostID'=>$hostid));
 		return $query->row_array();
 		}
-	public function get_wherehostclouds($hostid){
-		$username = $this->session->userdata('username');
-		$userinfo = $this->session->userdata('userinfo');
-		//透過指定cloudid讀取資料 left join hostcloudid
-		$this->db->select('*,host.Name as HostName,hostcloud.Name as CloudName');
-		$this->db->from('host');
-		$this->db->join('hostcloud','host.CloudID = hostcloud.CloudID');
-		$this->db->where('host.cloudid',$hostid);
-		//管理者可以看到全部的資料
-		if($username != 'admin'){
-			$this->db->where('host.UserID',$userinfo['UserID']);
-			
-			}
-		$query = $this->db->get();
-		return $query->result_array();
-		}
+
 	public function update_hosts(){
 		//透過指定的host id 更新資料
 		$username = $this->session->userdata('username');
 		$userinfo = $this->session->userdata('userinfo');
 		$data = array(
-				'Name' => htmlentities($this->input->post('hostname')),
-				'CloudID' => htmlentities($this->input->post('hostcloudid')),
-				'UserID' => htmlentities($this->input->post('userid')),
-				'Remark' => htmlentities($this->input->post('remark')),
+				'Name' => htmlentities($this->input->post('edithostname')),
+				'CloudID' => htmlentities($this->input->post('editsoftwarecloudid')),
+				'UserID' => htmlentities($this->input->post('edituserid')),
+				'Remark' => htmlentities($this->input->post('editremark')),
 				'Modifytime' => date('Y-m-d H:i:s',time()),
 				'Modifyuser' => $userinfo['UserID']
 			);
-		//檢查是否有重複的值
-		//$query = $this->db->get_where('host',array('Name'=>$this->input->post('hostname')));
-		/*if($query->result_array()!=null){
-			echo "<script type='text/javascript'>alert('機器名稱重複');</script>";
-			}
-		else{*/
-			$hostid = $this->input->post('hostid');
+			$hostid = $this->input->post('edithostid');
 			$this->db->update('host',$data,array('HostID'=>$hostid));
 			
-			//}
 		
 		}
 	
