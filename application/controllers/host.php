@@ -95,7 +95,7 @@ class Host extends CI_Controller{
 		
 		}
 		
-	//主機頁面用json jquery datatables用在hostOverview.php
+	//主機頁面用json jquery datatables用在hostOverview.php 機器群動態讀取
 	public function HostJson($cloudid){
 		$data['userinfo'] = $this->session->userdata('userinfo');
 		$message_array = $this->host_model->get_hostclouds($cloudid);
@@ -107,7 +107,19 @@ class Host extends CI_Controller{
 		$messages = array("data"=>$message2);
 		print(json_encode($messages,JSON_UNESCAPED_UNICODE));
 		}
-		
+	//主機頁面用json jquery datatables用在hostOverview.php 位置動態
+	public function HostLocationJson($location){
+		$location = urldecode($location);
+		$data['userinfo'] = $this->session->userdata('userinfo');
+		$message_array = $this->host_model->get_hostlocation($location);
+		$message2= array();
+		foreach($message_array as $item){
+			$message = array($item['HostID'],$item['Name'],$item['CloudName'],$item['Location'],$item['Remark']);
+			array_push($message2,$message);
+		}
+		$messages = array("data"=>$message2);
+		print(json_encode($messages,JSON_UNESCAPED_UNICODE));
+		}
 
 	//顯示單元 for view
 	private function showHostPage($data){

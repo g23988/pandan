@@ -12,7 +12,7 @@ class Host_model extends CI_Model{
 		}
 	
 	public function get_hostclouds($hostcloud){
-		//hostOverview.php專用jquery datatable json model
+		//hostOverview.php專用jquery datatable json model 機器群連動
 		$userinfo = $this->session->userdata('userinfo');
 		if($hostcloud=="all"){
 			$sql = "SELECT host.HostID,host.Name,hostcloud.Name as CloudName,hostcloud.Location,host.Remark FROM host
@@ -31,7 +31,29 @@ class Host_model extends CI_Model{
 		$query = $this->db->query($sql);
 		return $query->result_array();
 		}
-	
+
+	public function get_hostlocation($location){
+		//hostOverview.php專用jquery datatable json model 位置連動
+		$userinfo = $this->session->userdata('userinfo');
+		if($location=="all"){
+			$sql = "SELECT host.HostID,host.Name,hostcloud.Name as CloudName,hostcloud.Location,host.Remark FROM host
+				left join hostcloud on host.CloudID = hostcloud.CloudID ";
+			}
+		else{
+			$sql = "SELECT host.HostID,host.Name,hostcloud.Name as CloudName,hostcloud.Location,host.Remark FROM host
+				left join hostcloud on host.CloudID = hostcloud.CloudID ";
+			if($userinfo['UserID']==='1'){
+				$sql .= "WHERE hostcloud.Location = '".$location."'";
+				}
+			else{
+				$sql .= "WHERE host.UserID = ".$userinfo['UserID']." AND hostcloud.Location = '".$location."'";
+				}
+			}
+		$query = $this->db->query($sql);
+		return $query->result_array();
+		}
+
+
 	public function get_whereuserid_json($userid){
 		//給header.php searchinput用的json格式資料
 		$userinfo = $this->session->userdata('userinfo');

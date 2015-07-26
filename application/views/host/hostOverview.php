@@ -74,6 +74,9 @@ $(document).ready(function() {
 		if(selectval!='all'){
 			$("#filterByGroupSelect option[location!="+selectval+"]").css('display','none');
 			}
+		//位置下拉選擇後改變
+		var selecturl = baseHref+"index.php/host/HostLocationJson/"+selectval;
+		table.api().ajax.url(selecturl).load();
 		});
 	
 	
@@ -82,6 +85,8 @@ $(document).ready(function() {
     var table = $('#hosttable').dataTable( {
         ajax: baseHref+"index.php/host/HostJson/all"
     } );
+	
+	//機器群下拉選擇後改變
 	$('#filterByGroupSelect').change(function(){
 		var selectval = $("#filterByGroupSelect").find(":selected").val();
 		var selecturl = baseHref+"index.php/host/HostJson/"+selectval;
