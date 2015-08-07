@@ -267,6 +267,12 @@ class Pandan extends CI_Controller{
 	public function changeGroupuse($HostID,$Groupuse){
 			$this->pandan_model->update_hostGroupuse($HostID,$Groupuse);
 		}
+	
+	//自訂盤點頁
+	public function pandanByCustom(){
+		$data['username'] = $this->session->userdata('username');
+		$this->showPandanPageCustom($data);
+		}
 
 	//顯示單元 for view
 	public function showPandanPage($data){
@@ -290,17 +296,106 @@ class Pandan extends CI_Controller{
 			$this->load->view('templates/footer');
 		}
 	
+	private function showPandanPageCustom($data){
+			$data['userinfo'] = $this->session->userdata('userinfo');
+			$this->load->view('templates/header',$data);
+			$this->load->view('pandan/pandanByCustom',$data);
+			$this->load->view('templates/footer');
+		}
+	
+	
 
 	//json格式軟體list 選擇軟體群 自動帶出軟體
 	public function getJsonSoftwareByCloud($CloudID){
 			$data['data'] = $this->pandan_model->get_softwareByCloudID($CloudID);
 			print json_encode($data['data']);
 		}
+		
+	/* for pandanByCustom.php 客製化盤點介面  */
+	public function testa(){
+			$this->load->helper('file');
+			$array = array(array('id'=>1,'name'=>'第一個清單','context'=>array(1,2,3,4,5)),array('id'=>'2','name'=>'第二個清單','context'=>array(100,101,102,103,104)));
+			$data = json_encode($array,JSON_UNESCAPED_UNICODE);
+			var_dump($data);
+			if ( ! write_file('./customlist/1.json', $data))
+			{
+				 echo 'Unable to write the file';
+			}
+			$string = read_file('./customlist/1.json');
+			//echo $string;
+			$a = json_decode($string,true);
+			foreach($a as $item){
+				var_dump($item);
+				echo $item['name']."<br>";
+				}
+		}
 	
-	
-	
-	
-	
+	public function ReadCustomfile($mode){
+		//mode = 0 取得file裡面的清單 並去除部屬於管轄範圍的
+		//mode = 1 取得不再file裡面的清單 並去除清單裡面友的
+		//讀取自訂清單檔案
+			$data['userinfo'] = $this->session->userdata('userinfo');
+			$this->load->helper('file');
+			if(!file_exists("./customlist/".$data['userinfo']['UserID'].".json")){
+				//$arrayfirst = array(array('name'=>'第一個清單','context'=>array()));
+				//$data = json_encode($arrayfirst,JSON_UNESCAPED_UNICODE);
+				$path = "./customlist/".$data['userinfo']['UserID'].".json";
+				write_file($path, "[]");
+				}
+			$jsonstring = read_file("./customlist/".$data['userinfo']['UserID'].".json");
+			//檢查db中的異動
+			//先拿出屬於你的全部的hostid
+			$arrayallhost = $this->pandan_model->get_userhost();
+			$dbhostid = array();
+			foreach($arrayallhost as $item){
+				array_push($dbhostid,(int)$item['HostID']);
+				}
+			//解西json檔案
+			$arrayjson = json_decode($jsonstring,true);
+			$jsonfilehostid = array();
+			foreach($arrayjson as $key => $list){
+				foreach($list['context'] as $hostkey => $hostid){
+					if(!in_array($hostid,$dbhostid)){
+						//移除掉已經部屬於user管的hostid
+						unset($arrayjson[$key]['context'][$hostkey]);
+						continue;
+						}
+					array_push($jsonfilehostid,$hostid);
+					}
+				}
+			if($mode==0){
+				print json_encode($arrayjson,JSON_UNESCAPED_UNICODE);
+				}
+			if($mode==1){
+				print json_encode(array_diff($dbhostid,$jsonfilehostid));
+				}
+		}
+	public function WriteCustomfile(){
+		//寫入自訂清單檔案
+			$data['userinfo'] = $this->session->userdata('userinfo');
+			$this->load->helper('file');
+			//html_entity_decode($jsonstring, ENT_QUOTES,"UTF-8");
+			if ( ! write_file('./customlist/'.$data['userinfo']['UserID'].'.json', $this->input->get('string')))
+			{
+				 echo html_entity_decode($jsonstring);
+			}
+			 //echo $jsonstring."<br>";
+			 
+		}
+	public function ReadHostTitle($hostid){
+		$hostdetail = $this->pandan_model->get_wherehosts($hostid);
+		$flag_show = "";
+		if($hostdetail["flag"]==0) $flag_show='<span class="label label-success pull-right donebtn">Done</span>';
+		if($hostdetail["flag"]==1) $flag_show='<span class="label label-warning pull-right donebtn">DNF</span>';
+		if($hostdetail["flag"]==2) $flag_show='<span class="label label-danger pull-right donebtn">Never</span>';
+		if($hostdetail["Groupuse"]==1){
+			$flag_show.= '<br><span class="label label-primary pull-right groupusebtn"><i class="fa fa-group fa-fw"></i> Group</span>';
+		}
+		//var_dump($hostdetail);
+		echo '<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="'.$hostdetail["CloudName"].'" hostgroup="'.$hostdetail["CloudName"].'" href="http://g23988.synology.me/pandan/index.php/pandan/view/'.$hostid.'" data-original-title="'.$hostdetail["CloudName"].'" hostid="'.$hostdetail["HostID"].'"><span class="pull-left">'.$hostdetail['Name'].'</span>'. $flag_show.'<br></a>';
+			// ( '.$hostdetail["CloudName"].' )
+		}
+	/* for pandanByCustom.php 客製化盤點頁面 */
 	
 	
 	
