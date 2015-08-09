@@ -6,7 +6,7 @@ $(function  () {
 			var long = data.length;
 			for(var i = 0;i < long ;i++){
 				
-				var appendstring = '<li class="panel panel-info"> <div class="panel-heading" listid="'+i+'"><input type="text" value="'+data[i]["name"]+'"></div><div class="panel-body">';
+				var appendstring = '<li class="panel panel-default"> <div class="panel-heading" listid="'+i+'"><input type="text" value="'+data[i]["name"]+'"></div><div class="panel-body">';
 				appendstring += '<ol class="connect_btn" listname="'+data[i]["name"]+'" listid="'+i+'">';
 				for(var context in data[i]["context"]){
 					appendstring += ('<li><a style="display:none;" class="btn btn-default" listname="'+data[i]["name"]+'" href="index.php/pandan/view/'+data[i]["context"][context]+'" hostid="'+ data[i]["context"][context] +'">'+data[i]["context"][context]+'</a></li>');
@@ -88,7 +88,10 @@ $(function  () {
 	//新件清單
 	$('#newlistbtn').click(function(){
 			var newlistid = parseInt($("#draggablePanelList .panel-heading:last").attr('listid'))+1;
-			var appendstring = '<li class="panel panel-info"> <div class="panel-heading" listid="'+newlistid+'"><input type="text" value="new"></div><div class="panel-body">';
+			if(isNaN(newlistid)) {
+				newlistid=1;
+				}
+			var appendstring = '<li class="panel panel-default"> <div class="panel-heading" listid="'+newlistid+'"><input type="text" value="new"></div><div class="panel-body">';
 			appendstring += '<ol class="connect_btn" listname="new" listid="'+newlistid+'">';
 			appendstring += '</ol>註解：<br><textarea class="form-control" style="max-width:100%;" rows="3"></textarea></div></li>';
 				$('.list[use]').append(appendstring);
@@ -176,7 +179,7 @@ ol.example li.placeholder:before {
 	</div>
 	<div class="col-md-4" id="divnomove">
 
-            <div class="panel panel-info">
+            <div class="panel panel-primary">
                 <div class="panel-heading">未配置</div>
                 <div class="panel-body scrollable-menu">
                     <ol class='connect_btn' id='unsetpanel' style="width: 100%;">
