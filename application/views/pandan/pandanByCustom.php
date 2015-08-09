@@ -12,7 +12,7 @@ $(function  () {
 					appendstring += ('<li><a style="display:none;" class="btn btn-default" listname="'+data[i]["name"]+'" href="index.php/pandan/view/'+data[i]["context"][context]+'" hostid="'+ data[i]["context"][context] +'">'+data[i]["context"][context]+'</a></li>');
 					}
 				appendstring += '</ol></div></li>';
-				$('.list').append(appendstring);
+				$('.list[use]').append(appendstring);
 				
 				}
 			//group sortable
@@ -21,6 +21,7 @@ $(function  () {
 	  		});
 			$(".list").sortable(
 			{
+				connectWith:'.unsync',
 				placeholder: "movable-placeholder",
 				start: function(e, ui) {
 					ui.placeholder.height(ui.helper.outerHeight());
@@ -87,7 +88,7 @@ $(function  () {
 			var appendstring = '<li class="panel panel-info"> <div class="panel-heading" listid="'+newlistid+'"><input type="text" value="new"></div><div class="panel-body">';
 			appendstring += '<ol class="connect_btn" listname="new" listid="'+newlistid+'">';
 			appendstring += '</ol></div></li>';
-				$('.list').append(appendstring);
+				$('.list[use]').append(appendstring);
 			$(".connect_btn").sortable();
 		});
 
@@ -130,6 +131,11 @@ ol.example li.placeholder:before {
     max-height: 300px;
     overflow-x: hidden; 
 	}
+.scrollable-menu-waitdelete {
+	height: auto;
+    max-height: 100px;
+    overflow-x: hidden; 
+	}
 .connect_btn {
     width: 100%;
     min-height: 20px;
@@ -157,12 +163,13 @@ ol.example li.placeholder:before {
 <!-- /.col-lg-12 -->
 </div>
 <div class="row">
-	<div class="col-md-4">
-        <ul id="draggablePanelList" class="list-unstyled list">
+	<div class="col-md-7">
+        <ul id="draggablePanelList" use class="list-unstyled list">
 
         </ul>
 	</div>
 	<div class="col-md-4" id="divnomove">
+
             <div class="panel panel-info">
                 <div class="panel-heading">未配置</div>
                 <div class="panel-body scrollable-menu">
@@ -172,7 +179,14 @@ ol.example li.placeholder:before {
                  </div>
                  
             </div>
-
+            <div class="panel panel-danger">
+                <div class="panel-heading">待刪除清單</div>
+                <div class="panel-body scrollable-menu-waitdelete">
+                <ul class="list-unstyled list unsync" nouse>
+                    <li><span class="fa fa-trash"></span></li>
+                </ul>
+                </div>
+            </div>
 	</div>
 
 
