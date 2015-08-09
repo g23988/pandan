@@ -6,7 +6,7 @@ $(function  () {
 			var long = data.length;
 			for(var i = 0;i < long ;i++){
 				
-				var appendstring = '<li class="panel panel-default"> <div class="panel-heading" listid="'+i+'"><input type="text" value="'+data[i]["name"]+'"></div><div class="panel-body">';
+				var appendstring = '<li class="panel panel-primary"> <div class="panel-heading" listid="'+i+'"><input style="width:50%;" class="form-control" type="text" value="'+data[i]["name"]+'"></div><div class="panel-body">';
 				appendstring += '<ol class="connect_btn" listname="'+data[i]["name"]+'" listid="'+i+'">';
 				for(var context in data[i]["context"]){
 					appendstring += ('<li><a style="display:none;" class="btn btn-default" listname="'+data[i]["name"]+'" href="index.php/pandan/view/'+data[i]["context"][context]+'" hostid="'+ data[i]["context"][context] +'">'+data[i]["context"][context]+'</a></li>');
@@ -91,7 +91,7 @@ $(function  () {
 			if(isNaN(newlistid)) {
 				newlistid=1;
 				}
-			var appendstring = '<li class="panel panel-default"> <div class="panel-heading" listid="'+newlistid+'"><input type="text" value="new"></div><div class="panel-body">';
+			var appendstring = '<li class="panel panel-primary"> <div class="panel-heading" listid="'+newlistid+'"><input class="form-control" type="text" value="new" style="width:50%;"></div><div class="panel-body">';
 			appendstring += '<ol class="connect_btn" listname="new" listid="'+newlistid+'">';
 			appendstring += '</ol>註解：<br><textarea class="form-control" style="max-width:100%;" rows="3"></textarea></div></li>';
 				$('.list[use]').append(appendstring);
