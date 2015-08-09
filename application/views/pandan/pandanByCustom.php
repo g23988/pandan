@@ -11,7 +11,8 @@ $(function  () {
 				for(var context in data[i]["context"]){
 					appendstring += ('<li><a style="display:none;" class="btn btn-default" listname="'+data[i]["name"]+'" href="index.php/pandan/view/'+data[i]["context"][context]+'" hostid="'+ data[i]["context"][context] +'">'+data[i]["context"][context]+'</a></li>');
 					}
-				appendstring += '</ol></div></li>';
+				appendstring += '</ol>註解：<br>';
+				appendstring += '<textarea class="form-control" style="max-width:100%;" rows="3">'+data[i]["remark"]+'</textarea></div></li>';
 				$('.list[use]').append(appendstring);
 				
 				}
@@ -64,15 +65,17 @@ $(function  () {
 		$("#draggablePanelList .panel-heading").each(function() {
 			var string = "";
 			var listname = $(this).children('input').val();
+			var listremark = $(this).parent().children('.panel-body').children('textarea').val();
+			console.log(listremark);
 			var listid = $(this).attr('listid');
 			var arrayhostid = [];
 			$("#draggablePanelList .connect_btn[listid='"+listid+"'] a").each(function() {
-					
 					arrayhostid.push($(this).attr('hostid'));
 				});
 			//建立清單陣列 然後塞進obj
 			var itemobj = {
 				name : listname,
+				remark : listremark,
 				context : arrayhostid
 			}
 			obj.push(itemobj);
@@ -87,7 +90,7 @@ $(function  () {
 			var newlistid = parseInt($("#draggablePanelList .panel-heading:last").attr('listid'))+1;
 			var appendstring = '<li class="panel panel-info"> <div class="panel-heading" listid="'+newlistid+'"><input type="text" value="new"></div><div class="panel-body">';
 			appendstring += '<ol class="connect_btn" listname="new" listid="'+newlistid+'">';
-			appendstring += '</ol></div></li>';
+			appendstring += '</ol>註解：<br><textarea class="form-control" style="max-width:100%;" rows="3"></textarea></div></li>';
 				$('.list[use]').append(appendstring);
 			$(".connect_btn").sortable();
 		});
@@ -164,9 +167,12 @@ ol.example li.placeholder:before {
 </div>
 <div class="row">
 	<div class="col-md-7">
+
+        	
         <ul id="draggablePanelList" use class="list-unstyled list">
 
         </ul>
+		
 	</div>
 	<div class="col-md-4" id="divnomove">
 
@@ -183,7 +189,7 @@ ol.example li.placeholder:before {
                 <div class="panel-heading">待刪除清單</div>
                 <div class="panel-body scrollable-menu-waitdelete">
                 <ul class="list-unstyled list unsync" nouse>
-                    <li><span class="fa fa-trash"></span></li>
+                    <li><span class="fa fa-trash"></span> 移至此處的清單將無法復原</li>
                 </ul>
                 </div>
             </div>
