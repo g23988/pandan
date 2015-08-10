@@ -1,18 +1,31 @@
 <script src="<?=base_url()?>resources/js/jquery-ui.js"></script>
 <script>
 var baseHref = document.getElementsByTagName('base')[0].href;
+function autogrow(textarea){
+var adjustedHeight=textarea.clientHeight;
+
+	adjustedHeight=Math.max(textarea.scrollHeight,adjustedHeight);
+	if (adjustedHeight>textarea.clientHeight){
+		textarea.style.height=adjustedHeight+'px';
+	}
+
+}
 $(function  () {
 	$.getJSON(baseHref+'index.php/pandan/ReadCustomfile/0',function(data){
 			var long = data.length;
 			for(var i = 0;i < long ;i++){
 				
 				var appendstring = '<li class="panel panel-primary"> <div class="panel-heading" listid="'+i+'"><input style="width:50%;" class="form-control" type="text" value="'+data[i]["name"]+'"></div><div class="panel-body">';
+				appendstring += '<div class="row"><div class="col-md-6">';
 				appendstring += '<ol class="connect_btn" listname="'+data[i]["name"]+'" listid="'+i+'">';
 				for(var context in data[i]["context"]){
 					appendstring += ('<li><a style="display:none;" class="btn btn-default" listname="'+data[i]["name"]+'" href="index.php/pandan/view/'+data[i]["context"][context]+'" hostid="'+ data[i]["context"][context] +'">'+data[i]["context"][context]+'</a></li>');
 					}
-				appendstring += '</ol>註解：<br>';
-				appendstring += '<textarea class="form-control" style="max-width:100%;" rows="3">'+data[i]["remark"]+'</textarea></div></li>';
+				appendstring += '</ol>';
+				appendstring += '</div><div class="col-md-6" remark>';
+				appendstring += '<textarea id="textval" class="form-control" style="max-width:100%;" onkeyup="autogrow(this);">'+data[i]["remark"]+'</textarea>';
+				appendstring += '</div></div>';//註解的col-md-6用 關閉row
+				appendstring += '</div></li>';//body用
 				$('.list[use]').append(appendstring);
 				
 				}
@@ -33,7 +46,9 @@ $(function  () {
 			$("#draggablePanelList .connect_btn li a").each(function(){
 					$(this).parent("li").load(baseHref+'index.php/pandan/ReadHostTitle/'+$(this).attr('hostid'));
 					});
-			
+			$('textarea').each(function() {
+               autogrow(this); 
+            });
 		});
 	//取得未分類的
 	
@@ -65,8 +80,8 @@ $(function  () {
 		$("#draggablePanelList .panel-heading").each(function() {
 			var string = "";
 			var listname = $(this).children('input').val();
-			var listremark = $(this).parent().children('.panel-body').children('textarea').val();
-			console.log(listremark);
+			var listremark = $(this).parent().children('.panel-body').find('#textval').val();
+			//console.log(listremark);
 			var listid = $(this).attr('listid');
 			var arrayhostid = [];
 			$("#draggablePanelList .connect_btn[listid='"+listid+"'] a").each(function() {
@@ -92,8 +107,11 @@ $(function  () {
 				newlistid=1;
 				}
 			var appendstring = '<li class="panel panel-primary"> <div class="panel-heading" listid="'+newlistid+'"><input class="form-control" type="text" value="new" style="width:50%;"></div><div class="panel-body">';
+			appendstring += '<div class="row"><div class="col-md-6">';
 			appendstring += '<ol class="connect_btn" listname="new" listid="'+newlistid+'">';
-			appendstring += '</ol>註解：<br><textarea class="form-control" style="max-width:100%;" rows="3"></textarea></div></li>';
+			appendstring += '</ol>';
+			appendstring += '</div><div class="col-md-6">';
+			appendstring += '<textarea id="textval" class="form-control" style="max-width:100%;" onkeyup="autogrow(this);"></textarea></div></div></li>';
 				$('.list[use]').append(appendstring);
 			$(".connect_btn").sortable();
 		});
@@ -159,6 +177,9 @@ ol.example li.placeholder:before {
         border-width: 1px;
         border-color: #000;
     }
+textarea {
+	overflow-y:hidden;
+	}
 </style>
 
 <!-- Bootstrap 3 panel list. -->
@@ -170,18 +191,16 @@ ol.example li.placeholder:before {
 </div>
 <div class="row">
 	<div class="col-md-7">
-
-        	
-        <ul id="draggablePanelList" use class="list-unstyled list">
+		<ul id="draggablePanelList" use class="list-unstyled list">
 
         </ul>
-		
 	</div>
 	<div class="col-md-4" id="divnomove">
 
             <div class="panel panel-primary">
                 <div class="panel-heading">未配置</div>
                 <div class="panel-body scrollable-menu">
+
                     <ol class='connect_btn' id='unsetpanel' style="width: 100%;">
 
                     </ol>
