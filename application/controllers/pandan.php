@@ -392,7 +392,7 @@ class Pandan extends CI_Controller{
 			$flag_show.= '<br><span class="label label-primary pull-right groupusebtn"><i class="fa fa-group fa-fw"></i> Group</span>';
 		}
 		//var_dump($hostdetail);
-		echo '<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="'.$hostdetail["CloudName"].'" hostgroup="'.$hostdetail["CloudName"].'" href="http://g23988.synology.me/pandan/index.php/pandan/view/'.$hostid.'" data-original-title="'.$hostdetail["CloudName"].'" hostid="'.$hostdetail["HostID"].'"><span class="pull-left">'.$hostdetail['Name'].'</span>'. $flag_show.'<br></a>';
+		echo '<a class="btn btn-default btn-md" style="width:100%;font-weight:bold;" data-toggle="tooltip" data-placement="top" title="'.$hostdetail["CloudName"].'" hostgroup="'.$hostdetail["CloudName"].'" href="index.php/pandan/view/'.$hostid.'" data-original-title="'.$hostdetail["CloudName"].'" hostid="'.$hostdetail["HostID"].'"><span class="pull-left">'.$hostdetail['Name'].'</span>'. $flag_show.'<br></a>';
 			// ( '.$hostdetail["CloudName"].' )
 		}
 	/* for pandanByCustom.php 客製化盤點頁面 */
