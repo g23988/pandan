@@ -16,7 +16,8 @@ class Host_model extends CI_Model{
 		$userinfo = $this->session->userdata('userinfo');
 		if($hostcloud=="all"){
 			$sql = "SELECT host.HostID,host.Name,hostcloud.Name as CloudName,hostcloud.Location,host.Remark FROM host
-				left join hostcloud on host.CloudID = hostcloud.CloudID ";
+				left join hostcloud on host.CloudID = hostcloud.CloudID WHERE 1=1 ";
+				if($userinfo['UserID']!='1') {$sql .= "AND host.UserID = ".$userinfo['UserID'];}
 			}
 		else{
 			$sql = "SELECT host.HostID,host.Name,hostcloud.Name as CloudName,hostcloud.Location,host.Remark FROM host
