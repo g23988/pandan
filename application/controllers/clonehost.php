@@ -24,7 +24,7 @@ class Clonehost extends CI_Controller{
 		}
 	
 	//clone首頁，處發起點
-	public function cloneHostByHostID($newhostname,$oldhostid){
+	public function cloneHostByHostID($newhostname,$newhostcloud,$oldhostid){
 		$data['userinfo'] = $this->session->userdata('userinfo');
 		$hostinfo = $this->clone_model->selectCloneHost(urldecode($newhostname),$oldhostid);
 		//檢查是否相同名稱
@@ -39,12 +39,12 @@ class Clonehost extends CI_Controller{
 		}
 	
 	//insert新的host
-	public function resetcloneHost($newhostname,$oldhostid){
+	public function resetcloneHost($newhostname,$newcloudid,$oldhostid){
 		$data['userinfo'] = $this->session->userdata('userinfo');
 		$hostinfo = $this->clone_model->selectCloneHost(urldecode($newhostname),$oldhostid);
 		$oldName = $hostinfo->Name;
 		$newhostinfo['Name'] =  $newhostname;
-		$newhostinfo['CloudID'] = $hostinfo->CloudID;
+		$newhostinfo['CloudID'] = $newcloudid;
 		$newhostinfo['UserID'] = $data['userinfo']['UserID'];
 		$newhostinfo['Remark'] = $hostinfo->Remark;
 		$newhostinfo['Createtime'] = date('Y-m-d H:i:s',time());
@@ -125,8 +125,9 @@ class Clonehost extends CI_Controller{
 			}
 		}
 	//顯示單元 for index
-	public function showClonePage($newhostname,$oldhostid){
+	public function showClonePage($newhostname,$newhostcloud,$oldhostid){
 		$data['newhostname'] = urldecode($newhostname);
+		$data['newhostcloud'] = $newhostcloud;
 		$data['oldhostid'] = $oldhostid;
 		$this->load->view('clonehost/clone',$data);
 		/*

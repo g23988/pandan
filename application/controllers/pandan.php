@@ -291,6 +291,7 @@ class Pandan extends CI_Controller{
 			$data['bgs'] = $this->pandan_model->get_bgList();
 			$data['users'] = $this->pandan_model->get_userList();
 			$data['datatypes'] = $this->pandan_model->get_dataList();
+			$data['hostclouds'] = $this->pandan_model->get_hostclouds();
 			$this->load->view('templates/header',$data);
 			$this->load->view('pandan/pandanByHostID',$data);
 			$this->load->view('templates/footer');

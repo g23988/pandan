@@ -115,12 +115,13 @@
 $(function(){
 	
 	var newhostname = '<?php echo urldecode($newhostname)?>';
+	var newhostcloud = '<?php echo $newhostcloud;?>';
 	var newhostid ;
 	var oldhostid = '<?php echo $oldhostid?>';
 	setTimeout(function(){
 			//第一步驟，得到資訊
 			$.ajax({
-						  url: "<?=base_url()?>index.php/clonehost/cloneHostByHostID/"+newhostname+"/"+oldhostid,
+						  url: "<?=base_url()?>index.php/clonehost/cloneHostByHostID/"+newhostname+"/"+newhostcloud+"/"+oldhostid,
 						  type: "GET",
 						  dataType: "json",
 						  contentType: "application/json; charset=utf-8",
@@ -156,7 +157,7 @@ $(function(){
 	function resetHostInfo(){
 			//第二步驟，重塑insert資訊
 			$.ajax({
-						  url: "<?=base_url()?>index.php/clonehost/resetcloneHost/"+newhostname+"/"+oldhostid,
+						  url: "<?=base_url()?>index.php/clonehost/resetcloneHost/"+newhostname+"/"+newhostcloud+"/"+oldhostid,
 						  type: "GET",
 						  dataType: "json",
 						  contentType: "application/json; charset=utf-8",

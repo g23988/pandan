@@ -116,7 +116,22 @@ $(function () {
                         </tr>
                         <tr>
                         	<td>
-                            <input id="cloneHostname" type="text" style="width:100%;display:none;" value="<?php echo $hostdetail["hostname"]."_clone"?>" data-toggle="tooltip" data-placement="bottom" title="輸入新的主機名稱"/>	
+                            <div class="row">
+                            	<div class="col-md-6">
+                                    <select  class="form-control" id="cloneHostgroup" name="user" style="width:100%;display:none;">
+                                    <?php foreach($hostclouds as $item):?>
+                                    	<?php if($hostdetail["CloudName"]===$item['Name']):?>
+                                   		    <option value="<?php echo $item['CloudID']?>" selected="selected"><?php echo $item['Name']?></option>
+                                        <?php else:?>
+                                        	<option value="<?php echo $item['CloudID']?>"><?php echo $item['Name']?></option>
+                                        <?php endif;?>
+                                    <?php endforeach?>
+                              	  </select>
+                                </div>
+                            	<div class="col-md-6">
+                            <input id="cloneHostname" class="form-control" type="text" style="width:100%;display:none;" value="<?php echo $hostdetail["hostname"]."_clone"?>" data-toggle="tooltip" data-placement="bottom" title="輸入新的主機名稱"/>	
+                            	</div>
+                            </div>
                             <select  class="form-control" id="transUsername" name="user" style="width:100%;display:none;">
 								<?php foreach($users as $item):?>
                                 	<?php if($userinfo['Account']=='admin'):?>
@@ -128,8 +143,7 @@ $(function () {
                                     <?php endif;?>
                                 <?php endforeach?>
                             </select>
-                            <!--
-                            <input id="transUsername" type="text" style="width:100%;display:none;" value="<?php echo $hostdetail["hostname"]."_clone"?>" data-toggle="tooltip" data-placement="bottom" title="輸入新的主機名稱"/>	-->
+                            
                             </td>
                             <td>
                             <span id="clonelock" class="btn btn-primary btn-sm glyphicon glyphicon-new-window" aria-hidden="true"  data-toggle="tooltip" data-placement="bottom" title="完整複製整台資料並更名"> 複製</span>
@@ -151,11 +165,12 @@ $(function () {
 						$('#clonelock').click(function(){
 							$('#clonelock').css('display','none');
 							$('#cloneopen').css('display','');
+							$('#cloneHostgroup').css('display','');
 							$('#cloneHostname').css('display','');
 							$('#translock').css('display','none');
 							});
 						$('#cloneopen').click(function(){
-							var url = '<?=base_url()."index.php/clonehost/showClonePage/"?>'+$('#cloneHostname').val()+'/'+'<?php echo $hostdetail["HostID"]?>';
+							var url = '<?=base_url()."index.php/clonehost/showClonePage/"?>'+$('#cloneHostname').val()+'/'+$('#cloneHostgroup').val()+'/'+'<?php echo $hostdetail["HostID"]?>';
 							window.location = url;
 							});
 						//解鎖轉移

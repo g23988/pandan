@@ -265,12 +265,12 @@ on datapath.KeeperID=user.UserID
 		$query = $this->db->delete('datapath', array('PathID' => $PathID)); 
 		}
 	
-	public function get_wherehostclouds($hostid){
+	public function get_wherehostclouds($cloudid){
 		//透過指定cloudid讀取資料 left join hostcloudid
 		$this->db->select('*,host.Name as HostName,hostcloud.Name as CloudName');
 		$this->db->from('host');
 		$this->db->join('hostcloud','host.CloudID = hostcloud.CloudID');
-		$this->db->where('host.cloudid',$hostid);
+		$this->db->where('host.cloudid',$cloudid);
 		$query = $this->db->get();
 		return $query->result_array();
 		}
@@ -511,7 +511,15 @@ order by hostcloud.Name ASC,host.Name ASC");
 				
 				return $query->result_array();
 				}
-			
+		
+		public function get_hostclouds(){
+			//單純取出所有的hostcloud 適用id盤點頁 clone的部分 controller pandan/showPandanPageHost()
+			$this->db->select('CloudID,Name,Location');
+			$this->db->from('hostcloud');
+			$query = $this->db->get();
+			return $query->result_array();
+			}
+
 			
 					
 			
