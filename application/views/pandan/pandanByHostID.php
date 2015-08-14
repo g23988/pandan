@@ -116,22 +116,18 @@ $(function () {
                         </tr>
                         <tr>
                         	<td>
-                            <div class="row">
-                            	<div class="col-md-6">
-                                    <select  class="form-control" id="cloneHostgroup" name="user" style="width:100%;display:none;">
-                                    <?php foreach($hostclouds as $item):?>
-                                    	<?php if($hostdetail["CloudName"]===$item['Name']):?>
-                                   		    <option value="<?php echo $item['CloudID']?>" selected="selected"><?php echo $item['Name']?></option>
-                                        <?php else:?>
-                                        	<option value="<?php echo $item['CloudID']?>"><?php echo $item['Name']?></option>
-                                        <?php endif;?>
-                                    <?php endforeach?>
-                              	  </select>
-                                </div>
-                            	<div class="col-md-6">
+
+                            <select  class="form-control" id="cloneHostgroup" name="user" style="width:100%;display:none;">
+                            <?php foreach($hostclouds as $item):?>
+                    	       	<?php if($hostdetail["CloudName"]===$item['Name']):?>
+                           		    <option value="<?php echo $item['CloudID']?>" selected="selected"><?php echo $item['Name']?></option>
+                                <?php else:?>
+                                    <option value="<?php echo $item['CloudID']?>"><?php echo $item['Name']?></option>
+                                <?php endif;?>
+                            <?php endforeach?>
+                            </select>
                             <input id="cloneHostname" class="form-control" type="text" style="width:100%;display:none;" value="<?php echo $hostdetail["hostname"]."_clone"?>" data-toggle="tooltip" data-placement="bottom" title="輸入新的主機名稱"/>	
-                            	</div>
-                            </div>
+
                             <select  class="form-control" id="transUsername" name="user" style="width:100%;display:none;">
 								<?php foreach($users as $item):?>
                                 	<?php if($userinfo['Account']=='admin'):?>
