@@ -323,20 +323,26 @@ on datapath.KeeperID=user.UserID
 				'Modifyuser' => $userinfo['UserID']
 			);
 		$this->db->update('host',$updatehostdata,array('HostID'=>$hostid));
-		//更新DATAPATH KEEPER
-		$updateDataPathData = array(
-				'KeeperID' => htmlentities($newuser),
-				'Modifytime' => date('Y-m-d H:i:s',time()),
-				'Modifyuser' => $userinfo['UserID']
-			);
-		$this->db->update('datapath',$updateDataPathData,array('HostID'=>$hostid,'KeeperID'=>$userinfo['UserID']));
-		//更新SOFTWAREPATH KEEPER
-		$updateSoftwarePathData = array(
-				'KeeperID' => htmlentities($newuser),
-				'Modifytime' => date('Y-m-d H:i:s',time()),
-				'Modifyuser' => $userinfo['UserID']
-			);
-		$this->db->update('softwarepath',$updateSoftwarePathData,array('HostID'=>$hostid,'KeeperID'=>$userinfo['UserID']));
+		//如果非群組共用的機器，才更新path keeper
+		$hostdetail = $this->db->get_where('host',array('HostID'=>$hostid));
+		$hostdetailarray = $hostdetail->row_array();
+		if($hostdetailarray['Groupuse']!=1){
+				//更新DATAPATH KEEPER
+			$updateDataPathData = array(
+					'KeeperID' => htmlentities($newuser),
+					'Modifytime' => date('Y-m-d H:i:s',time()),
+					'Modifyuser' => $userinfo['UserID']
+				);
+			$this->db->update('datapath',$updateDataPathData,array('HostID'=>$hostid,'KeeperID'=>$userinfo['UserID']));
+			//更新SOFTWAREPATH KEEPER
+			$updateSoftwarePathData = array(
+					'KeeperID' => htmlentities($newuser),
+					'Modifytime' => date('Y-m-d H:i:s',time()),
+					'Modifyuser' => $userinfo['UserID']
+				);
+			$this->db->update('softwarepath',$updateSoftwarePathData,array('HostID'=>$hostid,'KeeperID'=>$userinfo['UserID']));
+			}
+		
 		}
 		
 		

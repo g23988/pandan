@@ -104,7 +104,6 @@ $(function () {
 									$("[name='my-checkbox']").on('switchChange.bootstrapSwitch',function(event, state){
 										if(state){
 											$.ajax({url:"<?php echo base_url().'index.php/pandan/changeGroupuse/'.$hostdetail["HostID"].'/1'?>",async:false});
-											console.log(state);
 											}
 										else{
 											$.ajax({url:"<?php echo base_url().'index.php/pandan/changeGroupuse/'.$hostdetail["HostID"].'/0'?>",async:false});		
