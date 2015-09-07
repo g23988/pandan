@@ -20,7 +20,7 @@
     <!-- Custom CSS -->
     <link href="<?=base_url()?>resources/css/sb-admin-2.css" rel="stylesheet">
     <!-- Morris Charts CSS -->
-    <!--<link href="base_url()resources/css/morris.css" rel="stylesheet">-->
+    <link href="<?=base_url()?>resources/css/morris.css" rel="stylesheet">
     <!-- Custom Fonts -->
     <link href="<?=base_url()?>resources/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="<?=base_url()?>resources/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css">
@@ -48,6 +48,8 @@
     <!-- 表格工具js-->
     <script src="<?=base_url()?>resources/js/jquery.dataTables.min.js"></script>
     <script src="<?=base_url()?>resources/js/dataTables.bootstrap.min.js"></script>
+    <script src="<?=base_url()?>resources/js/morris.min.js"></script>
+    <script src="<?=base_url()?>resources/js/raphael-min.js"></script>
     <!-- Morris Charts JavaScript -->
     <!--<script src="resources/js/raphael-min.js"></script>
     <script src="resources/js/morris.min.js"></script>

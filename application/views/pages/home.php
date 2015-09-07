@@ -151,6 +151,36 @@
                         <!-- /.panel-body -->
                     </div>
                     <!-- /.panel -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bar-chart-o fa-fw"></i> 完成進度 
+                        </div>
+                        <div class="panel-body">
+                       		<div id="morris-bar-chart"></div>
+                            <script>
+$(function() {
+	$.getJSON("<?=base_url()?>index.php/pages/ajax_complete_bar",function(json){
+		console.log(json);
+				Morris.Bar({
+				element: 'morris-bar-chart',
+				data: json,
+				xkey: 'Name',
+				ykeys: ['done', 'total'],
+				labels: ['Done', 'Total'],
+				stacked:true,
+				hideHover: 'auto',
+				xLabelMargin: 1,
+				resize: true
+			});
+		});
+    
+
+});
+							</script>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
                                     </div>
                 <!-- /.col-lg-8 -->
                 <div class="col-lg-4">

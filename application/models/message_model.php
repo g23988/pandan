@@ -127,7 +127,31 @@ left join user as b on message.To = b.UserID where message.To =".$userid." order
 		return $this->db->insert('message',$data);
 		}
 	
+	//加總圖表用 首頁顯示盤點進度
+	public function get_total_progress(){
+		$sqlstring = "select b.Name,b.done,c.total from(select user.UserID,user.Name,ifnull(a.done,0) as done from user
+				left join 
+				(select count(*) as done,host.UserID as UserID  from host
+				 where host.flag = 2
+				group by host.UserID )as a on user.UserID = a.UserID)b
+				
+				left join
+				
+				(select user.UserID,user.Name,ifnull(a.total,0) as total from user
+				left join 
+				(select count(*) as total,host.UserID as UserID  from host
+				group by host.UserID )as a on user.UserID = a.UserID)c
+				
+				on b.UserID = c.UserID";
+		$query = $this->db->query($sqlstring);
+		return $query->result_array();
+		
+		}
+	
+	
 	}
+	
+
 	
 
 
