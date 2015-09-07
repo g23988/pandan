@@ -142,6 +142,63 @@ class Clonehost extends CI_Controller{
 	public function test(){
 		echo "完成";
 		}
+	public function cloneforall($userid,$newcloudid){
+		$result = $this->clone_model->cloneforalldb($userid);
+		foreach($result as $item){
+			$data['userinfo'] = $this->session->userdata('userinfo');
+			$hostinfo = $this->clone_model->selectCloneHost($item['Name'],$item['HostID']);
+			$oldName = $hostinfo->Name;
+			$newhostinfo['Name'] =  $item['Name'];
+			$newhostinfo['CloudID'] = $newcloudid;
+			$newhostinfo['UserID'] = $data['userinfo']['UserID'];
+			$newhostinfo['Remark'] = $hostinfo->Remark;
+			$newhostinfo['Createtime'] = date('Y-m-d H:i:s',time());
+			$newhostinfo['Modifytime'] = date('Y-m-d H:i:s',time());
+			$newhostinfo['Modifyuser'] = $data['userinfo']['UserID'];
+			$newhostinfo['flag'] = 0;
+			$newhostidobj = $this->clone_model->insertCloneHost($newhostinfo);
+			$newhostinfo = $this->clone_model->selectCloneHost($item['HostID'],$newhostidobj->HostID);
+			//得到最新的id
+			$newhostid = $newhostinfo->HostID;
+			$oldhostid = $item['HostID'];
+			//蒐集舊的software
+			$softwareinfo = $this->clone_model->selectCloneSoftware($item['HostID']);
+			
+			//寫入新的software
+			if($softwareinfo!=null){
+			//循序改變為新的hostid  並且清空PathID
+			foreach($softwareinfo as $key =>$item){
+				$softwareinfo[$key]['HostID'] = $newhostid;
+				$softwareinfo[$key]['PathID'] = '';
+				$softwareinfo[$key]['Createtime'] = date('Y-m-d H:i:s',time());
+				$softwareinfo[$key]['Modifytime'] = date('Y-m-d H:i:s',time());
+				$softwareinfo[$key]['Modifyuser'] = $data['userinfo']['UserID'];;
+				}
+			
+			$result = $this->clone_model->insertSoftwarepath($softwareinfo);
+			}
+			
+			//蒐集舊的datapath
+			$datainfo = $this->clone_model->selectCloneData($oldhostid);
+			//循序改變為新的hostid  並且清空PathID
+			if($datainfo!=null){
+			foreach($datainfo as $key =>$item){
+			$datainfo[$key]['HostID'] = $newhostid;
+			$datainfo[$key]['PathID'] = '';
+			$datainfo[$key]['Createtime'] = date('Y-m-d H:i:s',time());
+			$datainfo[$key]['Modifytime'] = date('Y-m-d H:i:s',time());
+			$datainfo[$key]['Modifyuser'] = $data['userinfo']['UserID'];;
+			}
+			$result = $this->clone_model->insertDatapath($datainfo);
+			}
+			
+			
+			
+			}
+		
+		
+		}
+	
 	
 	}
 		

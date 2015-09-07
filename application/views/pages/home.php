@@ -167,7 +167,6 @@ $(function() {
 				xkey: 'Name',
 				ykeys: ['done', 'total'],
 				labels: ['Done', 'Total'],
-				stacked:true,
 				hideHover: 'auto',
 				xLabelMargin: 1,
 				resize: true

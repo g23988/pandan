@@ -46,6 +46,16 @@ class Clone_model extends CI_Model{
 			}
 		return $bool;
 		}
+		
+	//暫時使用
+	public function cloneforalldb($userid){
+		$query = $this->db->get_where('host',array('UserID'=>$userid));
+		return $query->result_array();
+		
+		}
+	
+	
+	
 		/*
 	public function get_bgs(){
 		$query = $this->db->get('bg');
