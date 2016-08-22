@@ -148,7 +148,7 @@ class Clonehost extends CI_Controller{
 			$data['userinfo'] = $this->session->userdata('userinfo');
 			$hostinfo = $this->clone_model->selectCloneHost($item['Name'],$item['HostID']);
 			$oldName = $hostinfo->Name;
-			$newhostinfo['Name'] =  $item['Name'];
+			$newhostinfo['Name'] =  $oldName;
 			$newhostinfo['CloudID'] = $newcloudid;
 			$newhostinfo['UserID'] = $data['userinfo']['UserID'];
 			$newhostinfo['Remark'] = $hostinfo->Remark;
@@ -161,6 +161,7 @@ class Clonehost extends CI_Controller{
 			//得到最新的id
 			$newhostid = $newhostinfo->HostID;
 			$oldhostid = $item['HostID'];
+			unset($newhostinfo);
 			//蒐集舊的software
 			$softwareinfo = $this->clone_model->selectCloneSoftware($item['HostID']);
 			

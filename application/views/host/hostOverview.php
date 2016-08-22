@@ -45,11 +45,12 @@
             <table id="hosttable" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
                 <thead>
                     <tr>
-                        <th width="10%">序號</th>
+                        <th width="5%">序號</th>
                         <th width="20%">名稱</th>
                         <th width="20%">主機群</th>
-                        <th width="15%">位置</th>
-                        <th width="35%">備註</th>
+                        <th width="10%">位置</th>
+			<th width="25%">保管者</th>
+                        <th width="20%">備註</th>
                     </tr>
                 </thead>
                 <tfoot>
@@ -58,6 +59,7 @@
                         <th>名稱</th>
                         <th>主機群</th>
                         <th>位置</th>
+			<th>保管者</th>
                         <th>備註</th>
                     </tr>
                 </tfoot>
