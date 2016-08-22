@@ -72,7 +72,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="<?=base_url()?>">Pandan v2.0</a>
+                <a class="navbar-brand" href="<?=base_url()?>">Pandan v2.5</a>
             </div>
             <!-- /.navbar-header -->
 
