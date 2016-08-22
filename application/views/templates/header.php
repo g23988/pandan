@@ -128,9 +128,6 @@
                             <a href="index.php/pandan/pandanByHost/all"><i class="fa fa-power-off fa-fw"></i> 開始</a>
                         </li>
                         <li>
-                            <a href="index.php/pandan/pandanByCustom"><i class="fa fa-list-alt fa-fw"></i> 自訂</a>
-                        </li>
-                        <li>
                             <a href="#"><i class="fa fa-desktop fa-fw"></i> 主機<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
