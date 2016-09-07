@@ -15,13 +15,16 @@ class Host_model extends CI_Model{
 		//hostOverview.php專用jquery datatable json model 機器群連動
 		$userinfo = $this->session->userdata('userinfo');
 		if($hostcloud=="all"){
-			$sql = "SELECT host.HostID,host.Name,hostcloud.Name as CloudName,hostcloud.Location,host.Remark FROM host
-				left join hostcloud on host.CloudID = hostcloud.CloudID WHERE 1=1 ";
+			$sql = "SELECT host.HostID,host.Name,hostcloud.Name as CloudName,user.Name as Username,hostcloud.Location,host.Remark FROM host
+				left join hostcloud on host.CloudID = hostcloud.CloudID 
+				left join user on host.UserID = user.UserID 
+				WHERE 1=1 ";
 				if($userinfo['UserID']!='1') {$sql .= "AND host.UserID = ".$userinfo['UserID'];}
 			}
 		else{
-			$sql = "SELECT host.HostID,host.Name,hostcloud.Name as CloudName,hostcloud.Location,host.Remark FROM host
-				left join hostcloud on host.CloudID = hostcloud.CloudID ";
+			$sql = "SELECT host.HostID,host.Name,hostcloud.Name as CloudName,user.Name as Username,hostcloud.Location,host.Remark FROM host
+				left join hostcloud on host.CloudID = hostcloud.CloudID 
+				left join user on host.UserID = user.UserID ";
 			if($userinfo['UserID']==='1'){
 				$sql .= "WHERE hostcloud.CloudID = ".$hostcloud;
 				}
@@ -37,12 +40,16 @@ class Host_model extends CI_Model{
 		//hostOverview.php專用jquery datatable json model 位置連動
 		$userinfo = $this->session->userdata('userinfo');
 		if($location=="all"){
-			$sql = "SELECT host.HostID,host.Name,hostcloud.Name as CloudName,hostcloud.Location,host.Remark FROM host
-				left join hostcloud on host.CloudID = hostcloud.CloudID ";
+			$sql = "SELECT host.HostID,host.Name,hostcloud.Name as CloudName,user.Name as Username,hostcloud.Location,host.Remark FROM host
+				left join hostcloud on host.CloudID = hostcloud.CloudID 
+				left join user on host.UserID = user.UserID 
+				";
 			}
 		else{
-			$sql = "SELECT host.HostID,host.Name,hostcloud.Name as CloudName,hostcloud.Location,host.Remark FROM host
-				left join hostcloud on host.CloudID = hostcloud.CloudID ";
+			$sql = "SELECT host.HostID,host.Name,hostcloud.Name as CloudName,user.Name as Username,hostcloud.Location,host.Remark FROM host
+				left join hostcloud on host.CloudID = hostcloud.CloudID 
+				left join user on host.UserID = user.UserID 
+				";
 			if($userinfo['UserID']==='1'){
 				$sql .= "WHERE hostcloud.Location = '".$location."'";
 				}
@@ -62,14 +69,14 @@ class Host_model extends CI_Model{
 			//admin可以看到全部
 			$query = $this->db->query("select host.HostID as id,host.Name as name,hostcloud.Name as cloudname from host
 					left join hostcloud on host.CloudID = hostcloud.CloudID
-					left join user on host.UserID = user.UserID
+					left join user on host.UserID = user.UserID 
 				");
 			}
 		else{
 			//把群組共用的野拉出來 還有admin管理的全域共用也拉出來
 			$query = $this->db->query("select host.HostID as id,host.Name as name,hostcloud.Name as cloudname from host
 					left join hostcloud on host.CloudID = hostcloud.CloudID
-					left join user on host.UserID = user.UserID
+					left join user on host.UserID = user.UserID 
 					WHERE host.UserID in (".$userinfo['UserID'].",1) or (GroupID = ".$userinfo['GroupID']." and Groupuse = 1) 
 				");
 			}

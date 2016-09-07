@@ -72,7 +72,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="<?=base_url()?>">Pandan v2.0</a>
+                <a class="navbar-brand" href="<?=base_url()?>">Pandan v2.5</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -126,9 +126,6 @@
                         </li>
                         <li>
                             <a href="index.php/pandan/pandanByHost/all"><i class="fa fa-power-off fa-fw"></i> 開始</a>
-                        </li>
-                        <li>
-                            <a href="index.php/pandan/pandanByCustom"><i class="fa fa-list-alt fa-fw"></i> 自訂</a>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-desktop fa-fw"></i> 主機<span class="fa arrow"></span></a>

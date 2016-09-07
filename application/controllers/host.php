@@ -101,7 +101,7 @@ class Host extends CI_Controller{
 		$message_array = $this->host_model->get_hostclouds($cloudid);
 		$message2= array();
 		foreach($message_array as $item){
-			$message = array($item['HostID'],$item['Name'],$item['CloudName'],$item['Location'],$item['Remark']);
+			$message = array($item['HostID'],$item['Name'],$item['CloudName'],$item['Location'],$item['Username'],$item['Remark']);
 			array_push($message2,$message);
 		}
 		$messages = array("data"=>$message2);
@@ -114,7 +114,7 @@ class Host extends CI_Controller{
 		$message_array = $this->host_model->get_hostlocation($location);
 		$message2= array();
 		foreach($message_array as $item){
-			$message = array($item['HostID'],$item['Name'],$item['CloudName'],$item['Location'],$item['Remark']);
+			$message = array($item['HostID'],$item['Name'],$item['CloudName'],$item['Location'],$item['Username'],$item['Remark']);
 			array_push($message2,$message);
 		}
 		$messages = array("data"=>$message2);
