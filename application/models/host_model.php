@@ -46,7 +46,7 @@ class Host_model extends CI_Model{
 				";
 			}
 		else{
-			$sql = "SELECT host.HostID,host.Name,hostcloud.Name as CloudName,user.Name,user.Name as Username,hostcloud.Location,host.Remark FROM host
+			$sql = "SELECT host.HostID,host.Name,hostcloud.Name as CloudName,user.Name as Username,hostcloud.Location,host.Remark FROM host
 				left join hostcloud on host.CloudID = hostcloud.CloudID 
 				left join user on host.UserID = user.UserID 
 				";

@@ -5,6 +5,7 @@
 	</div>
 </div>
 
+
 <div class="panel panel-default">
 	<div class="panel-heading">
 		<i class="fa fa-desktop fa-fw"></i> 主機群
@@ -78,21 +79,34 @@ $(document).ready(function() {
 			}
 		//位置下拉選擇後改變
 		var selecturl = baseHref+"index.php/host/HostLocationJson/"+selectval;
-		table.api().ajax.url(selecturl).load();
+		$('#hosttable').dataTable().api().ajax.url(selecturl).load();
+		
 		});
+	
+
 	
 	
 	//讀取群名稱ajax
 	var baseHref = document.getElementsByTagName('base')[0].href
-    var table = $('#hosttable').dataTable( {
-        ajax: baseHref+"index.php/host/HostJson/all"
+    var table = $('#hosttable').DataTable( {
+        "ajax": baseHref+"index.php/host/HostJson/all",
+		"fnDrawCallback":function(settings){
+			//$(this).page(2).draw(false);
+			//change_page();
+			//table.page(2).draw(false);
+			//console.log(settings);
+		}
     } );
+	
+	//function change_page(){
+	//	table.page(2).draw(false);
+	//}
 	
 	//機器群下拉選擇後改變
 	$('#filterByGroupSelect').change(function(){
 		var selectval = $("#filterByGroupSelect").find(":selected").val();
 		var selecturl = baseHref+"index.php/host/HostJson/"+selectval;
-		table.api().ajax.url(selecturl).load();
+		$('#hosttable').dataTable().api().ajax.url(selecturl).load();
 	});	
 	
 	
